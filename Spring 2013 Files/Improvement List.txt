@@ -1,0 +1,7 @@
+Eliminate the laptop
+Newer Android phone.
+	-possibly replace with embedded controller.
+Real time upload to server / cloud.
+Check in-function for each phone.
+Battery Life Augmentation.
+
