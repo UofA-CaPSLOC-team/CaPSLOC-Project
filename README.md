@@ -7,7 +7,7 @@ Camera Positioning System Location and Orientation Controller (CaPSLOC) Senior D
 
 <ul>
 <li>
-Due to potential issues with Windows not recognizing differently cased branch names as distinct, capital letters are henceforth ***banned*** from branch names. Please use all lowercase letters with underscores between words. (Example: my_branch_name)</li>
+Due to potential issues with Windows not recognizing differently cased branch names as distinct, capital letters are henceforth <b>banned</b> from branch names. Please use all lowercase letters with underscores between words. (Example: my_branch_name)</li>
 <li>
 Recommended branch names include the initials of the primary user of that branch, as well as the code area being worked on. (Example: jmp_motor_comtroller)</li>
 <li>
