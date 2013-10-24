@@ -1,0 +1,5 @@
+CaPSLOC/bin
+CaPSLOC/obj
+CaPSLOC/CaPSLOC.csproj.user
+*.suo
+packages
