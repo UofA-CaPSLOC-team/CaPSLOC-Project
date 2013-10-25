@@ -3,3 +3,4 @@ CaPSLOC/obj
 CaPSLOC/CaPSLOC.csproj.user
 *.suo
 packages
+!**/repositories.config
