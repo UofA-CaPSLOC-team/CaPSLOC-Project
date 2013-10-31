@@ -2,16 +2,34 @@
     ViewBag.Title = "Index";
 }
 
+<style>
+    html, body, #map-canvas {
+    height: 100%;
+    margin: 0px;
+    padding: 0px
+    }
+    #map-page 
+    {
+        height:500px
+    }
+</style>
+
 <h2>Index</h2>
 
 <div id="tabs">
   <ul>
-    <li><a href="#fragment-1">One</a></li>
+    <li><a href="#map-page">Map</a></li>
     <li><a href="#fragment-2">Two</a></li>
     <li><a href="#fragment-3">Three</a></li>
   </ul>
-  <div id="fragment-1">
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+  <div id="map-page">
+    <div id="map-canvas"></div>
+    <label for="latitude-field">Latitude:</label>
+    <input type="text" id="latitude-field" />
+    <label for="longitude-field">Longitude:</label>
+    <input type="text" id="longitude-field" />
+    <label for="altitude-field">Altitude:</label>
+    <input type="text" id="altitude-field" />
   </div>
   <div id="fragment-2">
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
@@ -21,4 +39,5 @@
   </div>
 </div>
 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/home.js"></script>

@@ -13,6 +13,19 @@ namespace CaPSLOC.Controllers
 
         public ActionResult Index()
         {
+            using (DbModelContainer model = new DbModelContainer())
+            {
+                Location loc = new Location()
+                {
+                    Latitude = 41.4256,
+                    Longitude = -80.2356,
+                    Altitude = 307.127,
+                    Name = "Akron Guess"
+                };
+                model.Locations.AddObject(loc);
+                model.SaveChanges();
+            }
+
             return View();
         }
 
