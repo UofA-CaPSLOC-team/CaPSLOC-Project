@@ -5,6 +5,7 @@ $(document).ready(function () {
     tabs.tabs();
 
     google.maps.event.addDomListener(window, 'load', initialize);
+    $('#location-submit').click(submitLocation);
     initialize();
 });
 
@@ -53,4 +54,20 @@ function addMarker(location) {
 
 function setAltitude(locations, status){
     $('#altitude-field').val(locations[0].elevation);
+}
+
+function submitLocation() {
+
+    var location = {
+        Latitude: $('#latitude-field').val(),
+        Longitude: $('#longitude-field').val(),
+        Altitude: $('#altitude-field').val(),
+        Name: $('#name-field').val()
+    };
+
+    $.ajax({
+        url: '/CaPSLOC/Home/SaveLocation',
+        type: 'POST',
+        data: location
+    });
 }

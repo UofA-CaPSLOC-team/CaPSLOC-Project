@@ -13,20 +13,28 @@ namespace CaPSLOC.Controllers
 
         public ActionResult Index()
         {
-            using (DbModelContainer model = new DbModelContainer())
+            return View();
+        }
+
+        public ActionResult SaveLocation(Location loc)
+        {
+            JsonResult result = Json(new { success = false, data = "An error occurred." });
+
+            try
             {
-                Location loc = new Location()
+                using (DbModelContainer model = new DbModelContainer())
                 {
-                    Latitude = 41.4256,
-                    Longitude = -80.2356,
-                    Altitude = 307.127,
-                    Name = "Akron Guess"
-                };
-                model.Locations.AddObject(loc);
-                model.SaveChanges();
+                    model.Locations.AddObject(loc);
+                    model.SaveChanges();
+                }
+                result = Json(new { success = true, data = loc.Id });
+            }
+            catch(Exception ex)
+            {
+                result = Json(new { success = false, data = ex.Message });
             }
 
-            return View();
+            return result;
         }
 
     }
