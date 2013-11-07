@@ -1,0 +1,92 @@
+<xml version="1.0">
+
+<script name="[filename]">
+
+	<!--Configuration command
+		Sets defaults for potentially ommitted attributes of other commands.-->
+	<config>
+		<!--optional-->
+		<rmotionangle>###<!--degrees--></rmotionangle>
+		<vidtime>hh:mm:ss:msms</vidtime>
+		<framerate>###<!--frames per second--></framerate>
+		<imagemode>[pic|vid]</imagemode>
+		<quality><!--preset resolutions--></quality>
+		<waittime>hh:mm:ss:msms</waittime>
+		<locoffset>
+			<longitude>##.###</longitude>
+			<latitude>##.###</latitude>
+			<altitude>##.###<!--meters--></altitude>
+		</locoffset>
+		<!--/optional-->
+	</config>
+	<!--/Configuration command-->	
+
+	<!--GOTO command
+		Defines the location in longitude, latitude, and altitude
+		of the desired target. Also includes the option of a name,
+		if given by the user.-->
+	<goto>
+		<longitude>134.21585083007812</longitude>
+		<latitude>-23.51732991248629</latitude>
+		<altitude>727.0023803710938</altitude>
+		<name>Mid-Australia</name>
+	</goto>
+	<!--/GOTO command-->
+
+	<!--Emergency Stop command
+		Causes the system to stop whatever it is doing and
+		shutdown. #1 Priority-->
+	<halt>
+	</halt>
+	<!--/Emergency Stop command-->
+
+	<!--Pause command
+		Pauses the execution without shutting down. #1 priority-->
+	<pause>
+	</pause>
+	<!--/Pause command-->
+
+	<!-- Resume command
+		Resumes the system from a paused state.-->
+	<resume>
+	</resume>
+	<!--/Resume command-->
+
+	<!-- Image Capture command
+		Tells the system to have the camera to capture an image.-->
+	<capture>
+		<mode>[pic|vid]</mode>
+		<!--optional-->
+		<tot>hh:mm:ss:msms</tot>
+		<framerate>10<!--frames per second--></framerate>
+		<quality><!--enumerated values of preset resolutions--></quality>
+		<!--/optional-->
+	</capture>
+	<!--/Image Capture command-->
+
+	<!--Relative motion command
+		Produces a relative motion in the given direction.-->
+	<rmotion>
+		<direction>[left|right|up|down]</direction>
+		<!--optional-->
+		<angle>###<!--degrees--></angle>
+		<!--/optional-->
+	</rmotion>
+	<!--/Relative motion-->
+
+	<!--Wait command
+		Causes system to wait for a predetermined amount of time
+		before performing next command, unless high priority command
+		is queued.-->
+	<wait>
+		<time>hh:mm:ss:msms</time>
+	</wait>
+	<!--/Wait command-->
+
+	<!--Execute Script command
+		Causes system to execute script file with given name.-->
+	<exec>
+		<name>[NAME]</name>
+	</exec>
+	<!--/Execute Script command-->
+</script>
