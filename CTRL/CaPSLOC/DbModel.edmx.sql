@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 11/01/2013 13:11:36
+-- Date Created: 11/14/2013 16:50:15
 -- Generated from EDMX file: C:\src\CaPSLOC-Project\CTRL\CaPSLOC\DbModel.edmx
 -- --------------------------------------------------
 
@@ -40,6 +40,25 @@ CREATE TABLE [dbo].[Locations] (
 );
 GO
 
+-- Creating table 'Scripts'
+CREATE TABLE [dbo].[Scripts] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NOT NULL,
+    [Content] nvarchar(max)  NOT NULL,
+    [Shared] bit  NOT NULL
+);
+GO
+
+-- Creating table 'ALTs'
+CREATE TABLE [dbo].[ALTs] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Address] nvarchar(max)  NOT NULL,
+    [RecentlyLocated] bit  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -47,6 +66,18 @@ GO
 -- Creating primary key on [Id] in table 'Locations'
 ALTER TABLE [dbo].[Locations]
 ADD CONSTRAINT [PK_Locations]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Scripts'
+ALTER TABLE [dbo].[Scripts]
+ADD CONSTRAINT [PK_Scripts]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ALTs'
+ALTER TABLE [dbo].[ALTs]
+ADD CONSTRAINT [PK_ALTs]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

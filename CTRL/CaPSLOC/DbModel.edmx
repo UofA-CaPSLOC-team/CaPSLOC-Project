@@ -7,6 +7,8 @@
     <Schema Namespace="DbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="DbModelStoreContainer">
     <EntitySet Name="Locations" EntityType="DbModel.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Scripts" EntityType="DbModel.Store.Scripts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ALTs" EntityType="DbModel.Store.ALTs" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="Locations">
     <Key>
@@ -18,12 +20,33 @@
     <Property Name="Longitude" Type="float" Nullable="false" />
     <Property Name="Altitude" Type="float" Nullable="false" />
   </EntityType>
+  <EntityType Name="Scripts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Shared" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ALTs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RecentlyLocated" Type="bit" Nullable="false" />
+  </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DbModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityContainer Name="DbModelContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Locations" EntityType="DbModel.Location" />
+          <EntitySet Name="Scripts" EntityType="DbModel.Script" />
+          <EntitySet Name="ALTs" EntityType="DbModel.ALT" />
         </EntityContainer>
         <EntityType Name="Location">
           <Key>
@@ -34,6 +57,25 @@
           <Property Type="Double" Name="Latitude" Nullable="false" />
           <Property Type="Double" Name="Longitude" Nullable="false" />
           <Property Type="Double" Name="Altitude" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Script">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="Boolean" Name="Shared" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ALT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="Boolean" Name="RecentlyLocated" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -49,6 +91,27 @@
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />
           <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="Altitude" ColumnName="Altitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Scripts">
+      <EntityTypeMapping TypeName="IsTypeOf(DbModel.Script)">
+        <MappingFragment StoreEntitySet="Scripts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Shared" ColumnName="Shared" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ALTs">
+      <EntityTypeMapping TypeName="IsTypeOf(DbModel.ALT)">
+        <MappingFragment StoreEntitySet="ALTs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="RecentlyLocated" ColumnName="RecentlyLocated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -72,6 +135,8 @@
     <edmx:Diagrams>
       <Diagram Name="DbModel" >
         <EntityTypeShape EntityType="DbModel.Location" Width="1.5" PointX="6.25" PointY="2.625" Height="1.9802864583333326" />
+        <EntityTypeShape EntityType="DbModel.Script" Width="1.5" PointX="2.125" PointY="2.5" Height="1.9802864583333326" />
+        <EntityTypeShape EntityType="DbModel.ALT" Width="1.5" PointX="4.25" PointY="1.25" Height="1.787985026041667" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

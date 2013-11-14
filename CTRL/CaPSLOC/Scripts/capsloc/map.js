@@ -66,7 +66,7 @@ function submitLocation() {
     };
 
     $.ajax({
-        url: '/CaPSLOC/Home/SaveLocation',
+        url: '/CaPSLOC/Map/SaveLocation',
         type: 'POST',
         data: location
     });

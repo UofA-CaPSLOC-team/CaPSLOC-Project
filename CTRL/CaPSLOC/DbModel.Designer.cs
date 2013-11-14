@@ -80,6 +80,38 @@ namespace CaPSLOC
             }
         }
         private ObjectSet<Location> _Locations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Script> Scripts
+        {
+            get
+            {
+                if ((_Scripts == null))
+                {
+                    _Scripts = base.CreateObjectSet<Script>("Scripts");
+                }
+                return _Scripts;
+            }
+        }
+        private ObjectSet<Script> _Scripts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ALT> ALTs
+        {
+            get
+            {
+                if ((_ALTs == null))
+                {
+                    _ALTs = base.CreateObjectSet<ALT>("ALTs");
+                }
+                return _ALTs;
+            }
+        }
+        private ObjectSet<ALT> _ALTs;
 
         #endregion
         #region AddTo Methods
@@ -91,6 +123,22 @@ namespace CaPSLOC
         {
             base.AddObject("Locations", location);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Scripts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToScripts(Script script)
+        {
+            base.AddObject("Scripts", script);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ALTs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToALTs(ALT aLT)
+        {
+            base.AddObject("ALTs", aLT);
+        }
 
         #endregion
     }
@@ -99,6 +147,139 @@ namespace CaPSLOC
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DbModel", Name="ALT")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ALT : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ALT object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="address">Initial value of the Address property.</param>
+        /// <param name="recentlyLocated">Initial value of the RecentlyLocated property.</param>
+        public static ALT CreateALT(global::System.Int32 id, global::System.String name, global::System.String address, global::System.Boolean recentlyLocated)
+        {
+            ALT aLT = new ALT();
+            aLT.Id = id;
+            aLT.Name = name;
+            aLT.Address = address;
+            aLT.RecentlyLocated = recentlyLocated;
+            return aLT;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Address
+        {
+            get
+            {
+                return _Address;
+            }
+            set
+            {
+                OnAddressChanging(value);
+                ReportPropertyChanging("Address");
+                _Address = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Address");
+                OnAddressChanged();
+            }
+        }
+        private global::System.String _Address;
+        partial void OnAddressChanging(global::System.String value);
+        partial void OnAddressChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean RecentlyLocated
+        {
+            get
+            {
+                return _RecentlyLocated;
+            }
+            set
+            {
+                OnRecentlyLocatedChanging(value);
+                ReportPropertyChanging("RecentlyLocated");
+                _RecentlyLocated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RecentlyLocated");
+                OnRecentlyLocatedChanged();
+            }
+        }
+        private global::System.Boolean _RecentlyLocated;
+        partial void OnRecentlyLocatedChanging(global::System.Boolean value);
+        partial void OnRecentlyLocatedChanged();
+
+        #endregion
+    
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -254,6 +435,165 @@ namespace CaPSLOC
         private global::System.Double _Altitude;
         partial void OnAltitudeChanging(global::System.Double value);
         partial void OnAltitudeChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DbModel", Name="Script")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Script : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Script object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        /// <param name="content">Initial value of the Content property.</param>
+        /// <param name="shared">Initial value of the Shared property.</param>
+        public static Script CreateScript(global::System.Int32 id, global::System.String name, global::System.String description, global::System.String content, global::System.Boolean shared)
+        {
+            Script script = new Script();
+            script.Id = id;
+            script.Name = name;
+            script.Description = description;
+            script.Content = content;
+            script.Shared = shared;
+            return script;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Content
+        {
+            get
+            {
+                return _Content;
+            }
+            set
+            {
+                OnContentChanging(value);
+                ReportPropertyChanging("Content");
+                _Content = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Content");
+                OnContentChanged();
+            }
+        }
+        private global::System.String _Content;
+        partial void OnContentChanging(global::System.String value);
+        partial void OnContentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Shared
+        {
+            get
+            {
+                return _Shared;
+            }
+            set
+            {
+                OnSharedChanging(value);
+                ReportPropertyChanging("Shared");
+                _Shared = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Shared");
+                OnSharedChanged();
+            }
+        }
+        private global::System.Boolean _Shared;
+        partial void OnSharedChanging(global::System.Boolean value);
+        partial void OnSharedChanged();
 
         #endregion
     
