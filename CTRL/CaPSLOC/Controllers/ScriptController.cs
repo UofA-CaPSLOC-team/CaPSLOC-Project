@@ -17,14 +17,14 @@ namespace CaPSLOC.Controllers
         }
 
 
-        public Result Save(XmlBlob script, string name, string description, bool share)
-        {
-            // Ensure that this name is unique, if not, return error
+        //public Result Save(XmlBlob script, string name, string description, bool share)
+        //{
+        //    // Ensure that this name is unique, if not, return error
 
-            // Write script, name, description, and whether to share to the database
+        //    // Write script, name, description, and whether to share to the database
 
-            // Return success
-        }
+        //    // Return success
+        //}
 
     }
 }

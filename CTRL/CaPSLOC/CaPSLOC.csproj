@@ -126,8 +126,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ALTController.cs" />
-    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\ALTController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ImageController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\ScriptController.cs" />
     <Compile Include="DbModel.Designer.cs">
@@ -141,6 +145,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\flexigrid.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -198,7 +203,25 @@
     <Content Include="DbModel.edmx.sql" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\bg.gif" />
+    <Content Include="Images\btn-sprite.gif" />
+    <Content Include="Images\ddn.png" />
+    <Content Include="Images\dn.png" />
+    <Content Include="Images\fhbg.gif" />
+    <Content Include="Images\first.gif" />
+    <Content Include="Images\hl.png" />
+    <Content Include="Images\last.gif" />
+    <Content Include="Images\line.gif" />
+    <Content Include="Images\load.gif" />
+    <Content Include="Images\load.png" />
+    <Content Include="Images\magnifier.png" />
+    <Content Include="Images\next.gif" />
+    <Content Include="Images\prev.gif" />
+    <Content Include="Images\up.png" />
+    <Content Include="Images\uup.png" />
+    <Content Include="Images\wbg.gif" />
     <Content Include="Scripts\capsloc\map.js" />
+    <Content Include="Scripts\flexigrid.js" />
     <Content Include="Scripts\jquery-2.0.3-vsdoc.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />

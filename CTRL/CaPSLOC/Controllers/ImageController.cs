@@ -12,16 +12,16 @@ namespace CaPSLOC.Controllers
     public class ImageController : Controller
     {
 
-        public JsonResult Save(HttpPostedFileBase file)
-        {
-            // Read images folder from settings
+        //public JsonResult Save(HttpPostedFileBase file)
+        //{
+        //    // Read images folder from settings
 
-            // Generate filename (based on time, or some other method to prevent name collisions)
+        //    // Generate filename (based on time, or some other method to prevent name collisions)
 
-            // Save image to folder
+        //    // Save image to folder
 
-            // Write location info, time, and filename to database
-        }
+        //    // Write location info, time, and filename to database
+        //}
 
 
     }

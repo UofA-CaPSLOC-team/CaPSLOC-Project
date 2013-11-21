@@ -9,37 +9,37 @@ namespace CaPSLOC.Controllers
 {
     public class ALTController : ApiController
     {
-        [HttpGet] // From browser
-        public void PingSweep(IPAddress start, IPAddress mask)
-        {
-            // Clear list of active ALTs
+        //[HttpGet] // From browser
+        //public void PingSweep(IPAddress start, IPAddress mask)
+        //{
+        //    // Clear list of active ALTs
 
-            foreach(/* IP in range */)
-            {
-                // Send 'ping' on ALT communication TCP port
-            }
-        }
+        //    foreach( IP in range )
+        //    {
+        //        // Send 'ping' on ALT communication TCP port
+        //    }
+        //}
 
-        [HttpPost] // From ALT
-        public void PingReply(int AltId)
-        {
-            // Add to list of active ALT units
-        }
+        //[HttpPost] // From ALT
+        //public void PingReply(int AltId)
+        //{
+        //    // Add to list of active ALT units
+        //}
 
-        //GET - from browser
-        public XmlBlob SendCommand(int AltId)
-        {
-            // Lookup ALT address in list
+        ////GET - from browser
+        //public XmlBlob SendCommand(int AltId)
+        //{
+        //    // Lookup ALT address in list
 
-            // Transmit XML to ALT
+        //    // Transmit XML to ALT
 
-            // Inform UI that command was sent
-        }
+        //    // Inform UI that command was sent
+        //}
 
-        //POST - from ALT
-        public AltStatus ReceiveStatus(int AltId, string status)
-        {
-            // Inform UI of status
-        }
+        ////POST - from ALT
+        //public AltStatus ReceiveStatus(int AltId, string status)
+        //{
+        //    // Inform UI of status
+        //}
     }
 }

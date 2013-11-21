@@ -4,6 +4,9 @@ $(document).ready(function () {
     var tabs = $('#tabs');
     tabs.tabs();
 
+    var locateAltGrid = $('#alts-located');
+    locateAltGrid.flexigrid();
+
     google.maps.event.addDomListener(window, 'load', initialize);
     $('#location-submit').click(submitLocation);
     initialize();
