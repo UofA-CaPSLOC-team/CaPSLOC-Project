@@ -47,6 +47,15 @@
           <EntitySet Name="Locations" EntityType="DbModel.Location" />
           <EntitySet Name="Scripts" EntityType="DbModel.Script" />
           <EntitySet Name="ALTs" EntityType="DbModel.ALT" />
+          <EntitySet Name="Data" EntityType="DbModel.Data" />
+          <AssociationSet Name="ALTData" Association="DbModel.ALTData">
+            <End Role="ALT" EntitySet="ALTs" />
+            <End Role="Data" EntitySet="Data" />
+          </AssociationSet>
+          <AssociationSet Name="DataLocation" Association="DbModel.DataLocation">
+            <End Role="Data" EntitySet="Data" />
+            <End Role="Location" EntitySet="Locations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Location">
           <Key>
@@ -57,6 +66,7 @@
           <Property Type="Double" Name="Latitude" Nullable="false" />
           <Property Type="Double" Name="Longitude" Nullable="false" />
           <Property Type="Double" Name="Altitude" Nullable="false" />
+          <NavigationProperty Name="Data" Relationship="DbModel.DataLocation" FromRole="Location" ToRole="Data" />
         </EntityType>
         <EntityType Name="Script">
           <Key>
@@ -76,7 +86,36 @@
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="Address" Nullable="false" />
           <Property Type="Boolean" Name="RecentlyLocated" Nullable="false" />
+          <NavigationProperty Name="Data" Relationship="DbModel.ALTData" FromRole="ALT" ToRole="Data" />
         </EntityType>
+        <EntityType Name="Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ImageFilename" Nullable="false" />
+          <Property Type="String" Name="ImageEncoding" Nullable="false" />
+          <Property Type="String" Name="CaptureTime" Nullable="false" />
+          <NavigationProperty Name="ALT" Relationship="DbModel.ALTData" FromRole="Data" ToRole="ALT" />
+          <Property Type="Int32" Name="ALTId" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="DbModel.DataLocation" FromRole="Data" ToRole="Location" />
+        </EntityType>
+        <Association Name="ALTData">
+          <End Type="DbModel.ALT" Role="ALT" Multiplicity="1" />
+          <End Type="DbModel.Data" Role="Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ALT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Data">
+              <PropertyRef Name="ALTId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DataLocation">
+          <End Type="DbModel.Data" Role="Data" Multiplicity="*" />
+          <End Type="DbModel.Location" Role="Location" Multiplicity="1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -134,9 +173,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram Name="DbModel" >
-        <EntityTypeShape EntityType="DbModel.Location" Width="1.5" PointX="6.25" PointY="2.625" Height="1.9802864583333326" />
-        <EntityTypeShape EntityType="DbModel.Script" Width="1.5" PointX="2.125" PointY="2.5" Height="1.9802864583333326" />
-        <EntityTypeShape EntityType="DbModel.ALT" Width="1.5" PointX="4.25" PointY="1.25" Height="1.787985026041667" />
+        <EntityTypeShape EntityType="DbModel.Location" Width="1.5" PointX="3.125" PointY="0.625" Height="2.172587890625" />
+        <EntityTypeShape EntityType="DbModel.Script" Width="1.5" PointX="3.125" PointY="3.625" Height="1.9802864583333326" />
+        <EntityTypeShape EntityType="DbModel.ALT" Width="1.5" PointX="5.625" PointY="3.625" Height="1.9802864583333339" />
+        <EntityTypeShape EntityType="DbModel.Data" Width="1.5" PointX="5.625" PointY="0.5" Height="2.3648893229166656" />
+        <AssociationConnector Association="DbModel.ALTData">
+          <ConnectorPoint PointX="6.375" PointY="3.625" />
+          <ConnectorPoint PointX="6.375" PointY="2.8648893229166656" />
+        </AssociationConnector>
+        <AssociationConnector Association="DbModel.DataLocation">
+          <ConnectorPoint PointX="5.625" PointY="1.7112939453125002" />
+          <ConnectorPoint PointX="4.625" PointY="1.7112939453125002" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

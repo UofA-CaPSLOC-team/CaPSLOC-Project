@@ -16,6 +16,12 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("DbModel", "ALTData", "ALT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CaPSLOC.ALT), "Data", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CaPSLOC.Data), true)]
+[assembly: EdmRelationshipAttribute("DbModel", "DataLocation", "Data", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CaPSLOC.Data), "Location", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CaPSLOC.Location))]
+
+#endregion
 
 namespace CaPSLOC
 {
@@ -112,6 +118,22 @@ namespace CaPSLOC
             }
         }
         private ObjectSet<ALT> _ALTs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Data> Data
+        {
+            get
+            {
+                if ((_Data == null))
+                {
+                    _Data = base.CreateObjectSet<Data>("Data");
+                }
+                return _Data;
+            }
+        }
+        private ObjectSet<Data> _Data;
 
         #endregion
         #region AddTo Methods
@@ -138,6 +160,14 @@ namespace CaPSLOC
         public void AddToALTs(ALT aLT)
         {
             base.AddObject("ALTs", aLT);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Data EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToData(Data data)
+        {
+            base.AddObject("Data", data);
         }
 
         #endregion
@@ -279,6 +309,269 @@ namespace CaPSLOC
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DbModel", "ALTData", "Data")]
+        public EntityCollection<Data> Data
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Data>("DbModel.ALTData", "Data");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Data>("DbModel.ALTData", "Data", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DbModel", Name="Data")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Data : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Data object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="imageFilename">Initial value of the ImageFilename property.</param>
+        /// <param name="imageEncoding">Initial value of the ImageEncoding property.</param>
+        /// <param name="captureTime">Initial value of the CaptureTime property.</param>
+        /// <param name="aLTId">Initial value of the ALTId property.</param>
+        public static Data CreateData(global::System.Int32 id, global::System.String imageFilename, global::System.String imageEncoding, global::System.String captureTime, global::System.Int32 aLTId)
+        {
+            Data data = new Data();
+            data.Id = id;
+            data.ImageFilename = imageFilename;
+            data.ImageEncoding = imageEncoding;
+            data.CaptureTime = captureTime;
+            data.ALTId = aLTId;
+            return data;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ImageFilename
+        {
+            get
+            {
+                return _ImageFilename;
+            }
+            set
+            {
+                OnImageFilenameChanging(value);
+                ReportPropertyChanging("ImageFilename");
+                _ImageFilename = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ImageFilename");
+                OnImageFilenameChanged();
+            }
+        }
+        private global::System.String _ImageFilename;
+        partial void OnImageFilenameChanging(global::System.String value);
+        partial void OnImageFilenameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ImageEncoding
+        {
+            get
+            {
+                return _ImageEncoding;
+            }
+            set
+            {
+                OnImageEncodingChanging(value);
+                ReportPropertyChanging("ImageEncoding");
+                _ImageEncoding = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ImageEncoding");
+                OnImageEncodingChanged();
+            }
+        }
+        private global::System.String _ImageEncoding;
+        partial void OnImageEncodingChanging(global::System.String value);
+        partial void OnImageEncodingChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CaptureTime
+        {
+            get
+            {
+                return _CaptureTime;
+            }
+            set
+            {
+                OnCaptureTimeChanging(value);
+                ReportPropertyChanging("CaptureTime");
+                _CaptureTime = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CaptureTime");
+                OnCaptureTimeChanged();
+            }
+        }
+        private global::System.String _CaptureTime;
+        partial void OnCaptureTimeChanging(global::System.String value);
+        partial void OnCaptureTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ALTId
+        {
+            get
+            {
+                return _ALTId;
+            }
+            set
+            {
+                OnALTIdChanging(value);
+                ReportPropertyChanging("ALTId");
+                _ALTId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ALTId");
+                OnALTIdChanged();
+            }
+        }
+        private global::System.Int32 _ALTId;
+        partial void OnALTIdChanging(global::System.Int32 value);
+        partial void OnALTIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DbModel", "ALTData", "ALT")]
+        public ALT ALT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ALT>("DbModel.ALTData", "ALT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ALT>("DbModel.ALTData", "ALT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<ALT> ALTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ALT>("DbModel.ALTData", "ALT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ALT>("DbModel.ALTData", "ALT", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DbModel", "DataLocation", "Location")]
+        public Location Location
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Location>("DbModel.DataLocation", "Location").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Location>("DbModel.DataLocation", "Location").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Location> LocationReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Location>("DbModel.DataLocation", "Location");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Location>("DbModel.DataLocation", "Location", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>
@@ -438,6 +731,31 @@ namespace CaPSLOC
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DbModel", "DataLocation", "Data")]
+        public EntityCollection<Data> Data
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Data>("DbModel.DataLocation", "Data");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Data>("DbModel.DataLocation", "Data", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>
