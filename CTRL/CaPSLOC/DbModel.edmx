@@ -9,6 +9,15 @@
     <EntitySet Name="Locations" EntityType="DbModel.Store.Locations" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Scripts" EntityType="DbModel.Store.Scripts" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ALTs" EntityType="DbModel.Store.ALTs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Data" EntityType="DbModel.Store.Data" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ALTData" Association="DbModel.Store.ALTData">
+      <End Role="ALT" EntitySet="ALTs" />
+      <End Role="Data" EntitySet="Data" />
+    </AssociationSet>
+    <AssociationSet Name="DataLocation" Association="DbModel.Store.DataLocation">
+      <End Role="Data" EntitySet="Data" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Locations">
     <Key>
@@ -39,6 +48,41 @@
     <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
     <Property Name="RecentlyLocated" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Data">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImageFilename" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImageEncoding" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CaptureTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ALTId" Type="int" Nullable="false" />
+    <Property Name="Location_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ALTData">
+    <End Role="ALT" Type="DbModel.Store.ALTs" Multiplicity="1" />
+    <End Role="Data" Type="DbModel.Store.Data" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ALT">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Data">
+        <PropertyRef Name="ALTId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DataLocation">
+    <End Role="Data" Type="DbModel.Store.Data" Multiplicity="*" />
+    <End Role="Location" Type="DbModel.Store.Locations" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Data">
+        <PropertyRef Name="Location_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -154,6 +198,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Data">
+      <EntityTypeMapping TypeName="IsTypeOf(DbModel.Data)">
+        <MappingFragment StoreEntitySet="Data">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ImageFilename" ColumnName="ImageFilename" />
+          <ScalarProperty Name="ImageEncoding" ColumnName="ImageEncoding" />
+          <ScalarProperty Name="CaptureTime" ColumnName="CaptureTime" />
+          <ScalarProperty Name="ALTId" ColumnName="ALTId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="DataLocation" TypeName="DbModel.DataLocation" StoreEntitySet="Data">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="Id" ColumnName="Location_Id" />
+      </EndProperty>
+      <EndProperty Name="Data">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

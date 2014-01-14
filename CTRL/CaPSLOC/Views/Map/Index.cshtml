@@ -51,17 +51,25 @@
   </div>
   <div id="create-script">
     <select id="command-list">
-        <option>Go To Location</option>
+        <option value="0">Select a Command</option>
+        <option value="1">Go To Location - Manual</option>
+        <option value="2">Go To Location - Predefined</option>
     </select>
     <br />
-    <label for="latitude-script-field">Latitude:</label>
-    <input type="text" id="latitude-script-field" />
-    <br />
-    <label for="longitude-script-field">Longitude:</label>
-    <input type="text" id="longitude-script-field" />
-    <br />
-    <label for="altitude-script-field">Altitude:</label>
-    <input type="text" id="altitude-script-field" />
+    <div id="command-parameters-2" class="command-parameters" style="display:none">
+        <label for="goto-location-list">Location:</label>
+        <select id="goto-location-list"></select>
+    </div>
+    <div id="command-parameters-1" class="command-parameters" style="display:none">
+        <label for="latitude-script-field">Latitude:</label>
+        <input type="text" id="latitude-script-field" />
+        <br />
+        <label for="longitude-script-field">Longitude:</label>
+        <input type="text" id="longitude-script-field" />
+        <br />
+        <label for="altitude-script-field">Altitude:</label>
+        <input type="text" id="altitude-script-field" />
+    </div>   
     <br />
     <textarea id="script-contents" style="width:400px;height:200px">GTL (41.23452, -80.78346, 305.126)
 SC
@@ -83,3 +91,4 @@ PS (1.5)</textarea>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/map.js"></script>
+<script type="text/javascript" src="~/Scripts/capsloc/createscript.js"></script>
