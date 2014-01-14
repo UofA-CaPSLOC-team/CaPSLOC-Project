@@ -1,6 +1,6 @@
 <xml version="1.0">
 
-<script name="[filename]">
+<script name="[filename]"> <!--This can also be <command user="[std|admin]"> for manual commands-->
 
 	<!--Configuration command
 		Sets defaults for potentially ommitted attributes of other commands.-->
