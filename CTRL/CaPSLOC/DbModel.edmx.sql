@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/14/2014 13:29:47
+-- Date Created: 01/21/2014 14:17:03
 -- Generated from EDMX file: C:\src\CaPSLOC-Project\CTRL\CaPSLOC\DbModel.edmx
 -- --------------------------------------------------
 
@@ -17,6 +17,12 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_LocationData]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Data] DROP CONSTRAINT [FK_LocationData];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ALTData]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Data] DROP CONSTRAINT [FK_ALTData];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -30,6 +36,9 @@ IF OBJECT_ID(N'[dbo].[Scripts]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ALTs]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ALTs];
+GO
+IF OBJECT_ID(N'[dbo].[Data]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Data];
 GO
 
 -- --------------------------------------------------
@@ -71,8 +80,8 @@ CREATE TABLE [dbo].[Data] (
     [ImageFilename] nvarchar(max)  NOT NULL,
     [ImageEncoding] nvarchar(max)  NOT NULL,
     [CaptureTime] nvarchar(max)  NOT NULL,
-    [ALTId] int  NOT NULL,
-    [Location_Id] int  NOT NULL
+    [LocationId] int  NOT NULL,
+    [ALTId] int  NOT NULL
 );
 GO
 
@@ -108,6 +117,20 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
+-- Creating foreign key on [LocationId] in table 'Data'
+ALTER TABLE [dbo].[Data]
+ADD CONSTRAINT [FK_LocationData]
+    FOREIGN KEY ([LocationId])
+    REFERENCES [dbo].[Locations]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LocationData'
+CREATE INDEX [IX_FK_LocationData]
+ON [dbo].[Data]
+    ([LocationId]);
+GO
+
 -- Creating foreign key on [ALTId] in table 'Data'
 ALTER TABLE [dbo].[Data]
 ADD CONSTRAINT [FK_ALTData]
@@ -120,20 +143,6 @@ ADD CONSTRAINT [FK_ALTData]
 CREATE INDEX [IX_FK_ALTData]
 ON [dbo].[Data]
     ([ALTId]);
-GO
-
--- Creating foreign key on [Location_Id] in table 'Data'
-ALTER TABLE [dbo].[Data]
-ADD CONSTRAINT [FK_DataLocation]
-    FOREIGN KEY ([Location_Id])
-    REFERENCES [dbo].[Locations]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_DataLocation'
-CREATE INDEX [IX_FK_DataLocation]
-ON [dbo].[Data]
-    ([Location_Id]);
 GO
 
 -- --------------------------------------------------

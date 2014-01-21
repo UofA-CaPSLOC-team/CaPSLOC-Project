@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace CaPSLOC.Controllers
 {
-    public class MapController : Controller
+    public class MapController : BaseController
     {
         //
         // GET: /Home/
@@ -25,7 +26,7 @@ namespace CaPSLOC.Controllers
             {
                 using (DbModelContainer model = new DbModelContainer())
                 {
-                    model.Locations.AddObject(loc);
+                    model.Locations.Add(loc);
                     model.SaveChanges();
                 }
                 result = Json(new { success = true, data = loc.Id });
@@ -39,25 +40,26 @@ namespace CaPSLOC.Controllers
         }
 
         [HttpGet]
-        public ActionResult AllLocations()
+        public JsonResult AllLocations()
         {
-            JsonResult result = Json(new { success = false, data = "An error occurred." });
+            JsonResult result = Json(new { success = false, data = "An error occurred." }, JsonRequestBehavior.AllowGet);
 
-            try
+            using (DbModelContainer model = new DbModelContainer())
             {
-                using (DbModelContainer model = new DbModelContainer())
+                try
                 {
-                    var locations = model.Locations.ToList();
+                    var locations = model.Locations.AsEnumerable();
 
-                    result = Json(new { success = true, data = locations });
+                    return result = Json(new { success = true, data = locations.ToList() }, JsonRequestBehavior.AllowGet);
+
                 }
-            }
-            catch (Exception ex)
-            {
-                result = Json(new { success = false, data = ex.Message });
-            }
+                catch (Exception ex)
+                {
+                    result = Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
 
-            return result;
+                return result;
+            }
         }
 
     }

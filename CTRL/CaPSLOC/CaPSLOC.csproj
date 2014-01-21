@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -59,9 +63,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -122,18 +123,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ALT.cs">
+      <DependentUpon>CapslocModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="CapslocModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CapslocModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CapslocModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CapslocModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ALTController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ImageController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\ScriptController.cs" />
+    <Compile Include="Data.cs">
+      <DependentUpon>CapslocModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DbModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -142,7 +160,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>CapslocModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Script.cs">
+      <DependentUpon>CapslocModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\flexigrid.css" />
@@ -220,6 +244,7 @@
     <Content Include="Images\up.png" />
     <Content Include="Images\uup.png" />
     <Content Include="Images\wbg.gif" />
+    <Content Include="Scripts\capsloc\createscript.js" />
     <Content Include="Scripts\capsloc\map.js" />
     <Content Include="Scripts\flexigrid.js" />
     <Content Include="Scripts\jquery-2.0.3-vsdoc.js" />
@@ -269,7 +294,18 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
+    <None Include="CapslocModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CapslocModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="CapslocModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CapslocModel.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-2.0.3.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

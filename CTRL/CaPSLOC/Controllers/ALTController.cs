@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace CaPSLOC.Controllers
 {
-    public class ALTController : ApiController
+    public class ALTController : BaseController
     {
         //[HttpGet] // From browser
         //public void PingSweep(IPAddress start, IPAddress mask)

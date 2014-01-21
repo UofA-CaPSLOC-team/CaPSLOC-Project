@@ -54,6 +54,10 @@
         <option value="0">Select a Command</option>
         <option value="1">Go To Location - Manual</option>
         <option value="2">Go To Location - Predefined</option>
+        <option value="3">Halt</option>
+        <option value="4">Pause</option>
+        <option value="5">Resume</option>
+        <option value="6">Image Capture</option>
     </select>
     <br />
     <div id="command-parameters-2" class="command-parameters" style="display:none">
@@ -69,7 +73,29 @@
         <br />
         <label for="altitude-script-field">Altitude:</label>
         <input type="text" id="altitude-script-field" />
-    </div>   
+    </div>
+    <div id="command-parameters-6" class="command-parameters" style="display:none">
+        <input type="radio" id="image-capture-type-picture" name="image-capture-type" value="1" />
+        <label for="image-capture-type-picture">Picture</label>
+        <br />
+        <input type="radio" id="image-capture-type-video" name="image-capture-type" value="2" />
+        <label for="image-capture-type-picture">Video</label>
+        <br />
+        <label for="image-capture-duration">Duration:</label>
+        <input type="time" id="image-capture-duration" />
+        <br />
+        <label for="image-capture-frame-rate">Frame Rate:</label>
+        <select id="image-capture-frame-rate" >
+            <option value="5">5 FPS</option>
+            <option value="10">10 FPS</option>
+        </select>
+        <br />
+        <label for="image-capture-resolution">Resolution:</label>
+        <select id="image-capture-resolution" >
+            <option value="480">640 x 480</option>
+            <option value="600">800 x 600</option>
+        </select>
+    </div>  
     <br />
     <textarea id="script-contents" style="width:400px;height:200px">GTL (41.23452, -80.78346, 305.126)
 SC
