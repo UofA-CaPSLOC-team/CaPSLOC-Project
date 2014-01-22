@@ -58,6 +58,10 @@
         <option value="4">Pause</option>
         <option value="5">Resume</option>
         <option value="6">Image Capture</option>
+        <option value="7">Rotate</option>
+        <option value="8">Wait</option>
+        <option value="9">Execute Script</option>
+        <option value="10">Configure Defaults</option>
     </select>
     <br />
     <div id="command-parameters-2" class="command-parameters" style="display:none">
@@ -95,7 +99,58 @@
             <option value="480">640 x 480</option>
             <option value="600">800 x 600</option>
         </select>
-    </div>  
+    </div> 
+    <div id="command-parameters-7" class="command-parameters" style="display:none">
+        <label for="rotate-direction">Direction:</label>
+        <select id="rotate-direction" >
+            <option value="1">Left</option>
+            <option value="2">Right</option>
+            <option value="3">Up</option>
+            <option value="4">Down</option>
+        </select>
+        <br />
+        <label for="rotate-degrees">Change in degrees:</label>
+        <input type="number" id="rotate-degrees" />
+    </div>
+    <div id="command-parameters-8" class="command-parameters" style="display:none">
+        <label for="wait-duration">Duration:</label>
+        <input type="time" id="wait-duration" />
+    </div>
+    <div id="command-parameters-9" class="command-parameters" style="display:none">
+        <label for="execute-name">Script Name:</label>
+        <input type="text" id="execute-name" />
+    </div>
+    <div id="command-parameters-10" class="command-parameters" style="display:none">
+        <label for="default-rotate-degrees">Change in degrees:</label>
+        <input type="number" id="default-rotate-degrees" />
+        <br />
+        <label for="default-image-capture-duration">Video Duration:</label>
+        <input type="time" id="default-image-capture-duration" />
+        <br />
+        <label for="default-image-capture-frame-rate">Frame Rate:</label>
+        <select id="default-image-capture-frame-rate" >
+            <option value="5">5 FPS</option>
+            <option value="10">10 FPS</option>
+        </select>
+        <br />
+        <label for="default-image-capture-resolution">Resolution:</label>
+        <select id="default-image-capture-resolution" >
+            <option value="480">640 x 480</option>
+            <option value="600">800 x 600</option>
+        </select>
+        <br />
+        <label for="default-wait-duration">Wait Duration:</label>
+        <input type="time" id="default-wait-duration" />
+        <br />
+        <label for="latitude-offset">Latitude:</label>
+        <input type="text" id="latitude-offset" />
+        <br />
+        <label for="longitude-offset">Longitude:</label>
+        <input type="text" id="longitude-offset" />
+        <br />
+        <label for="altitude-offset">Altitude:</label>
+        <input type="text" id="altitude-offset" />
+    </div> 
     <br />
     <textarea id="script-contents" style="width:400px;height:200px">GTL (41.23452, -80.78346, 305.126)
 SC
