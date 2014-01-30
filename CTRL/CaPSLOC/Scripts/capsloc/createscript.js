@@ -29,6 +29,21 @@ $(document).ready(function () {
         singleSelect: true
     });
 
+    $('#save-script-dialog').dialog({
+        autoOpen: false,
+        height: 500,
+        width: 350,
+        title: 'Save Script',
+        // modal: true,
+        buttons: {
+            Save: saveScript,
+            Cancel: function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+
     $('#add-script-element').button().click(function () {
         var data = readScriptInput($('#command-list').val());
 
@@ -38,20 +53,36 @@ $(document).ready(function () {
     });
 
     $('#save-script').button().click(function () {
-        $.ajax({
-            url: '/CaPSLOC/Map/Garbage',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(_scriptContext),
-            success: function (result) {
-                
-            },
-            error: function () {
-
-            }
-        });
+        $('#save-script-dialog').dialog('open');
     });
 });
+
+function saveScript() {
+
+    var params = {
+        Name: $('#save-script-name').val(),
+        Description: $('#save-script-description').val(),
+        Commands: _scriptContext
+    };
+
+    $.ajax({
+        url: '/CaPSLOC/Script/Save',
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(params),
+        contentType: 'application/json',
+        success: function (result) {
+            if (result.success) {
+                alert('Script save successfully');
+            } else {
+                alert('An error occurred while saving the script: ' + result.data);
+            }
+        },
+        error: function () {
+            alert('An error occurred while saving the script');
+        }
+    });
+}
 
 function loadLocations() {
     $('#goto-location-list').empty();  // Remove existing locations
@@ -97,6 +128,7 @@ function deleteScriptElement() {
     if (commandId.indexOf('-') != -1) {
         commandId = commandId.substr(0, commandId.indexOf('-'))
     }
+    // remove command and associated parameters
     _scriptContext = $.grep(_scriptContext, function (element, index) {
         return element.CommandId != commandId
         });
@@ -178,7 +210,7 @@ function readScriptInput(cmdType) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-3',
                     Name: 'Frame Rate',
-                    Value: $('image-capture-frame-rate').val()
+                    Value: $('#image-capture-frame-rate').val()
                 });
             }
             if ($('#image-capture-resolution').val()) {

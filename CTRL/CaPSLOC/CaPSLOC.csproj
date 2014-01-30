@@ -163,6 +163,7 @@
     <Compile Include="Location.cs">
       <DependentUpon>CapslocModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ScriptModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script.cs">
       <DependentUpon>CapslocModel.tt</DependentUpon>
@@ -279,7 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
