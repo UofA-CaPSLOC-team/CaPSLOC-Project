@@ -14,6 +14,11 @@ namespace CaPSLOC.Models
         public string CommandName { get; set; }
         public int CommandType { get; set; }
         public List<ScriptParamModel> Params { get; set; }
+
+        public ScriptCommandModel()
+        {
+            Params = new List<ScriptParamModel>();
+        }
     }
 
     public class ScriptParamModel

@@ -94,11 +94,11 @@
                         <input type="text" id="altitude-script-field" />
                     </div>
                     <div id="command-parameters-6" class="command-parameters" style="display:none">
-                        <input type="radio" id="image-capture-type-picture" name="image-capture-type" value="1" />
+                        <input type="radio" id="image-capture-type-picture" name="image-capture-type" value="pic" />
                         <label for="image-capture-type-picture">Picture</label>
                         <br />
-                        <input type="radio" id="image-capture-type-video" name="image-capture-type" value="2" />
-                        <label for="image-capture-type-picture">Video</label>
+                        <input type="radio" id="image-capture-type-video" name="image-capture-type" value="vid" />
+                        <label for="image-capture-type-video">Video</label>
                         <br />
                         <label for="image-capture-duration">Duration:</label>
                         <input type="time" id="image-capture-duration" />
@@ -120,10 +120,10 @@
                     <div id="command-parameters-7" class="command-parameters" style="display:none">
                         <label for="rotate-direction">Direction:</label>
                         <select id="rotate-direction" >
-                            <option value="1">Left</option>
-                            <option value="2">Right</option>
-                            <option value="3">Up</option>
-                            <option value="4">Down</option>
+                            <option value="left">Left</option>
+                            <option value="right">Right</option>
+                            <option value="up">Up</option>
+                            <option value="down">Down</option>
                         </select>
                         <br />
                         <label for="rotate-degrees">Change in degrees:</label>
@@ -188,12 +188,115 @@
         <option>ALT 1 (192.168.1.3)</option>
     </select>
     <br />
-    <select id="interactive-command-list">
-        <option>Rotate Yaw Left</option>
-    </select>
-    <br />
-    <button>Send Command</button>
-  </div>
+    <div>
+        <select id="interactive-command-list">
+            <option value="0">Select a Command</option>
+            <option value="1">Go To Location - Manual</option>
+            <option value="2">Go To Location - Predefined</option>
+            <option value="3">Halt</option>
+            <option value="4">Pause</option>
+            <option value="5">Resume</option>
+            <option value="6">Image Capture</option>
+            <option value="7">Rotate</option>
+            <option value="8">Wait</option>
+            <option value="9">Execute Script</option>
+            <option value="10">Configure Defaults</option>
+        </select>
+        <br />
+        <div id="interactive-command-parameters-2" class="command-parameters" style="display:none">
+            <label for="interactive-goto-location-list">Location:</label>
+            <select id="interactive-goto-location-list"></select>
+        </div>
+        <div id="interactive-command-parameters-1" class="command-parameters" style="display:none">
+            <label for="latitude-script-field">Latitude:</label>
+            <input type="text" id="interactive-latitude-script-field" />
+            <br />
+            <label for="longitude-script-field">Longitude:</label>
+            <input type="text" id="interactive-longitude-script-field" />
+            <br />
+            <label for="altitude-script-field">Altitude:</label>
+            <input type="text" id="interactive-altitude-script-field" />
+        </div>
+        <div id="interactive-command-parameters-6" class="command-parameters" style="display:none">
+            <input type="radio" id="interactive-image-capture-type-picture" name="interactive-image-capture-type" value="pic" />
+            <label for="interactive-image-capture-type-picture">Picture</label>
+            <br />
+            <input type="radio" id="interactive-image-capture-type-video" name="interactive-image-capture-type" value="vid" />
+            <label for="interactive-image-capture-type-video">Video</label>
+            <br />
+            <label for="interactive-image-capture-duration">Duration:</label>
+            <input type="time" id="interactive-image-capture-duration" />
+            <br />
+            <label for="interactive-image-capture-frame-rate">Frame Rate:</label>
+            <select id="interactive-image-capture-frame-rate" >
+                <option value="0">--</option>
+                <option value="5">5 FPS</option>
+                <option value="10">10 FPS</option>
+            </select>
+            <br />
+            <label for="interactive-image-capture-resolution">Resolution:</label>
+            <select id="interactive-image-capture-resolution" >
+                <option value="0">--</option>
+                <option value="480">640 x 480</option>
+                <option value="600">800 x 600</option>
+            </select>
+        </div> 
+        <div id="interactive-command-parameters-7" class="command-parameters" style="display:none">
+            <label for="interactive-rotate-direction">Direction:</label>
+            <select id="interactive-rotate-direction" >
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="up">Up</option>
+                <option value="down">Down</option>
+            </select>
+            <br />
+            <label for="rotate-degrees">Change in degrees:</label>
+            <input type="number" id="interactive-rotate-degrees" />
+        </div>
+        <div id="interactive-command-parameters-8" class="command-parameters" style="display:none">
+            <label for="interactive-wait-duration">Duration:</label>
+            <input type="time" id="interactive-wait-duration" />
+        </div>
+        <div id="interactive-command-parameters-9" class="command-parameters" style="display:none">
+            <label for="interactive-execute-name">Script Name:</label>
+            <input type="text" id="interactive-execute-name" />
+        </div>
+        <div id="interactive-command-parameters-10" class="command-parameters" style="display:none">
+            <label for="interactive-default-rotate-degrees">Change in degrees:</label>
+            <input type="number" id="interactive-default-rotate-degrees" />
+            <br />
+            <label for="interactive-default-image-capture-duration">Video Duration:</label>
+            <input type="time" id="interactive-default-image-capture-duration" />
+            <br />
+            <label for="interactive-default-image-capture-frame-rate">Frame Rate:</label>
+            <select id="interactive-default-image-capture-frame-rate" >
+                <option value="0">--</option>
+                <option value="5">5 FPS</option>
+                <option value="10">10 FPS</option>
+            </select>
+            <br />
+            <label for="interactive-default-image-capture-resolution">Resolution:</label>
+            <select id="interactive-default-image-capture-resolution" >
+                <option value="0">--</option>
+                <option value="480">640 x 480</option>
+                <option value="600">800 x 600</option>
+            </select>
+            <br />
+            <label for="interactive-default-wait-duration">Wait Duration:</label>
+            <input type="time" id="interactive-default-wait-duration" />
+            <br />
+            <label for="interactive-latitude-offset">Latitude:</label>
+            <input type="text" id="interactive-latitude-offset" />
+            <br />
+            <label for="interactive-longitude-offset">Longitude:</label>
+            <input type="text" id="interactive-longitude-offset" />
+            <br />
+            <label for="interactive-altitude-offset">Altitude:</label>
+            <input type="text" id="interactive-altitude-offset" />
+        </div>
+        <button id="send-command">Send Command</button>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>

@@ -228,23 +228,23 @@
     <Content Include="DbModel.edmx.sql" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\bg.gif" />
-    <Content Include="Images\btn-sprite.gif" />
-    <Content Include="Images\ddn.png" />
-    <Content Include="Images\dn.png" />
-    <Content Include="Images\fhbg.gif" />
-    <Content Include="Images\first.gif" />
-    <Content Include="Images\hl.png" />
-    <Content Include="Images\last.gif" />
-    <Content Include="Images\line.gif" />
-    <Content Include="Images\load.gif" />
-    <Content Include="Images\load.png" />
-    <Content Include="Images\magnifier.png" />
-    <Content Include="Images\next.gif" />
-    <Content Include="Images\prev.gif" />
-    <Content Include="Images\up.png" />
-    <Content Include="Images\uup.png" />
-    <Content Include="Images\wbg.gif" />
+    <Content Include="Content\images\bg.gif" />
+    <Content Include="Content\images\btn-sprite.gif" />
+    <Content Include="Content\images\ddn.png" />
+    <Content Include="Content\images\dn.png" />
+    <Content Include="Content\images\fhbg.gif" />
+    <Content Include="Content\images\first.gif" />
+    <Content Include="Content\images\hl.png" />
+    <Content Include="Content\images\last.gif" />
+    <Content Include="Content\images\line.gif" />
+    <Content Include="Content\images\load.gif" />
+    <Content Include="Content\images\load.png" />
+    <Content Include="Content\images\magnifier.png" />
+    <Content Include="Content\images\next.gif" />
+    <Content Include="Content\images\prev.gif" />
+    <Content Include="Content\images\up.png" />
+    <Content Include="Content\images\uup.png" />
+    <Content Include="Content\images\wbg.gif" />
     <Content Include="Scripts\capsloc\createscript.js" />
     <Content Include="Scripts\capsloc\map.js" />
     <Content Include="Scripts\flexigrid.js" />
@@ -280,6 +280,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

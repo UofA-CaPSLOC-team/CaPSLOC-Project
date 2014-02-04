@@ -45,7 +45,7 @@ $(document).ready(function () {
 
 
     $('#add-script-element').button().click(function () {
-        var data = readScriptInput($('#command-list').val());
+        var data = readScriptInput($('#command-list').val(), $('#create-script'));
 
         _scriptContext.push(data);
 
@@ -73,7 +73,7 @@ function saveScript() {
         contentType: 'application/json',
         success: function (result) {
             if (result.success) {
-                alert('Script save successfully');
+                alert('Script saved successfully');
             } else {
                 alert('An error occurred while saving the script: ' + result.data);
             }
@@ -136,7 +136,7 @@ function deleteScriptElement() {
     reloadScriptGrid();
 }
 
-function readScriptInput(cmdType) {
+function readScriptInput(cmdType, tab) {
     var serializedInput = { CommandType: cmdType, Params: [] };
     serializedInput.CommandId = Math.floor(Math.random() * 0xFFFFFFFF).toString(16);
 
@@ -146,17 +146,17 @@ function readScriptInput(cmdType) {
             serializedInput.Params.push({
                 Id: serializedInput.CommandId + '-1',
                 Name: 'Latitude',
-                Value: $('#latitude-script-field').val()
+                Value: $('[id$=latitude-script-field]', tab).val()
             });
             serializedInput.Params.push({
                 Id: serializedInput.CommandId + '-2',
                 Name: 'Longitude',
-                Value: $('#longitude-script-field').val()
+                Value: $('[id$=longitude-script-field]', tab).val()
             });
             serializedInput.Params.push({
                 Id: serializedInput.CommandId + '-3',
                 Name: 'Altitude',
-                Value: $('#altitude-script-field').val()
+                Value: $('[id$=altitude-script-field]', tab).val()
             });
             break;
         case 2:
@@ -197,27 +197,27 @@ function readScriptInput(cmdType) {
             serializedInput.Params.push({
                 Id: serializedInput.CommandId + '-1',
                 Name: 'Image Type',
-                Value: $('input[name=image-capture-type]:checked').val()
+                Value: $('input[name$=image-capture-type]:checked', tab).val()
             });
-            if ($('#image-capture-duration').val() && $('input[name=image-capture-type]:checked').val() == 2) {
+            if ($('[id$=image-capture-duration]', tab).val() && $('input[name$=image-capture-type]:checked', tab).val() == "vid") {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-2',
                     Name: 'Duration',
-                    Value: $('#image-capture-duration').val()
+                    Value: $('[id$=image-capture-duration]', tab).val()
                 });
             }
-            if ($('#image-capture-frame-rate').val() && $('input[name=image-capture-type]:checked').val() == 2) {
+            if ($('[id$=image-capture-frame-rate]', tab).val() && $('input[name$=image-capture-type]:checked', tab).val() == "vid") {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-3',
                     Name: 'Frame Rate',
-                    Value: $('#image-capture-frame-rate').val()
+                    Value: $('[id$=image-capture-frame-rate]', tab).val()
                 });
             }
-            if ($('#image-capture-resolution').val()) {
+            if ($('[id$=image-capture-resolution]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-4',
                     Name: 'Resolution',
-                    Value: $('#image-capture-resolution').val()
+                    Value: $('[id$=image-capture-resolution]', tab).val()
                 });
             }
             break;
@@ -226,23 +226,23 @@ function readScriptInput(cmdType) {
             serializedInput.Params.push({
                 Id: serializedInput.CommandId + '-1',
                 Name: 'Direction',
-                Value: $('#rotate-direction').val()
+                Value: $('[id$=rotate-direction]', tab).val()
             });
-            if ($('#rotate-degrees').val()) {
+            if ($('[id$=rotate-degrees]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-2',
                     Name: 'Degrees',
-                    Value: $('#rotate-degrees').val()
+                    Value: $('[id$=rotate-degrees]', tab).val()
                 });
             }
             break;
         case 8:
             serializedInput.CommandName = 'Wait';
-            if ($('#wait-duration').val()) {
+            if ($('[id$=wait-duration]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-1',
                     Name: 'Duration',
-                    Value: $('#wait-duration').val()
+                    Value: $('[id$=wait-duration]', tab).val()
                 });
             }
             break;
@@ -251,65 +251,65 @@ function readScriptInput(cmdType) {
             serializedInput.Params.push({
                 Id: serializedInput.CommandId + '-1',
                 Name: 'Script Name',
-                Value: $('#execute-name').val()
+                Value: $('[id$=execute-name]', tab).val()
             });
             break;
         case 10:
             serializedInput.CommandName = 'Set Defaults';
-            if ($('#default-rotate-degrees').val()) {
+            if ($('[id$=default-rotate-degrees]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-1',
                     Name: 'Degrees',
-                    Value: $('#default-rotate-degrees').val()
+                    Value: $('[id$=default-rotate-degrees]', tab).val()
                 });
             }
-            if ($('#default-image-capture-duration').val()) {
+            if ($('[id$=default-image-capture-duration]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-2',
                     Name: 'Video Duration',
-                    Value: $('#default-image-capture-duration').val()
+                    Value: $('[id$=default-image-capture-duration]', tab).val()
                 });
             }
-            if ($('#default-image-capture-frame-rate').val()) {
+            if ($('[id$=default-image-capture-frame-rate]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-3',
                     Name: 'Video Frame Rate',
-                    Value: $('default-image-capture-frame-rate').val()
+                    Value: $('[id$=default-image-capture-frame-rate]', tab).val()
                 });
             }
-            if ($('#default-image-capture-resolution').val()) {
+            if ($('[id$=default-image-capture-resolution]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-4',
                     Name: 'Image Resolution',
-                    Value: $('#default-image-capture-resolution').val()
+                    Value: $('[id$=default-image-capture-resolution]', tab).val()
                 });
             }
-            if ($('#default-wait-duration').val()) {
+            if ($('[id$=default-wait-duration]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-5',
                     Name: 'Wait Duration',
-                    Value: $('#default-wait-duration').val()
+                    Value: $('[id$=default-wait-duration]').val()
                 });
             }
-            if ($('#latitude-offset').val()) {
+            if ($('[id$=latitude-offset]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-6',
                     Name: 'Latitude Offset',
-                    Value: $('#latitude-offset').val()
+                    Value: $('[id$=latitude-offset]', tab).val()
                 });
             }
-            if ($('#longitude-offset').val()) {
+            if ($('[id$=longitude-offset]', tab).val()) {
                 serializedInput.Params.push({
                     Id: serializedInput.CommandId + '-7',
                     Name: 'Longitude Offset',
-                    Value: $('#longitude-offset').val()
+                    Value: $('[id$=longitude-offset]', tab).val()
                 });
             }
-            if ($('#altitude-offset').val()) {
+            if ($('[id$=altitude-offset]', tab).val()) {
                 serializedInput.Params.push({
                     id: serializedInput.CommandId + '-8',
                     Name: 'Altitude Offset',
-                    Value: $('#altitude-offset').val()
+                    Value: $('[id$=altitude-offset]', tab).val()
                 });
             }
             break;
@@ -320,7 +320,7 @@ function readScriptInput(cmdType) {
     return serializedInput;
 }
 
-function writeScriptInput(serializedInput) {
+function writeScriptInput(serializedInput, tab) {
 
     var cmdType = serializedInput.commandType;
 
@@ -329,11 +329,11 @@ function writeScriptInput(serializedInput) {
             $.each(serializedInput.Params, function (index, element) {
                 var paramType = element.Id.substr(element.Id.indexOf('-') + 1);
                 if (paramType == '1') {
-                    $('#latitude-script-field').val(element.Value);
+                    $('[id$=latitude-script-field]', tab).val(element.Value);
                 } else if (paramType == '2') {
-                    $('#longitude-script-field').val(element.Value);
+                    $('[id$=longitude-script-field]', tab).val(element.Value);
                 } else if (paramType == '3') {
-                    $('#altitude-script-field').val(element.Value);
+                    $('[id$=altitude-script-field]', tab).val(element.Value);
                 }
             });
             break;
@@ -368,13 +368,13 @@ function writeScriptInput(serializedInput) {
             $.each(serializedInput.Params, function (index, element) {
                 var paramType = element.Id.substr(element.Id.indexOf('-') + 1);
                 if (paramType == '1') {
-                    $('input[name=image-capture-type]:checked').val(element.Value);
+                    $('input[name$=image-capture-type]:checked', tab).val(element.Value);
                 } else if (paramType == '2') {
-                    $('#image-capture-duration').val(element.Value);
+                    $('[id$=image-capture-duration]', tab).val(element.Value);
                 } else if (paramType == '3') {
-                    $('image-capture-frame-rate').val(element.Value);
+                    $('[id$=image-capture-frame-rate]', tab).val(element.Value);
                 } else if (paramType == '4') {
-                    $('#image-capture-resolution').val(element.Value);
+                    $('[id$=image-capture-resolution]', tab).val(element.Value);
                 }
             });
             break;
@@ -382,9 +382,9 @@ function writeScriptInput(serializedInput) {
             $.each(serializedInput.Params, function (index, element) {
                 var paramType = element.Id.substr(element.Id.indexOf('-') + 1);
                 if (paramType == '1') {
-                    $('#rotate-direction').val(element.Value);
+                    $('[id$=rotate-direction]', tab).val(element.Value);
                 } else if (paramType == '2') {
-                    $('#rotate-degrees').val(element.Value);
+                    $('[id$=rotate-degrees]', tab).val(element.Value);
                 }
             });
             break;
@@ -392,7 +392,7 @@ function writeScriptInput(serializedInput) {
             $.each(serializedInput.Params, function (index, element) {
                 var paramType = element.Id.substr(element.Id.indexOf('-') + 1);
                 if (paramType == '1') {
-                    $('#wait-duration').val(element.Value);
+                    $('[id$=wait-duration]', tab).val(element.Value);
                 }
             });
             break;
@@ -400,7 +400,7 @@ function writeScriptInput(serializedInput) {
             $.each(serializedInput.Params, function (index, element) {
                 var paramType = element.Id.substr(element.Id.indexOf('-') + 1);
                 if (paramType == '1') {
-                    $('#execute-name').val(element.Value);
+                    $('[id$=execute-name]', tab).val(element.Value);
                 }
             });
             break;
@@ -408,21 +408,21 @@ function writeScriptInput(serializedInput) {
             $.each(serializedInput.Params, function (index, element) {
                 var paramType = element.Id.substr(element.Id.indexOf('-') + 1);
                 if (paramType == '1') {
-                    $('#default-rotate-degrees').val(element.Value);
+                    $('[id$=default-rotate-degrees]', tab).val(element.Value);
                 } else if (paramType == '2') {
-                    $('#default-image-capture-duration').val(element.Value);
+                    $('[id$=default-image-capture-duration]', tab).val(element.Value);
                 } else if (paramType == '3') {
-                    $('default-image-capture-frame-rate').val(element.Value);
+                    $('[id$=default-image-capture-frame-rate]', tab).val(element.Value);
                 } else if (paramType == '4') {
-                    $('#default-image-capture-resolution').val(element.Value);
+                    $('[id$=default-image-capture-resolution]', tab).val(element.Value);
                 } else if (paramType == '5') {
-                    $('#default-wait-duration').val(element.Value);
+                    $('[id$=default-wait-duration]', tab).val(element.Value);
                 } else if (paramType == '6') {
-                    $('#latitude-offset').val(element.Value);
+                    $('[id$=latitude-offset]', tab).val(element.Value);
                 } else if (paramType == '7') {
-                    $('#longitude-offset').val(element.Value);
+                    $('[id$=longitude-offset]', tab).val(element.Value);
                 } else if (paramType == '8') {
-                    $('#altitude-offset').val(element.Value);
+                    $('[id$=altitude-offset]', tab).val(element.Value);
                 }
             });
             break;
