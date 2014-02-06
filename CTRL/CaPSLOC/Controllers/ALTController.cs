@@ -8,21 +8,77 @@ using CaPSLOC.Models;
 using CaPSLOC.Services;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace CaPSLOC.Controllers
 {
     public class ALTController : Controller
     {
-        //[HttpGet] // From browser
-        //public void PingSweep(IPAddress start, IPAddress mask)
-        //{
-        //    // Clear list of active ALTs
+        [HttpPost] // From browser
+        public ActionResult PingSweep(string startIP, string endIP)
+        {
+            using (DbModelContainer models = new DbModelContainer())
+            {
+                // Clear list of active ALTs
+                foreach (ALT a in models.ALTs)
+                {
+                    a.RecentlyLocated = false;
+                }
 
-        //    foreach( IP in range )
-        //    {
-        //        // Send 'ping' on ALT communication TCP port
-        //    }
-        //}
+                UInt32 startIpInt = ParseIP(startIP);
+                UInt32 endIpInt = ParseIP(endIP);
+
+                for (uint ip = startIpInt; ip <= endIpInt; ip++)
+                {
+                    string ipString = IPtoString(ip);
+                    // Send 'ping' on ALT communication TCP port
+
+                    WebRequest altPing = WebRequest.CreateDefault(new Uri(String.Format("http://{0}/CaPSLOC/Status", ipString)));
+                    try
+                    {
+                        WebResponse pingResp = altPing.GetResponse();
+                        Stream nameStream = pingResp.GetResponseStream();
+                        byte[] nameBytes = new byte[nameStream.Length];
+                        nameStream.Read(nameBytes, 0, (int)nameStream.Length);
+                        string nameString = Encoding.UTF8.GetString(nameBytes);
+
+                        models.ALTs.Add(new ALT()
+                        {
+                            Name = nameString,
+                            Address = ipString,
+                            RecentlyLocated = true
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Some form of tracking timeouts, etc.
+                        System.Diagnostics.Debug.WriteLine(String.Format("Error when sending to IP address {0}:\n {1}", ipString, ex.Message));
+                    }
+                }
+
+                models.SaveChanges();
+            }
+
+            return Json(new { success = false, data = "An unknown error has occurred" }, JsonRequestBehavior.DenyGet);
+        }
+
+        private UInt32 ParseIP(string ipAddr)
+        {
+            string[] ipParts = ipAddr.Split(new char[] { '.' });
+            UInt32 ipInt = 0;
+            foreach (string part in ipParts)
+            {
+                uint intPart = UInt32.Parse(part);
+                ipInt = ipInt << 8;
+                ipInt = ipInt | intPart;
+            }
+            return ipInt;
+        }
+
+        private string IPtoString(UInt32 ipAddr)
+        {
+            return string.Format("{0}.{1}.{2}.{3}", (ipAddr & 0xFF000000) >> 24, (ipAddr & 0xFF0000) >> 16, (ipAddr & 0xFF00) >> 8, ipAddr & 0xFF);
+        }
 
         //[HttpPost] // From ALT
         //public void PingReply(int AltId)

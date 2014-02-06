@@ -247,6 +247,7 @@
     <Content Include="Content\images\up.png" />
     <Content Include="Content\images\uup.png" />
     <Content Include="Content\images\wbg.gif" />
+    <Content Include="Scripts\capsloc\alt.js" />
     <Content Include="Scripts\capsloc\createscript.js" />
     <Content Include="Scripts\capsloc\interactive.js" />
     <Content Include="Scripts\capsloc\map.js" />
