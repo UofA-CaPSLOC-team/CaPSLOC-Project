@@ -134,6 +134,24 @@ namespace CaPSLOC.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ListALTs()
+        {
+            try
+            {
+                using (DbModelContainer models = new DbModelContainer())
+                {
+                    IQueryable<ALT> alts = models.ALTs.Where(a => a.RecentlyLocated);
+
+                    return Json(new { success = true, data = alts.ToList() }, JsonRequestBehavior.DenyGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         ////POST - from ALT
         //public AltStatus ReceiveStatus(int AltId, string status)
         //{

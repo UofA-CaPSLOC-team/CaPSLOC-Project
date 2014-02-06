@@ -11,10 +11,7 @@ $(document).ready(function () {
         $.ajax({
             url: '/CaPSLOC/ALT/PingSweep',
             type: 'POST',
-            data: ips,
-            //dataType: 'json',
-            //data: JSON.stringify(params),
-            //contentType: 'application/json',
+            data: ips,  // No JSON
             success: function (result) {
                 if (result.success) {
                     alert('Ping sweep successful');
