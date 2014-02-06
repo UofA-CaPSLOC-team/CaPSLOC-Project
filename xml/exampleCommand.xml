@@ -12,11 +12,9 @@
 		<imagemode>[pic|vid]</imagemode>
 		<quality><!--preset resolutions--></quality>
 		<waittime>hh:mm:ss:msms</waittime>
-		<locoffset>
-			<longitude>##.###</longitude>
-			<latitude>##.###</latitude>
-			<altitude>##.###<!--meters--></altitude>
-		</locoffset>
+		<longoffset>##.###</longoffset>
+		<latoffset>##.###</latoffset>
+		<altoffset>##.###<!--meters--></altoffset>
 		<!--/optional-->
 	</config>
 	<!--/Configuration command-->	
@@ -29,7 +27,9 @@
 		<longitude>134.21585083007812</longitude>
 		<latitude>-23.51732991248629</latitude>
 		<altitude>727.0023803710938</altitude>
+		<!--optional-->
 		<name>Mid-Australia</name>
+		<!--/optional-->
 	</goto>
 	<!--/GOTO command-->
 
