@@ -14,19 +14,21 @@
 
 typedef enum CommandType{
 	COMMAND,
-	SCRIPT,
+	SCFILE,
 
 	CONFIG,
-	GOTO,
+	GOTO, //Call to MCPM
 	HALT,
 	PAUSE,
 	RESUME,
-	CAPTURE,
-	RMOTION,
+	CAPTURE,//Call to MCPM
+	RMOTION,//Call to MCPM
 	WAIT,
 	EXEC,
 
-	LOCOFFSET,
+	LATOFFSET,
+	LONGOFFSET,
+	ALTOFFSET,
 	LONGITUDE,
 	LATITUDE,
 	ALTITUDE,
@@ -41,7 +43,6 @@ typedef enum CommandType{
 	TIME,
 	VIDTIME,
 	IMAGEMODE,
-	QUALITY,
 	WAITTIME,
 	NOTYPE,
 	ERROR
@@ -49,7 +50,7 @@ typedef enum CommandType{
 }CommandType;
 
 typedef enum Priority{
-	SCRIPT,
+	SCRIPTFILE,
 	STD_MANUAL,
 	ADMIN_MANUAL,
 	EMERGENCY
@@ -61,18 +62,37 @@ typedef enum Source{
 	USER_ADMIN
 }Source;
 
+typedef enum CaptureMode{
+	PIC,
+	VID
+}CaptureMode;
+
+typedef enum RelativeDirection{
+	RIGHT,
+	LEFT,
+	UP,
+	DOWN
+}RelativeDirection;
+
 class CommandID {
 public:
 	CommandID(std::string type, std::string attribute, Source src, std::string value, CommandType parentType);
 	virtual ~CommandID();
-	void addData(CommandID *);
+
+	/**
+	 * addData allows sub-elements of scripts to be added to this CommandID's vector.
+	 *
+	 * @param newData: pointer to new CommandID element.
+	 */
+	void addData(CommandID * newData);
 
 	//GETTER METHODS
 	CommandType getType(){return m_tType;}
 	Priority getPriority(){return m_tPriority;}
 	std::string getAttributes(){return m_strAttribute;}
-	std::vector<CommandID> getSubElements(){return m_vCmdData;}
+	std::vector<CommandID> * getSubElements(){return m_vCmdData;}
 	std::string getValue(){return m_strValue;}
+	bool hasSubElements(){return hasSubElems;}
 
 private:
 	CommandType m_tType;
@@ -81,7 +101,8 @@ private:
 	Priority m_tPriority;
 	std::string m_strAttribute;
 	std::string m_strValue;
-	std::vector<CommandID> m_vCmdData;
+	std::vector<CommandID> * m_vCmdData;
+	bool hasSubElems;
 
 	/**
 	 *

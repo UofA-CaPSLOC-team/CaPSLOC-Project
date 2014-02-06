@@ -8,90 +8,100 @@
 #include "CommandID.h"
 
 
-CommandID::CommandID(std::string type, std::string attribute = "", Source src, std::string value = "", CommandType parentType = CommandType::NOTYPE) {
+CommandID::CommandID(std::string type, std::string attribute = "", Source src = SCRIPT_FILE, std::string value = "", CommandType parentType = NOTYPE) {
 	m_tParentType = parentType;
 	defineType(type);
 	m_strAttribute = attribute;
 	m_strValue = value;
 	m_tParentType = parentType;
 	m_tSource = src;
+	hasSubElems = false;
 }
 
 CommandID::~CommandID() {
 	// TODO Auto-generated destructor stub
 }
 
+void CommandID::addData(CommandID * newData){
+	const CommandID * nd = newData;
+	m_vCmdData->push_back(*nd);
+	hasSubElems = true;
+}
+
 inline void CommandID::defineType(std::string strType){
 	if(!strType.compare("script")){
-		m_tType = CommandType::SCRIPT;
+		m_tType = SCFILE;
 	}else if(!strType.compare("command")){
-		m_tType = CommandType::COMMAND;
-	}else if(m_tParentType == CommandType::SCRIPT || m_tParentType == CommandType::COMMAND){
+		m_tType = COMMAND;
+	}else if((m_tParentType == SCFILE) || (m_tParentType == COMMAND)){
 		if(!strType.compare("config")){
-			m_tType = CommandType::CONFIG;
+			m_tType = CONFIG;
 		}else if(!strType.compare("goto")){
-			m_tType = CommandType = GOTO;
+			m_tType = GOTO;
 		}else if(!strType.compare("halt")){
-			m_tType = CommandType::HALT;
+			m_tType = HALT;
 			//TODO IMMEDIATELY HALT EVERYTHING!
 			//TODO Alert CTRL unit of imminent shutdown.
-			system("shutdown -h 5"); //Shutdown system in 5 seconds.
 		}else if(!strType.compare("pause")){
-			m_tType = CommandType::PAUSE;
+			m_tType = PAUSE;
 		}else if(!strType.compare("resume")){
-			m_tType = CommandType = RESUME;
+			m_tType = RESUME;
 		}else if(!strType.compare("capture")){
-			m_tType = CommandType = CAPTURE;
+			m_tType = CAPTURE;
 		}else if(!strType.compare("rmotion")){
-			m_tType = CommandType = RMOTION;
+			m_tType = RMOTION;
 		}else if(!strType.compare("wait")){
-			m_tType = CommandType::WAIT;
+			m_tType = WAIT;
 		}else if(!strType.compare("exec")){
-			m_tType = CommandType::EXEC;
+			m_tType = EXEC;
 		}else {
-			m_tType = CommandType::ERROR;
+			m_tType = ERROR;
 		}
-	}else if(m_tParentType == CommandType::CONFIG){
+	}else if(m_tParentType == CONFIG){
 		if(!strType.compare("rmotionangle")){
-			m_tType = CommandType::RMOTIONANGLE;
+			m_tType = RMOTIONANGLE;
 		}else if(!strType.compare("vidtime")){
-			m_tType = CommandType::VIDTIME;
+			m_tType = VIDTIME;
 		}else if(!strType.compare("framerate")){
-			m_tType = CommandType::FRAMERATE;
+			m_tType = FRAMERATE;
 		}else if(!strType.compare("imagemode")){
-			m_tType = CommandType::IMAGEMODE;
+			m_tType = IMAGEMODE;
 		}else if(!strType.compare("quality")){
-			m_tType = CommandType::QUALITY;
+			m_tType = QUALITY;
 		}else if(!strType.compare("waitime")){
-			m_tType = CommandType::WAITTIME;
-		}else if(!strType.compare("locoffset")){
-			m_tType = CommandType::LOCOFFSET;
+			m_tType = WAITTIME;
+		}else if(!strType.compare("longoffset")){
+			m_tType = LONGOFFSET;
+		}else if(!strType.compare("latoffset")){
+			m_tType = LATOFFSET;
+		}else if(!strType.compare("altoffset")){
+			m_tType = ALTOFFSET;
 		}else {
-			m_tType = CommandType::ERROR;
+			m_tType = ERROR;
 		}
-	}else if(m_tParentType == CommandType::LOCOFFSET || m_tParentType == CommandType::GOTO){
+	}else if(m_tParentType == GOTO){
 		if(!strType.compare("longitude")){
-			m_tType = CommandType::LONGITUDE;
+			m_tType = LONGITUDE;
 		}else if(!strType.compare("latitude")){
-			m_tType = CommandType::LATITUDE;
+			m_tType = LATITUDE;
 		}else if(!strType.compare("altitude")){
-			m_tType = CommandType::ALTITUDE;
+			m_tType = ALTITUDE;
 		}else {
-			m_tType = CommandType::ERROR;
+			m_tType = ERROR;
 		}
 	}else if(!strType.compare("name")){
-		if(m_tParentType == CommandType::EXEC || m_tParentType == CommandType::GOTO){
-			m_tType = CommandType::NAME;
+		if(m_tParentType == EXEC || m_tParentType == GOTO){
+			m_tType = NAME;
 		}else {
-			m_tType = CommandType::ERROR;
+			m_tType = ERROR;
 		}
 	}else if(!strType.compare("time")){
-		if(m_tParentType == CommandType::WAIT){
-			m_tType = CommandType::TIME;
+		if(m_tParentType == WAIT){
+			m_tType = TIME;
 		}else {
-			m_tType = CommandType::ERROR;
+			m_tType = ERROR;
 		}
 	}else {
-		m_tType = CommandType::ERROR;
+		m_tType = ERROR;
 	}
 }
