@@ -12,10 +12,12 @@ namespace CaPSLOC.Controllers
     public class BaseController : Controller
     {
         public Logger Logger { get; set; }
+        public DbModelContainer DbModel { get; set; }
 
         public BaseController()
             : base()
         {
+            DbModel = new DbModelContainer();
             Logger = LogManager.GetCurrentClassLogger();
             Logger.Debug("Controller initialization successful");
         }

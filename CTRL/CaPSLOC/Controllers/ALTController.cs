@@ -9,24 +9,48 @@ using CaPSLOC.Services;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace CaPSLOC.Controllers
 {
     public class ALTController : BaseController
     {
+        public class PingRequestState
+        {
+            public ManualResetEvent doneSignal;
+            public WebRequest request;
+            public Stream responseStream;
+            public string ipAddress;
+            public byte[] readBuffer;
+            public PingRequestState()
+            {
+                readBuffer = new byte[1024];
+            }
+        }
+
+        public List<string> PingReplies { get; set; }
+
+
         [HttpPost] // From browser
         public ActionResult PingSweep(string startIP, string endIP)
         {
-            using (DbModelContainer models = new DbModelContainer())
+            try
             {
+                // Initialize reply list
+                PingReplies = new List<string>();
+
+
                 // Clear list of active ALTs
-                foreach (ALT a in models.ALTs)
+                foreach (ALT a in DbModel.ALTs)
                 {
                     a.RecentlyLocated = false;
                 }
 
                 UInt32 startIpInt = ParseIP(startIP);
                 UInt32 endIpInt = ParseIP(endIP);
+
+                // List of wait handles associated with the ALT pings
+                List<ManualResetEvent> pingMREs = new List<ManualResetEvent>();
 
                 for (uint ip = startIpInt; ip <= endIpInt; ip++)
                 {
@@ -36,30 +60,90 @@ namespace CaPSLOC.Controllers
                     WebRequest altPing = WebRequest.CreateDefault(new Uri(String.Format("http://{0}/CaPSLOC/Status", ipString)));
                     try
                     {
-                        WebResponse pingResp = altPing.GetResponse();
-                        Stream nameStream = pingResp.GetResponseStream();
-                        byte[] nameBytes = new byte[nameStream.Length];
-                        nameStream.Read(nameBytes, 0, (int)nameStream.Length);
-                        string nameString = Encoding.UTF8.GetString(nameBytes);
+                        PingRequestState requestState = new PingRequestState();
+                        ManualResetEvent mre = new ManualResetEvent(false);
+                        requestState.doneSignal = mre;
+                        requestState.request = altPing;
+                        requestState.ipAddress = ipString;
+                        pingMREs.Add(mre);
 
-                        models.ALTs.Add(new ALT()
-                        {
-                            Name = nameString,
-                            Address = ipString,
-                            RecentlyLocated = true
-                        });
+                        Logger.Debug(String.Format("Beginning ping to ALT at IP address '{0}'", ipString));
+                        IAsyncResult pingResp = altPing.BeginGetResponse(new AsyncCallback(PingResponseCallback), requestState);
                     }
                     catch (Exception ex)
                     {
                         // Some form of tracking timeouts, etc.
-                        System.Diagnostics.Debug.WriteLine(String.Format("Error when sending to IP address {0}:\n {1}", ipString, ex.Message));
+                        Logger.Error(String.Format("Error when sending to IP address {0}:\n {1}", ipString, ex.Message));
                     }
                 }
 
-                models.SaveChanges();
-            }
+                WaitHandle.WaitAll(pingMREs.ToArray());
+                Logger.Debug("All pings have returned. Continuing...");
+                Logger.Debug(String.Format("{0} ALT units found", PingReplies.Count));
 
-            return Json(new { success = false, data = "An unknown error has occurred" }, JsonRequestBehavior.DenyGet);
+                DbModel.SaveChanges();
+
+                return Json(new { success = true, data = DbModel.ALTs.Where(a => a.RecentlyLocated) }, JsonRequestBehavior.DenyGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, data = "An error has occurred: " + ex.Message }, JsonRequestBehavior.DenyGet);
+            }
+        }
+
+        private void PingResponseCallback(IAsyncResult respResult)
+        {
+            PingRequestState requestState = respResult.AsyncState as PingRequestState;
+            try
+            {               
+                Logger.Debug(String.Format("Ping for IP address '{0}' returned", requestState.ipAddress));
+                WebRequest request = requestState.request;
+                WebResponse response = request.EndGetResponse(respResult);
+
+                Stream respStream = response.GetResponseStream();
+                requestState.responseStream = respStream;
+                IAsyncResult pingResp = respStream.BeginRead(requestState.readBuffer, 0, 1024, new AsyncCallback(PingResponseReadCallback), requestState);                
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(String.Format("Error occurred in ping response for '{0}': \n\t{1}", requestState.ipAddress, ex.Message));
+                requestState.doneSignal.Set(); // If there is an error, we need to signal this ping complete, so it will return
+            }
+        }
+
+        private void PingResponseReadCallback(IAsyncResult readResult)
+        {
+            PingRequestState requestState = readResult.AsyncState as PingRequestState;
+            try
+            {
+                int bytesRead = requestState.responseStream.EndRead(readResult);
+                // TODO - Change to format of ping reply
+                string nameString = Encoding.UTF8.GetString(requestState.readBuffer, 0, bytesRead);
+                Logger.Debug(String.Format("ALT at IP address '{0}' is named '{1}'", requestState.ipAddress, nameString));
+                PingReplies.Add(nameString);
+
+                ALT existingALT = DbModel.ALTs.SingleOrDefault(a => a.Name == nameString);  // Update existing entry if one exists
+                if (existingALT != null)
+                {
+                    existingALT.Name = nameString;
+                    existingALT.Address = requestState.ipAddress;
+                    existingALT.RecentlyLocated = true;
+                }
+                else
+                {
+                    DbModel.ALTs.Add(new ALT()
+                    {
+                        Name = nameString,
+                        Address = requestState.ipAddress,
+                        RecentlyLocated = true
+                    });
+                }
+                // Changes will be saved in the calling action method (to ensure everything completes successfully first)
+            }
+            finally
+            {
+                requestState.doneSignal.Set();
+            }
         }
 
         private UInt32 ParseIP(string ipAddr)
