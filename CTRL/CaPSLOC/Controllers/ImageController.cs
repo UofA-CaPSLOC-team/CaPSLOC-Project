@@ -9,7 +9,7 @@ using System.Web;
 
 namespace CaPSLOC.Controllers
 {
-    public class ImageController : Controller
+    public class ImageController : BaseController
     {
 
         //public JsonResult Save(HttpPostedFileBase file)

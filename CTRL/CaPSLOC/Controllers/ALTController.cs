@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CaPSLOC.Controllers
 {
-    public class ALTController : Controller
+    public class ALTController : BaseController
     {
         [HttpPost] // From browser
         public ActionResult PingSweep(string startIP, string endIP)

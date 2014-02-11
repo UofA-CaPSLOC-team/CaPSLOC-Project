@@ -12,7 +12,7 @@ using CaPSLOC.Services;
 
 namespace CaPSLOC.Controllers
 {
-    public class ScriptController : Controller
+    public class ScriptController : BaseController
     {
         //
         // GET: /Script/
