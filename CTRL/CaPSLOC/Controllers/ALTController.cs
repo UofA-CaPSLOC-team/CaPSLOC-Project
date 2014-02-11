@@ -87,7 +87,7 @@ namespace CaPSLOC.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, data = "An error has occurred: " + ex.Message }, JsonRequestBehavior.DenyGet);
+                return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.DenyGet);
             }
         }
 
