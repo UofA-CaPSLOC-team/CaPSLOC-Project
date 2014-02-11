@@ -12,11 +12,9 @@
 		<imagemode>[pic|vid]</imagemode>
 		<quality><!--preset resolutions--></quality>
 		<waittime>hh:mm:ss:msms</waittime>
-		<locoffset>
-			<longitude>##.###</longitude>
-			<latitude>##.###</latitude>
-			<altitude>##.###<!--meters--></altitude>
-		</locoffset>
+		<longoffset>##.###</longoffset>
+		<latoffset>##.###</latoffset>
+		<altoffset>##.###<!--meters--></altoffset>
 		<!--/optional-->
 	</config>
 	<!--/Configuration command-->	
