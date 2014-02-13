@@ -45,27 +45,31 @@ function readScriptInput(cmdType, tab) {
             break;
         case 2:
             serializedInput.CommandName = 'Go To Location';
-            alert("Not Implemented!");  // Need to read back that value from the server (or store when pulling back all locations)
-            /*serializedInput.params.push({
-            id: serializedInput.commandId + '-1',
-            name: 'Latitude',
-            value: $('#latitude-script-field').val()
+            //alert("Not Implemented!");  // Need to read back that value from the server (or store when pulling back all locations)
+            var locText = $('[id$=goto-location-list]', tab).text();
+            var locName = locText.substr(0, locText.indexOf('('));
+            var locArray = locText.substring(locText.indexOf('(') + 1, locText.indexOf(')')).split(',');
+
+            serializedInput.Params.push({
+                id: serializedInput.CommandId + '-1',
+                name: 'Latitude',
+                value: $.trim(locArray[0])
             });
-            serializedInput.params.push({
-            id: serializedInput.commandId + '-2',
-            name: 'Longitude',
-            value: $('#longitude-script-field').val()
+            serializedInput.Params.push({
+                id: serializedInput.CommandId + '-2',
+                name: 'Longitude',
+                value: $.trim(locArray[1])
             });
-            serializedInput.params.push({
-            id: serializedInput.commandId + '-3',
-            name: 'Altitude',
-            value: $('#altitude-script-field').val()
+            serializedInput.Params.push({
+                id: serializedInput.CommandId + '-3',
+                name: 'Altitude',
+                value: $.trim(locArray[2])
             });
-            serializedInput.params.push({
-            id: serializedInput.commandId + '-4',
-            name: 'Name',
-            value: $('#altitude-script-field').val()
-            });*/
+            serializedInput.Params.push({
+                id: serializedInput.CommandId + '-4',
+                name: 'Name',
+                value: $.trim(locName)
+            });
             break;
         case 3:
             serializedInput.CommandName = 'Halt';

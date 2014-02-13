@@ -1,4 +1,5 @@
 ﻿
+
 $(document).ready(function () {
 
     $('#interactive-command-list').change(function () {
@@ -97,7 +98,10 @@ function interactiveRefreshLocations(){
         success: function (result) {
             if (result.success) {
                 $.each(result.data, function (index, element) {
-                    $('<option/>').val(element.Id).text(element.Name).appendTo($locs);
+                    $('<option/>')
+                    .val(element.Id)
+                    .text(element.Name + ' (' + element.Latitude + ', ' + element.Longitude + ', ' + element.Altitude + ')')
+                    .appendTo($locs);
                 });
             } else {
                 alert('An error occurred while finding the ALTs: ' + result.data);
