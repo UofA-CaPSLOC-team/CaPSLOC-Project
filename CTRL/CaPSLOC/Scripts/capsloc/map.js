@@ -1,36 +1,6 @@
 ﻿
 $(document).ready(function () {
 
-    var tabs = $('#tabs');
-    tabs.tabs({
-        select: function (event, ui) {
-            switch ($(ui.panel).attr('id')) {
-                case 'interactive-mode':
-                    var $altList = $('#interactive-alt-list');
-                    $altList.empty();
-                    $.ajax({
-                        url: '/CaPSLOC/ALT/RecentlyLocated',
-                        type: 'GET',
-                        success: function (result) {
-                            if (result.success) {
-                                $.each(result.data, function (index, element) {
-                                    $('<option/>').val(element.Id).text(element.Name + ' (' + element.Address + ')').appendTo($altList);
-                                });
-                            } else {
-                                alert('An error occurred while finding the ALTs: ' + result.data);
-                            }
-                        },
-                        error: function () {
-                            alert('An error occurred while finding the ALTs');
-                        }
-                    });
-                    break;
-                default:
-                    break;
-            }
-        }
-    });
-
     google.maps.event.addDomListener(window, 'load', initialize);
     $('#location-submit').click(submitLocation);
     initialize();

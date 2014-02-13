@@ -1,4 +1,25 @@
 ﻿
+
+$(document).ready(function () {
+
+    var tabs = $('#tabs');
+    tabs.tabs({
+        select: function (event, ui) {
+            switch ($(ui.panel).attr('id')) {
+                case 'interactive-mode':
+                    interactiveRefreshLocations();
+                    interactiveRefreshALTs();
+                    break;
+                case 'create-script':
+                    scriptRefreshLocations();
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+});
+
 function readScriptInput(cmdType, tab) {
     var serializedInput = { CommandType: cmdType, Params: [] };
     serializedInput.CommandId = Math.floor(Math.random() * 0xFFFFFFFF).toString(16);

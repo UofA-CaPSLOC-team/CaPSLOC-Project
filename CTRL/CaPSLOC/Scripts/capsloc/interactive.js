@@ -11,6 +11,9 @@ $(document).ready(function () {
         }
     });
 
+    interactiveRefreshLocations();
+    interactiveRefreshALTs();
+
     $('#send-command').button().click(function () {
         if($('#interactive-command-form').valid()){
             var com = readScriptInput($('#interactive-command-list').val(), $('#interactive-mode'));
@@ -63,3 +66,45 @@ $(document).ready(function () {
         wrapper: 'li'
     });
 });
+
+function interactiveRefreshALTs(){
+    var $altList = $('#interactive-alt-list');
+    $altList.empty();
+    $.ajax({
+        url: '/CaPSLOC/ALT/RecentlyLocated',
+        type: 'GET',
+        success: function (result) {
+            if (result.success) {
+                $.each(result.data, function (index, element) {
+                    $('<option/>').val(element.Id).text(element.Name + ' (' + element.Address + ')').appendTo($altList);
+                });
+            } else {
+                alert('An error occurred while finding the ALTs: ' + result.data);
+            }
+        },
+        error: function () {
+            alert('An error occurred while finding the ALTs');
+        }
+    });
+}
+
+function interactiveRefreshLocations(){
+    var $locs = $('#interactive-goto-location-list');
+    $locs.empty();
+    $.ajax({
+        url: '/CaPSLOC/Map/AllLocations',
+        type: 'GET',
+        success: function (result) {
+            if (result.success) {
+                $.each(result.data, function (index, element) {
+                    $('<option/>').val(element.Id).text(element.Name).appendTo($locs);
+                });
+            } else {
+                alert('An error occurred while finding the ALTs: ' + result.data);
+            }
+        },
+        error: function () {
+            alert('An error occurred while finding the ALTs');
+        }
+    });
+}

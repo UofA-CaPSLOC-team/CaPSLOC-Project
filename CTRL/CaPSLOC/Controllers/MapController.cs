@@ -21,17 +21,20 @@ namespace CaPSLOC.Controllers
         public ActionResult SaveLocation(Location loc)
         {
             JsonResult result = Json(new { success = false, data = "An error occurred." });
-
             try
             {
-                using (DbModelContainer model = new DbModelContainer())
+                if (DbModel.Locations.FirstOrDefault(l => l.Name == loc.Name) != null)
                 {
-                    model.Locations.Add(loc);
-                    model.SaveChanges();
+                    result = Json(new { success = false, data = "Name is not unique!" });
+                    return result;
                 }
+
+                DbModel.Locations.Add(loc);
+                DbModel.SaveChanges();
+
                 result = Json(new { success = true, data = loc.Id });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = Json(new { success = false, data = ex.Message });
             }
@@ -44,22 +47,20 @@ namespace CaPSLOC.Controllers
         {
             JsonResult result = Json(new { success = false, data = "An error occurred." }, JsonRequestBehavior.AllowGet);
 
-            using (DbModelContainer model = new DbModelContainer())
+            try
             {
-                try
-                {
-                    var locations = model.Locations.AsEnumerable();
+                var locations = DbModel.Locations.OrderBy(l => l.Name);
 
-                    return result = Json(new { success = true, data = locations.ToList() }, JsonRequestBehavior.AllowGet);
+                return result = Json(new { success = true, data = locations.ToList() }, JsonRequestBehavior.AllowGet);
 
-                }
-                catch (Exception ex)
-                {
-                    result = Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
-                }
-
-                return result;
             }
+            catch (Exception ex)
+            {
+                result = Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+
+            return result;
+
         }
 
     }

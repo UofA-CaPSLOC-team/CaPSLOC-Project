@@ -12,6 +12,8 @@ $(document).ready(function () {
         }
     });
 
+    scriptRefreshLocations();
+
     $('#script-display').flexigrid({
         colModel: [
             { display: 'Command', name: 'command', width: 150, sortable: false, align: 'left' },
@@ -85,6 +87,27 @@ $(document).ready(function () {
         $('#save-script-dialog').dialog('open');
     });
 });
+
+function scriptRefreshLocations(){
+    var $locs = $('#goto-location-list');
+    $locs.empty();
+    $.ajax({
+        url: '/CaPSLOC/Map/AllLocations',
+        type: 'GET',
+        success: function (result) {
+            if (result.success) {
+                $.each(result.data, function (index, element) {
+                    $('<option/>').val(element.Id).text(element.Name).appendTo($locs);
+                });
+            } else {
+                alert('An error occurred while finding the ALTs: ' + result.data);
+            }
+        },
+        error: function () {
+            alert('An error occurred while finding the ALTs');
+        }
+    });
+}
 
 function saveScript() {
 
