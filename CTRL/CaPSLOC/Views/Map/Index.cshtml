@@ -82,96 +82,101 @@
                         <option value="10">Configure Defaults</option>
                     </select>
                     <br />
-                    <div id="command-parameters-2" class="command-parameters" style="display:none">
-                        <label for="goto-location-list">Location:</label>
-                        <select id="goto-location-list"></select>
-                    </div>
-                    <div id="command-parameters-1" class="command-parameters" style="display:none">
-                        <label for="latitude-script-field">Latitude:</label>
-                        <input type="text" id="latitude-script-field" />
-                        <br />
-                        <label for="longitude-script-field">Longitude:</label>
-                        <input type="text" id="longitude-script-field" />
-                        <br />
-                        <label for="altitude-script-field">Altitude:</label>
-                        <input type="text" id="altitude-script-field" />
-                    </div>
-                    <div id="command-parameters-6" class="command-parameters" style="display:none">
-                        <input type="radio" id="image-capture-type-picture" name="image-capture-type" value="pic" />
-                        <label for="image-capture-type-picture">Picture</label>
-                        <br />
-                        <input type="radio" id="image-capture-type-video" name="image-capture-type" value="vid" />
-                        <label for="image-capture-type-video">Video</label>
-                        <br />
-                        <label for="image-capture-duration">Duration:</label>
-                        <input type="time" id="image-capture-duration" />
-                        <br />
-                        <label for="image-capture-frame-rate">Frame Rate:</label>
-                        <select id="image-capture-frame-rate" >
-                            <option value="0">--</option>
-                            <option value="5">5 FPS</option>
-                            <option value="10">10 FPS</option>
-                        </select>
-                        <br />
-                        <label for="image-capture-resolution">Resolution:</label>
-                        <select id="image-capture-resolution" >
-                            <option value="0">--</option>
-                            <option value="480">640 x 480</option>
-                            <option value="600">800 x 600</option>
-                        </select>
-                    </div> 
-                    <div id="command-parameters-7" class="command-parameters" style="display:none">
-                        <label for="rotate-direction">Direction:</label>
-                        <select id="rotate-direction" >
-                            <option value="left">Left</option>
-                            <option value="right">Right</option>
-                            <option value="up">Up</option>
-                            <option value="down">Down</option>
-                        </select>
-                        <br />
-                        <label for="rotate-degrees">Change in degrees:</label>
-                        <input type="number" id="rotate-degrees" />
-                    </div>
-                    <div id="command-parameters-8" class="command-parameters" style="display:none">
-                        <label for="wait-duration">Duration:</label>
-                        <input type="time" id="wait-duration" />
-                    </div>
-                    <div id="command-parameters-9" class="command-parameters" style="display:none">
-                        <label for="execute-name">Script Name:</label>
-                        <input type="text" id="execute-name" />
-                    </div>
-                    <div id="command-parameters-10" class="command-parameters" style="display:none">
-                        <label for="default-rotate-degrees">Change in degrees:</label>
-                        <input type="number" id="default-rotate-degrees" />
-                        <br />
-                        <label for="default-image-capture-duration">Video Duration:</label>
-                        <input type="time" id="default-image-capture-duration" />
-                        <br />
-                        <label for="default-image-capture-frame-rate">Frame Rate:</label>
-                        <select id="default-image-capture-frame-rate" >
-                            <option value="0">--</option>
-                            <option value="5">5 FPS</option>
-                            <option value="10">10 FPS</option>
-                        </select>
-                        <br />
-                        <label for="default-image-capture-resolution">Resolution:</label>
-                        <select id="default-image-capture-resolution" >
-                            <option value="0">--</option>
-                            <option value="480">640 x 480</option>
-                            <option value="600">800 x 600</option>
-                        </select>
-                        <br />
-                        <label for="default-wait-duration">Wait Duration:</label>
-                        <input type="time" id="default-wait-duration" />
-                        <br />
-                        <label for="latitude-offset">Latitude:</label>
-                        <input type="text" id="latitude-offset" />
-                        <br />
-                        <label for="longitude-offset">Longitude:</label>
-                        <input type="text" id="longitude-offset" />
-                        <br />
-                        <label for="altitude-offset">Altitude:</label>
-                        <input type="text" id="altitude-offset" />
+                    <form id="create-script-add-form">
+                        <div id="command-parameters-2" class="command-parameters" style="display:none">
+                            <label for="goto-location-list">Location:</label>
+                            <select id="goto-location-list"></select>
+                        </div>
+                        <div id="command-parameters-1" class="command-parameters" style="display:none">
+                            <label for="latitude-script-field">Latitude:</label>
+                            <input type="text" id="latitude-script-field" name="latitude-script-field" />
+                            <br />
+                            <label for="longitude-script-field">Longitude:</label>
+                            <input type="text" id="longitude-script-field" name="longitude-script-field" />
+                            <br />
+                            <label for="altitude-script-field">Altitude:</label>
+                            <input type="text" id="altitude-script-field" name="altitude-script-field" />
+                        </div>
+                        <div id="command-parameters-6" class="command-parameters" style="display:none">
+                            <input type="radio" id="image-capture-type-picture" name="image-capture-type" value="pic" />
+                            <label for="image-capture-type-picture">Picture</label>
+                            <br />
+                            <input type="radio" id="image-capture-type-video" name="image-capture-type" value="vid" />
+                            <label for="image-capture-type-video">Video</label>
+                            <br />
+                            <label for="image-capture-duration">Duration:</label>
+                            <input type="time" id="image-capture-duration" name="image-capture-duration" />
+                            <br />
+                            <label for="image-capture-frame-rate">Frame Rate:</label>
+                            <select id="image-capture-frame-rate" name="image-capture-frame-rate" >
+                                <option value="0">--</option>
+                                <option value="5">5 FPS</option>
+                                <option value="10">10 FPS</option>
+                            </select>
+                            <br />
+                            <label for="image-capture-resolution">Resolution:</label>
+                            <select id="image-capture-resolution" name="image-capture-resolution" >
+                                <option value="0">--</option>
+                                <option value="480">640 x 480</option>
+                                <option value="600">800 x 600</option>
+                            </select>
+                        </div> 
+                        <div id="command-parameters-7" class="command-parameters" style="display:none">
+                            <label for="rotate-direction">Direction:</label>
+                            <select id="rotate-direction" name="rotate-direction" >
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                                <option value="up">Up</option>
+                                <option value="down">Down</option>
+                            </select>
+                            <br />
+                            <label for="rotate-degrees">Change in degrees:</label>
+                            <input type="number" id="rotate-degrees" name="rotate-degrees" />
+                        </div>
+                        <div id="command-parameters-8" class="command-parameters" style="display:none">
+                            <label for="wait-duration">Duration:</label>
+                            <input type="time" id="wait-duration" name="wait-duration" />
+                        </div>
+                        <div id="command-parameters-9" class="command-parameters" style="display:none">
+                            <label for="execute-name">Script Name:</label>
+                            <input type="text" id="execute-name" name="execute-name" />
+                        </div>
+                        <div id="command-parameters-10" class="command-parameters" style="display:none">
+                            <label for="default-rotate-degrees">Change in degrees:</label>
+                            <input type="number" id="default-rotate-degrees" name="default-rotate-degrees" />
+                            <br />
+                            <label for="default-image-capture-duration">Video Duration:</label>
+                            <input type="time" id="default-image-capture-duration" name="default-image-capture-duration" />
+                            <br />
+                            <label for="default-image-capture-frame-rate">Frame Rate:</label>
+                            <select id="default-image-capture-frame-rate" name="default-image-capture-frame-rate" >
+                                <option value="0">--</option>
+                                <option value="5">5 FPS</option>
+                                <option value="10">10 FPS</option>
+                            </select>
+                            <br />
+                            <label for="default-image-capture-resolution">Resolution:</label>
+                            <select id="default-image-capture-resolution" name="default-image-capture-resolution" >
+                                <option value="0">--</option>
+                                <option value="480">640 x 480</option>
+                                <option value="600">800 x 600</option>
+                            </select>
+                            <br />
+                            <label for="default-wait-duration">Wait Duration:</label>
+                            <input type="time" id="default-wait-duration" name="default-wait-duration" />
+                            <br />
+                            <label for="latitude-offset">Latitude:</label>
+                            <input type="text" id="latitude-offset" name="latitude-offset" />
+                            <br />
+                            <label for="longitude-offset">Longitude:</label>
+                            <input type="text" id="longitude-offset" name="longitude-offset" />
+                            <br />
+                            <label for="altitude-offset">Altitude:</label>
+                            <input type="text" id="altitude-offset" name="altitude-offset" />
+                        </div>
+                    </form>
+                    <div id="create-script-add-error">
+                        <ul></ul>
                     </div>
                     <button id="add-script-element">Add To Script</button>
                 </td>
@@ -188,7 +193,6 @@
   </div>
   <div id="interactive-mode">
     <select id="interactive-alt-list">
-        <option value="1">ALT 1 (192.168.1.3)</option>
     </select>
     <br />
     <div>
@@ -206,19 +210,20 @@
             <option value="10">Configure Defaults</option>
         </select>
         <br />
+        <form id="interactive-command-form">
         <div id="interactive-command-parameters-2" class="command-parameters" style="display:none">
             <label for="interactive-goto-location-list">Location:</label>
             <select id="interactive-goto-location-list"></select>
         </div>
         <div id="interactive-command-parameters-1" class="command-parameters" style="display:none">
             <label for="latitude-script-field">Latitude:</label>
-            <input type="text" id="interactive-latitude-script-field" />
+            <input type="text" id="interactive-latitude-script-field" name="latitude-script-field" />
             <br />
             <label for="longitude-script-field">Longitude:</label>
-            <input type="text" id="interactive-longitude-script-field" />
+            <input type="text" id="interactive-longitude-script-field" name="longitude-script-field" />
             <br />
             <label for="altitude-script-field">Altitude:</label>
-            <input type="text" id="interactive-altitude-script-field" />
+            <input type="text" id="interactive-altitude-script-field" name="altitude-script-field" />
         </div>
         <div id="interactive-command-parameters-6" class="command-parameters" style="display:none">
             <input type="radio" id="interactive-image-capture-type-picture" name="interactive-image-capture-type" value="pic" />
@@ -262,7 +267,7 @@
         </div>
         <div id="interactive-command-parameters-9" class="command-parameters" style="display:none">
             <label for="interactive-execute-name">Script Name:</label>
-            <input type="text" id="interactive-execute-name" />
+            <input type="text" id="interactive-execute-name" name="execute-name" />
         </div>
         <div id="interactive-command-parameters-10" class="command-parameters" style="display:none">
             <label for="interactive-default-rotate-degrees">Change in degrees:</label>
@@ -296,6 +301,10 @@
             <br />
             <label for="interactive-altitude-offset">Altitude:</label>
             <input type="text" id="interactive-altitude-offset" />
+        </div>
+        </form>
+        <div id="interactive-command-error">
+            <ul></ul>
         </div>
         <button id="send-command">Send Command</button>
         </div>

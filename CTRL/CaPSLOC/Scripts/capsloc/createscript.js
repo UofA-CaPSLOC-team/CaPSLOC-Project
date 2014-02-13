@@ -21,7 +21,8 @@ $(document).ready(function () {
         dataType: 'json',
         buttons: [{
             name: 'Delete',
-            onpress: deleteScriptElement
+            onpress: deleteScriptElement,
+            bclass: 'edit'
         }],
         title: 'SCRIPT_NAME_HERE',
         width: 450,
@@ -43,13 +44,41 @@ $(document).ready(function () {
         }
     });
 
+    // Remove the unobtrusive validator so we can manually set up validation
+    $('#create-script-add-form').removeData('validator');
+    $('#create-script-add-form').validate({
+        rules: {
+            'latitude-script-field': {
+                required: true,
+                number: true,
+                range: [-90, 90]
+            },
+            'longitude-script-field': {
+                required: true,
+                number: true,
+                range: [-180, 180]
+            },
+            'altitude-script-field': {
+                required: true,
+                number: true
+            },
+            'execute-name': {
+                required: true
+            },
+        },
+        errorContainer: '#create-script-add-error',
+        errorLabelContainer: '#create-script-add-error ul',
+        wrapper: 'li'
+    });
 
     $('#add-script-element').button().click(function () {
-        var data = readScriptInput($('#command-list').val(), $('#create-script'));
+        if($('#create-script-add-form').valid()){
+            var data = readScriptInput($('#command-list').val(), $('#create-script'));
 
-        _scriptContext.push(data);
+            _scriptContext.push(data);
 
-        reloadScriptGrid();
+            reloadScriptGrid();
+        }
     });
 
     $('#save-script').button().click(function () {

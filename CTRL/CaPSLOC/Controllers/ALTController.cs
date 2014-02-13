@@ -219,7 +219,7 @@ namespace CaPSLOC.Controllers
         }
 
         [HttpGet]
-        public ActionResult ListALTs()
+        public ActionResult RecentlyLocated()
         {
             try
             {
@@ -227,7 +227,7 @@ namespace CaPSLOC.Controllers
                 {
                     IQueryable<ALT> alts = models.ALTs.Where(a => a.RecentlyLocated);
 
-                    return Json(new { success = true, data = alts.ToList() }, JsonRequestBehavior.DenyGet);
+                    return Json(new { success = true, data = alts.ToList() }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)

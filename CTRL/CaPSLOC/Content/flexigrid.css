@@ -627,3 +627,9 @@ div.pGroup {
 	/* common inner cell properties*/ {
 	overflow: hidden;
 }
+
+/* User-defined button classes */
+.flexigrid .edit
+{
+    background: url(images/close.png) no-repeat left;
+}
