@@ -58,5 +58,24 @@ namespace CaPSLOC.Controllers
             }
         }
 
+        // This will come from the ALT, if it determines that it does not have the script it needs
+        [HttpGet]
+        public ActionResult Request(string scriptName)
+        {
+            try
+            {
+                Script script = DbModel.Scripts.SingleOrDefault(s => s.Name == scriptName);
+                if (script == null)
+                {
+                    return Json(new { success = false, data = String.Format("Script '{0}' not found", scriptName) }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = true, data = script.Content }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

@@ -57,7 +57,7 @@ namespace CaPSLOC.Controllers
                     string ipString = IPtoString(ip);
                     // Send 'ping' on ALT communication TCP port
 
-                    WebRequest altPing = WebRequest.CreateDefault(new Uri(String.Format("http://{0}/CaPSLOC/Status", ipString)));
+                    WebRequest altPing = WebRequest.CreateDefault(new Uri(String.Format("http://{0}:3000/CaPSLOC/Status", ipString)));
                     try
                     {
                         PingRequestState requestState = new PingRequestState();
