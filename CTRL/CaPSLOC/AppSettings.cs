@@ -12,17 +12,12 @@ using System.Collections.Generic;
 
 namespace CaPSLOC
 {
-    public partial class Data
+    public partial class AppSettings
     {
         public int Id { get; set; }
-        public string ImageFilename { get; set; }
-        public string ImageEncoding { get; set; }
-        public System.DateTime CaptureTime { get; set; }
-        public int LocationId { get; set; }
-        public int ALTId { get; set; }
-    
-        public virtual Location Location { get; set; }
-        public virtual ALT ALT { get; set; }
+        public string DisplayName { get; set; }
+        public string ShortName { get; set; }
+        public string Value { get; set; }
     }
     
 }

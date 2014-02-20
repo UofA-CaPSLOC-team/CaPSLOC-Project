@@ -10,6 +10,7 @@
     <EntitySet Name="Scripts" EntityType="DbModel.Store.Scripts" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ALTs" EntityType="DbModel.Store.ALTs" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Data" EntityType="DbModel.Store.Data" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AppSettings" EntityType="DbModel.Store.AppSettings" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="LocationData" Association="DbModel.Store.LocationData">
       <End Role="Location" EntitySet="Locations" />
       <End Role="Data" EntitySet="Data" />
@@ -53,11 +54,20 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ImageFilename" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ImageEncoding" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CaptureTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImageFilename" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="ImageEncoding" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="CaptureTime" Type="datetime" Nullable="false" />
     <Property Name="LocationId" Type="int" Nullable="false" />
     <Property Name="ALTId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AppSettings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ShortName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="LocationData">
     <End Role="Location" Type="DbModel.Store.Locations" Multiplicity="1" />
@@ -100,6 +110,7 @@
             <End Role="ALT" EntitySet="ALTs" />
             <End Role="Data" EntitySet="Data" />
           </AssociationSet>
+          <EntitySet Name="AppSettings" EntityType="DbModel.AppSettings" />
         </EntityContainer>
         <EntityType Name="Location">
           <Key>
@@ -135,9 +146,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="ImageFilename" Nullable="false" />
-          <Property Type="String" Name="ImageEncoding" Nullable="false" />
-          <Property Type="String" Name="CaptureTime" Nullable="false" />
+          <Property Type="String" Name="ImageFilename" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="ImageEncoding" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="CaptureTime" Nullable="false" />
           <NavigationProperty Name="Location" Relationship="DbModel.LocationData" FromRole="Data" ToRole="Location" />
           <Property Type="Int32" Name="LocationId" Nullable="false" />
           <NavigationProperty Name="ALT" Relationship="DbModel.ALTData" FromRole="Data" ToRole="ALT" />
@@ -167,6 +178,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AppSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DisplayName" Nullable="false" />
+          <Property Type="String" Name="ShortName" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -217,6 +237,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AppSettings">
+      <EntityTypeMapping TypeName="IsTypeOf(DbModel.AppSettings)">
+        <MappingFragment StoreEntitySet="AppSettings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -249,6 +279,7 @@
           <ConnectorPoint PointX="6.375" PointY="4" />
           <ConnectorPoint PointX="6.375" PointY="3.0571907552083331" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="DbModel.AppSettings" Width="1.5" PointX="8.75" PointY="2.125" Height="1.787985026041667" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

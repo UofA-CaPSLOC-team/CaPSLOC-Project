@@ -129,6 +129,9 @@
     <Compile Include="ALT.cs">
       <DependentUpon>CapslocModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs">
+      <DependentUpon>CapslocModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -143,6 +146,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CapslocModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="Controllers\ALTController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -166,6 +170,7 @@
     <Compile Include="Location.cs">
       <DependentUpon>CapslocModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImageMetadata.cs" />
     <Compile Include="Models\InteractiveCommandModel.cs" />
     <Compile Include="Models\ScriptModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,6 +278,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Seed.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

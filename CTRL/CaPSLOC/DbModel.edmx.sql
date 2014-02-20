@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 01/21/2014 14:17:03
+-- Date Created: 02/20/2014 15:00:02
 -- Generated from EDMX file: C:\src\CaPSLOC-Project\CTRL\CaPSLOC\DbModel.edmx
 -- --------------------------------------------------
 
@@ -39,6 +39,9 @@ IF OBJECT_ID(N'[dbo].[ALTs]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Data]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Data];
+GO
+IF OBJECT_ID(N'[dbo].[AppSettings]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AppSettings];
 GO
 
 -- --------------------------------------------------
@@ -77,11 +80,20 @@ GO
 -- Creating table 'Data'
 CREATE TABLE [dbo].[Data] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [ImageFilename] nvarchar(max)  NOT NULL,
-    [ImageEncoding] nvarchar(max)  NOT NULL,
-    [CaptureTime] nvarchar(max)  NOT NULL,
+    [ImageFilename] nvarchar(300)  NOT NULL,
+    [ImageEncoding] nvarchar(10)  NOT NULL,
+    [CaptureTime] datetime  NOT NULL,
     [LocationId] int  NOT NULL,
     [ALTId] int  NOT NULL
+);
+GO
+
+-- Creating table 'AppSettings'
+CREATE TABLE [dbo].[AppSettings] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [DisplayName] nvarchar(max)  NOT NULL,
+    [ShortName] nvarchar(max)  NOT NULL,
+    [Value] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -110,6 +122,12 @@ GO
 -- Creating primary key on [Id] in table 'Data'
 ALTER TABLE [dbo].[Data]
 ADD CONSTRAINT [PK_Data]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'AppSettings'
+ALTER TABLE [dbo].[AppSettings]
+ADD CONSTRAINT [PK_AppSettings]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

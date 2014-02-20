@@ -29,5 +29,6 @@ namespace CaPSLOC
         public DbSet<Script> Scripts { get; set; }
         public DbSet<ALT> ALTs { get; set; }
         public DbSet<Data> Data { get; set; }
+        public DbSet<AppSettings> AppSettings { get; set; }
     }
 }
