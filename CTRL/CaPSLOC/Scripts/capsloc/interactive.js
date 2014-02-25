@@ -6,10 +6,6 @@ $(document).ready(function () {
         $('.command-parameters').css('display', 'none');
         var selectVal = $('#interactive-command-list').val();
         $('#interactive-command-parameters-' + selectVal).css('display', 'block');
-
-        if (selectVal == 2) {
-            loadLocations();
-        }
     });
 
     interactiveRefreshLocations();
@@ -104,11 +100,11 @@ function interactiveRefreshLocations(){
                     .appendTo($locs);
                 });
             } else {
-                alert('An error occurred while finding the ALTs: ' + result.data);
+                alert('An error occurred while finding the locations: ' + result.data);
             }
         },
         error: function () {
-            alert('An error occurred while finding the ALTs');
+            alert('An error occurred while finding the locations');
         }
     });
 }

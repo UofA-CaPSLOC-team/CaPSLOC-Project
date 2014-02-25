@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "CaPSLOC";
 }
 
 <style>
@@ -14,7 +14,7 @@
     }
 </style>
 
-<h2>Index</h2>
+<h2>CaPSLOC</h2>
 
 <div id="save-script-dialog" style="display:none;position:absolute;overflow:hidden">
     <label for="save-script-name">Name:</label>
@@ -29,6 +29,7 @@
     <li><a href="#alt-locate">Locate ALT</a></li>
     <li><a href="#create-script">Create Script</a></li>
     <li><a href="#interactive-mode">Interactive</a></li>
+    <li><a href="#image-gallery">Image Gallery</a></li>
   </ul>
   <div id="map-page">
     <div id="map-canvas"></div>
@@ -309,6 +310,21 @@
         <button id="send-command">Send Command</button>
         </div>
     </div>
+  <div id="image-gallery">
+    <select id="image-alt-list"></select>
+    <select id="image-location-list"></select>
+    <br />
+    <label for="image-start-date">Start Date:</label>
+    <input id="image-start-date" type="date" />
+    <input id="image-start-time" type="time" />
+    <br />
+    <label for="image-end-date">End Date:</label>
+    <input id="image-end-date" type="date" />
+    <input id="image-end-time" type="time" />
+    <button id="image-filter-refresh">Refresh Images</button>
+    <br />
+    <div id="image-gallery-grid"></div>
+  </div>
 </div>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
@@ -317,3 +333,4 @@
 <script type="text/javascript" src="~/Scripts/capsloc/alt.js"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/createscript.js"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/interactive.js"></script>
+<script type="text/javascript" src="~/Scripts/capsloc/image.js"></script>

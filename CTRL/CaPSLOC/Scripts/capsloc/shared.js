@@ -13,6 +13,10 @@ $(document).ready(function () {
                 case 'create-script':
                     scriptRefreshLocations();
                     break;
+                case 'image-gallery':
+                    imageRefreshALTs();
+                    imageRefreshLocations();
+                    break;
                 default:
                     break;
             }

@@ -1,19 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 using System.Web.Mvc;
 using System.Web;
 using System.IO;
 using CaPSLOC.Models;
+using System.Drawing;
 
 namespace CaPSLOC.Controllers
 {
     public class ImageController : BaseController
     {
 
+        // From browser
+        [HttpPost]
+        public ActionResult RefreshGrid(ImageGridFilter filter)
+        {
+            DateTime start = DateTime.MinValue;
+            DateTime end = DateTime.MinValue;
+            if (filter.StartDate != DateTime.MinValue)
+            {
+                Logger.Debug("Composing start datetime");
+                start = filter.StartDate.Add(filter.StartTime);
+            }
+            if (filter.EndDate != DateTime.MinValue)
+            {
+                Logger.Debug("Composing end datetime");
+                end = filter.EndDate.Add(filter.EndTime);
+            }
+
+            IQueryable<Data> filteredData = DbModel.Data;  // Start with all data
+            if (filter.AltId != 0)
+            {
+                Logger.Debug("Filter by ALT id = " + filter.AltId);
+                filteredData = filteredData.Where(d => d.ALTId == filter.AltId);
+            }
+            if (filter.LocationId != 0)
+            {
+                Logger.Debug("Filter by Location id = " + filter.LocationId);
+                filteredData = filteredData.Where(d => d.LocationId == filter.LocationId);
+            }
+            if (start != DateTime.MinValue)
+            {
+                Logger.Debug("Filter by capture date after " + start);
+                filteredData = filteredData.Where(d => d.CaptureTime >= start);
+            }
+            if (end != DateTime.MinValue)
+            {
+                Logger.Debug("Filter by capture date before " + end);
+                filteredData = filteredData.Where(d => d.CaptureTime <= end);
+            }
+
+            return PartialView(filteredData.ToList());
+        }
+
+        // From ALT
         public JsonResult Save(HttpPostedFileBase file, string altName, double latitude, double longitude, double altitude, string locName, DateTime captureTime)
         {
             JsonResult result = Json(new { success = false, data = "An unknown error has occurred" }, JsonRequestBehavior.DenyGet);
@@ -44,6 +85,24 @@ namespace CaPSLOC.Controllers
                     file.InputStream.CopyTo(fileStream);
                 }
 
+                //Save a thumbnail version
+                file.InputStream.Position = 0;
+                Bitmap bmp = new Bitmap(file.InputStream);
+                //Determine scaling factor to fit in a box
+                int tSize;
+                if (!int.TryParse(DbModel.AppSettings.Single(a => a.ShortName == Constants.IMAGE_THUMBNAIL_SIZE).Value, out tSize))
+                {
+                    throw new Exception("Parsing of thumbnail size failed");
+                }
+                if (Math.Max(bmp.Width, bmp.Height) > tSize)  // Check if resize is even needed
+                {
+                    double scale = (double)tSize / (double)Math.Max(bmp.Width, bmp.Height);
+                    bmp = new Bitmap(bmp, (int)(bmp.Width * scale), (int)(bmp.Height * scale));
+                }
+                string tPath = Path.Combine(imagePath, "Thumbnails", filename);
+                bmp.Save(tPath);
+                bmp.Dispose();
+
                 // Write location info, time, and filename to database
                 ALT alt = DbModel.ALTs.SingleOrDefault(a => a.Name == altName);
                 if (alt == null)
@@ -51,7 +110,7 @@ namespace CaPSLOC.Controllers
                     alt = new ALT()
                     {
                         Name = altName,
-                        Address = Request.UserHostAddress,
+                        Address = IPNetworking.GetIP4Address(Request),
                         RecentlyLocated = true
                     };
                 }

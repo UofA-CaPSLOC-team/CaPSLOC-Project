@@ -195,7 +195,7 @@ namespace CaPSLOC.Controllers
 
                     // Transmit XML to ALT
                     WebRequest altRequest = WebRequest.CreateDefault(new Uri(String.Format("http://{0}/CaPSLOC/Command", alt.Address)));
-                    altRequest.ContentType = "application/xml";
+                    altRequest.ContentType = "text/xml";
                     altRequest.Method = "POST";
 
                     byte[] xmlBytes = Encoding.UTF8.GetBytes(xml);

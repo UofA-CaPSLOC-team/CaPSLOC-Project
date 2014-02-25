@@ -170,6 +170,7 @@
     <Compile Include="Location.cs">
       <DependentUpon>CapslocModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImageGridFilter.cs" />
     <Compile Include="Models\ImageMetadata.cs" />
     <Compile Include="Models\InteractiveCommandModel.cs" />
     <Compile Include="Models\ScriptModel.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Script.cs">
       <DependentUpon>CapslocModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\IPHelper.cs" />
     <Compile Include="Services\XmlParsing.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +260,7 @@
     <Content Include="Content\images\wbg.gif" />
     <Content Include="Scripts\capsloc\alt.js" />
     <Content Include="Scripts\capsloc\createscript.js" />
+    <Content Include="Scripts\capsloc\image.js" />
     <Content Include="Scripts\capsloc\interactive.js" />
     <Content Include="Scripts\capsloc\map.js" />
     <Content Include="Scripts\capsloc\shared.js" />
@@ -319,6 +322,7 @@
       <LastGenOutput>CapslocModel.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-2.0.3.min.map" />
+    <Content Include="Views\Image\RefreshGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
