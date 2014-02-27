@@ -1,3 +1,41 @@
 ﻿@model List<CaPSLOC.Data>
 
-Images Go Here
+<br />
+<ul>
+@foreach (CaPSLOC.Data d in Model)
+{
+    <li>
+        <img src="/CaPSLOCImages/Thumbnails/@d.ImageFilename" alt="@d.ImageFilename" />
+    </li>
+}
+</ul>
+
+<style>
+/* Added to support image grid */
+
+
+#image-gallery-grid {
+    background: #c4c4c4;
+	width: @(3 * CaPSLOC.Constants.IMAGE_THUMBNAIL_SIZE + 6 * CaPSLOC.Constants.IMAGE_PADDING_SIZE + 80)px;
+	margin: 0px auto;
+}
+ 
+#image-gallery-grid ul {
+    list-style: none;
+}
+ 
+#image-gallery-grid ul li {
+	display: inline-block;
+    text-align: center;
+	padding: @(CaPSLOC.Constants.IMAGE_PADDING_SIZE)px;
+}
+</style>
+
+<script type="text/ecmascript">
+    // Click handlers for pictures
+    $(document).ready(function () {
+        $('#image-gallery-grid img').click(function () {
+            alert('Picture clicked');
+        });
+    });
+</script>

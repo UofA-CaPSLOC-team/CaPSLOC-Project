@@ -225,7 +225,25 @@ namespace CaPSLOC.Controllers
             {
                 using (DbModelContainer models = new DbModelContainer())
                 {
-                    IQueryable<ALT> alts = models.ALTs.Where(a => a.RecentlyLocated);
+                    IQueryable<ALT> alts = models.ALTs.Where(a => a.RecentlyLocated).OrderBy(a => a.Name);
+
+                    return Json(new { success = true, data = alts.ToList() }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult All()
+        {
+            try
+            {
+                using (DbModelContainer models = new DbModelContainer())
+                {
+                    IQueryable<ALT> alts = models.ALTs.OrderBy(a => a.Name);
 
                     return Json(new { success = true, data = alts.ToList() }, JsonRequestBehavior.AllowGet);
                 }

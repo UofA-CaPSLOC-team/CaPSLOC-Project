@@ -8,6 +8,7 @@ namespace CaPSLOC
     public class Constants
     {
         public static string IMAGE_STORAGE_PATH = "Image.StoragePath";
-        public static string IMAGE_THUMBNAIL_SIZE = "Image.ThumbnailSize";
+        public static int IMAGE_THUMBNAIL_SIZE = 200;
+        public static int IMAGE_PADDING_SIZE = 20;
     }
 }

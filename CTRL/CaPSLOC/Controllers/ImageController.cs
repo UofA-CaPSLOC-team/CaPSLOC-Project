@@ -89,11 +89,8 @@ namespace CaPSLOC.Controllers
                 file.InputStream.Position = 0;
                 Bitmap bmp = new Bitmap(file.InputStream);
                 //Determine scaling factor to fit in a box
-                int tSize;
-                if (!int.TryParse(DbModel.AppSettings.Single(a => a.ShortName == Constants.IMAGE_THUMBNAIL_SIZE).Value, out tSize))
-                {
-                    throw new Exception("Parsing of thumbnail size failed");
-                }
+                int tSize = Constants.IMAGE_THUMBNAIL_SIZE;
+                
                 if (Math.Max(bmp.Width, bmp.Height) > tSize)  // Check if resize is even needed
                 {
                     double scale = (double)tSize / (double)Math.Max(bmp.Width, bmp.Height);

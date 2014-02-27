@@ -17,14 +17,14 @@ $(document).ready(function () {
         $.ajax({
             url: '/CaPSLOC/Image/RefreshGrid',
             type: 'POST',
-            dataType: 'json',
+            dataType: 'html',
             data: JSON.stringify(filterData),
             contentType: 'application/json',
             success: function (result) {
-                alert('Returned successfully');
+                $('#image-gallery-grid').html(result);
             },
             error: function () {
-                alert('An error occurred while finding the images 2');
+                alert('An error occurred while finding the images');
             }
         });
     });
@@ -35,7 +35,7 @@ function imageRefreshALTs() {
     $altList.empty();
     $('<option/>').val('0').text('<All ALTs>').appendTo($altList);
     $.ajax({
-        url: '/CaPSLOC/ALT/RecentlyLocated',
+        url: '/CaPSLOC/ALT/All',
         type: 'GET',
         success: function (result) {
             if (result.success) {
