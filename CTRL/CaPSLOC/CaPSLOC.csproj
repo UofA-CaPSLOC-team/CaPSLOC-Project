@@ -184,6 +184,8 @@
   <ItemGroup>
     <Content Include="Content\flexigrid.css" />
     <Content Include="Content\images\close.png" />
+    <Content Include="Content\lightbox.css" />
+    <Content Include="Content\screen.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -258,6 +260,10 @@
     <Content Include="Content\images\up.png" />
     <Content Include="Content\images\uup.png" />
     <Content Include="Content\images\wbg.gif" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\next.png" />
+    <Content Include="Images\prev.png" />
     <Content Include="Scripts\capsloc\alt.js" />
     <Content Include="Scripts\capsloc\createscript.js" />
     <Content Include="Scripts\capsloc\image.js" />
@@ -279,6 +285,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\lightbox-2.6.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Seed.sql" />
@@ -298,7 +305,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

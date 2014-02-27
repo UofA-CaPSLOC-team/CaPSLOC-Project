@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web;
@@ -29,7 +30,7 @@ namespace CaPSLOC.Controllers
                 end = filter.EndDate.Add(filter.EndTime);
             }
 
-            IQueryable<Data> filteredData = DbModel.Data;  // Start with all data
+            IQueryable<Data> filteredData = DbModel.Data.Include(d => d.ALT).Include(d => d.Location);  // Start with all data
             if (filter.AltId != 0)
             {
                 Logger.Debug("Filter by ALT id = " + filter.AltId);

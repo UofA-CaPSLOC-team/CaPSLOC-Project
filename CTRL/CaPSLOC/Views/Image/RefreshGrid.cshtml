@@ -5,7 +5,9 @@
 @foreach (CaPSLOC.Data d in Model)
 {
     <li>
-        <img src="/CaPSLOCImages/Thumbnails/@d.ImageFilename" alt="@d.ImageFilename" />
+        <a href="/CaPSLOCImages/@d.ImageFilename" data-lightbox="images" title="@(String.Format("{0} ({1}, {2}, {3}). Captured by {4} at {5}.", d.Location.Name, d.Location.Latitude, d.Location.Longitude, d.Location.Altitude, d.ALT.Name, d.CaptureTime.ToString()))">
+            <img id="image@(d.Id)"  src="/CaPSLOCImages/Thumbnails/@d.ImageFilename" alt="@d.ImageFilename" />
+        </a>
     </li>
 }
 </ul>
@@ -31,11 +33,3 @@
 }
 </style>
 
-<script type="text/ecmascript">
-    // Click handlers for pictures
-    $(document).ready(function () {
-        $('#image-gallery-grid img').click(function () {
-            alert('Picture clicked');
-        });
-    });
-</script>
