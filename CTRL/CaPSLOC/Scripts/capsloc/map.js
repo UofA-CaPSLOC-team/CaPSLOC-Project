@@ -50,6 +50,9 @@ $(document).ready(function () {
         errorLabelContainer: '#map-page-error ul',
         wrapper: 'li'
     });
+
+    $('#latitude-field').change(moveMarker);
+    $('#longitude-field').change(moveMarker);
 });
 
 var map;
@@ -78,6 +81,16 @@ function initializeMap() {
     });
 }
 
+function moveMarker() {
+    var latVal = $('#latitude-field').val();
+    var longVal = $('#longitude-field').val();
+    if (latVal != '' && latVal > -90 && latVal < 90 && longVal != '' && longVal > -180 && longVal < 180) {
+        var latLng = new google.maps.LatLng(latVal, longVal);
+        addMarker(latLng);
+        reCenterMap(latLng);
+    }
+}
+
 // Add a marker to the map and push to the array.
 function addMarker(location) {
     marker.setMap(null);
@@ -94,6 +107,12 @@ function addMarker(location) {
     }
     var eServ = new google.maps.ElevationService();
     eServ.getElevationForLocations(request, setAltitude);
+}
+
+function reCenterMap(location) {
+    if (!map.getBounds().contains(location)) {
+        map.panTo(location);
+    }
 }
 
 function setAltitude(locations, status){
