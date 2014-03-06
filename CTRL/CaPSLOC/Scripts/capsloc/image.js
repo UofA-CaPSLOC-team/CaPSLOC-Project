@@ -4,29 +4,82 @@ $(document).ready(function () {
     imageRefreshLocations();
 
     $('#image-filter-refresh').button({ icons: { primary: 'ui-icon-arrowrefresh-1-s'} }).click(function () {
+        if ($('#image-filter-form').valid()) {
+            var filterData = {
+                AltId: $('#image-alt-list').val(),
+                LocationId: $('#image-location-list').val(),
+                StartDate: $('#image-start-date').val(),
+                StartTime: $('#image-start-time').val(),
+                EndDate: $('#image-end-date').val(),
+                EndTime: $('#image-end-time').val()
+            };
 
-        var filterData = {
-            AltId: $('#image-alt-list').val(),
-            LocationId: $('#image-location-list').val(),
-            StartDate: $('#image-start-date').val(),
-            StartTime: $('#image-start-time').val(),
-            EndDate: $('#image-end-date').val(),
-            EndTime: $('#image-end-time').val()
-        };
+            $.ajax({
+                url: '/CaPSLOC/Image/RefreshGrid',
+                type: 'POST',
+                dataType: 'html',
+                data: JSON.stringify(filterData),
+                contentType: 'application/json',
+                success: function (result) {
+                    $('#image-gallery-grid').html(result);
+                },
+                error: function () {
+                    alert('An error occurred while finding the images');
+                }
+            });
+        }
+    });
 
-        $.ajax({
-            url: '/CaPSLOC/Image/RefreshGrid',
-            type: 'POST',
-            dataType: 'html',
-            data: JSON.stringify(filterData),
-            contentType: 'application/json',
-            success: function (result) {
-                $('#image-gallery-grid').html(result);
+    // Remove the unobtrusive validator so we can manually set up validation
+    $('#image-filter-form').removeData('validator');
+    $('#image-filter-form').validate({
+        rules: {
+            'image-start-date': {
+                required: {
+                    depends: function (element) {
+                        return $('#image-start-time').val();
+                    }
+                }
             },
-            error: function () {
-                alert('An error occurred while finding the images');
+            'image-start-time': {
+                required: {
+                    depends: function (element) {
+                        return $('#image-start-date').val();
+                    }
+                }
+            },
+            'image-end-date': {
+                required: {
+                    depends: function (element) {
+                        return $('#image-end-time').val();
+                    }
+                }
+            },
+            'image-end-time': {
+                required: {
+                    depends: function (element) {
+                        return $('#image-end-date').val();
+                    }
+                }
             }
-        });
+        },
+        messages: {
+            'image-start-date': {
+                required: 'Start date is required if a start time is given.'
+            },
+            'image-start-time': {
+                required: 'Start time is required if a start date is given.'
+            },
+            'image-end-date': {
+                required: 'End date is required if an end time is given.'
+            },
+            'image-end-time': {
+                required: 'End time is required if an end date is given.'
+            }
+        },
+        errorContainer: '#image-filter-error',
+        errorLabelContainer: '#image-filter-error ul',
+        wrapper: 'li'
     });
 });
 

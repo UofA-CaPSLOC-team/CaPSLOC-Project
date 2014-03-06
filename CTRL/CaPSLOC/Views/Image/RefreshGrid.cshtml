@@ -2,13 +2,22 @@
 
 <br />
 <ul>
-@foreach (CaPSLOC.Data d in Model)
+@if (Model.Count > 0)
 {
+    foreach (CaPSLOC.Data d in Model)
+    {
     <li>
-        <a href="/CaPSLOCImages/@d.ImageFilename" data-lightbox="images" title="@(String.Format("{0} ({1}, {2}, {3}). Captured by {4} at {5}.", d.Location.Name, d.Location.Latitude, d.Location.Longitude, d.Location.Altitude, d.ALT.Name, d.CaptureTime.ToString()))">
+        <a href="/CaPSLOCImages/@d.ImageFilename" data-lightbox="images"
+        title="@(String.Format("{0} ({1}, {2}, {3}). Captured by {4} at {5}.",
+        d.Location.Name, d.Location.Latitude, d.Location.Longitude, d.Location.Altitude, d.ALT.Name, d.CaptureTime.ToString()))">
             <img id="image@(d.Id)"  src="/CaPSLOCImages/Thumbnails/@d.ImageFilename" alt="@d.ImageFilename" />
         </a>
     </li>
+    }
+}
+else
+{
+    <li>No Images Found</li>
 }
 </ul>
 

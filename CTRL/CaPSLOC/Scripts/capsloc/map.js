@@ -1,15 +1,61 @@
 ﻿
 $(document).ready(function () {
 
-    google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', initializeMap);
     $('#location-submit').click(submitLocation);
-    initialize();
+    initializeMap();
+
+    // Remove the unobtrusive validator so we can manually set up validation
+    $('#map-page-form').removeData('validator');
+    $('#map-page-form').validate({
+        rules: {
+            'latitude-field': {
+                required: true,
+                number: true,
+                range: [-90, 90]
+            },
+            'longitude-field': {
+                required: true,
+                number: true,
+                range: [-180, 180]
+            },
+            'altitude-field': {
+                required: true,
+                number: true
+            },
+            'name-field': {
+                required: true
+            }
+        },
+        messages: {
+            'latitude-field': {
+                required: 'Latitude is required',
+                number: 'Latitude must be a number',
+                range: 'Latitude must be between -90 and 90'
+            },
+            'longitude-field': {
+                required: 'Longitude is required',
+                number: 'Longitude must be a number',
+                range: 'Longitude must be between -180 and 180'
+            },
+            'altitude-field': {
+                required: 'Altitude is required',
+                number: 'Altitude must be a number'
+            },
+            'name-field': {
+                required: 'Name is required'
+            }
+        },
+        errorContainer: '#map-page-error',
+        errorLabelContainer: '#map-page-error ul',
+        wrapper: 'li'
+    });
 });
 
 var map;
 var marker;
 
-function initialize() {
+function initializeMap() {
     var mapOptions = {
         zoom: 4,
         minZoom:4,
@@ -17,6 +63,7 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
+    $('#map-canvas').empty();  // Clear this out, so we don't have multiple maps
     map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
@@ -55,16 +102,18 @@ function setAltitude(locations, status){
 
 function submitLocation() {
 
-    var location = {
-        Latitude: $('#latitude-field').val(),
-        Longitude: $('#longitude-field').val(),
-        Altitude: $('#altitude-field').val(),
-        Name: $('#name-field').val()
-    };
+    if ($('#map-page-form').valid()) {
+        var location = {
+            Latitude: $('#latitude-field').val(),
+            Longitude: $('#longitude-field').val(),
+            Altitude: $('#altitude-field').val(),
+            Name: $('#name-field').val()
+        };
 
-    $.ajax({
-        url: '/CaPSLOC/Map/SaveLocation',
-        type: 'POST',
-        data: location
-    });
+        $.ajax({
+            url: '/CaPSLOC/Map/SaveLocation',
+            type: 'POST',
+            data: location
+        });
+    }
 }
