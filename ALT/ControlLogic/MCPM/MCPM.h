@@ -9,7 +9,8 @@
 #define MCPM_H_
 
 
-#include "../../Preprocessor/InProc/CommandID.h"
+#include "../../Preprocessor/InProc/CommandNode.h"
+#include "../../Preprocessor/InProc/CommandList.h"
 #include <iostream>
 #include <unistd.h>
 #include <string>
@@ -46,7 +47,7 @@ public:
 	 * @return true: operation completed successfully
 	 * @return false: operation blew up in your face
 	 */
-	bool capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolution, short sFrameRate = 0);
+	bool capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolution, short sFrameRate);
 
 	/**
 	 * relativeMotion performs the math and system calls necessary to

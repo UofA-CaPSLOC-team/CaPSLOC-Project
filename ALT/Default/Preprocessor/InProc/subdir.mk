@@ -4,23 +4,29 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Preprocessor/InProc/CommandID.cpp \
-../Preprocessor/InProc/CommandParse.cpp 
+../Preprocessor/InProc/BoostParse.cpp \
+../Preprocessor/InProc/CommandList.cpp \
+../Preprocessor/InProc/CommandNode.cpp \
+../Preprocessor/InProc/Config.cpp 
 
 OBJS += \
-./Preprocessor/InProc/CommandID.o \
-./Preprocessor/InProc/CommandParse.o 
+./Preprocessor/InProc/BoostParse.o \
+./Preprocessor/InProc/CommandList.o \
+./Preprocessor/InProc/CommandNode.o \
+./Preprocessor/InProc/Config.o 
 
 CPP_DEPS += \
-./Preprocessor/InProc/CommandID.d \
-./Preprocessor/InProc/CommandParse.d 
+./Preprocessor/InProc/BoostParse.d \
+./Preprocessor/InProc/CommandList.d \
+./Preprocessor/InProc/CommandNode.d \
+./Preprocessor/InProc/Config.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
 Preprocessor/InProc/%.o: ../Preprocessor/InProc/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -O0 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
