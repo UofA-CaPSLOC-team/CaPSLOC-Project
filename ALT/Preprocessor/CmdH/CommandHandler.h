@@ -11,17 +11,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../InProc/CommandID.h"
-#include "../InProc/CommandParse.h"
+#include "../InProc/CommandNode.h"
+#include "../InProc/CommandList.h"
+#include "../InProc/BoostParse.h"
 #include "../../ControlLogic/MCPM/MCPM.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include "../InProc/Config.h"
+
 
 
 class CommandHandler {
 public:
 
-	CommandHandler(std::deque<CommandID> * vManualCmd, std::vector<CommandID> * vScriptCmd);
+	CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd);
 	virtual ~CommandHandler();
 
 	/**
@@ -36,9 +39,12 @@ public:
 
 private:
 	bool m_bExecScript;
-	std::deque<CommandID> * m_dqManualCmd;
-	std::vector<CommandID> * m_vScriptCmd;
-	MCPM * ptrMCPM;
+	CommandList * m_cmdManual;
+	CommandList * m_cmdScript;
+	MCPM * m_ptrMCPM;
+
+
+	//TODO These have been defined in Config class, call them from there...
 	double m_dLatOffset, m_dLongOffset, m_dAltOffset, m_dRMotionAngle;
 	long m_lVidtime, m_lWaitTime;
 	int m_nQuality;
