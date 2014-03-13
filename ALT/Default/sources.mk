@@ -26,6 +26,7 @@ SUBDIRS := \
 . \
 Preprocessor/InProc \
 Preprocessor/CmdH \
+DPU \
 ControlLogic/MCPM \
 .metadata/.plugins/org.eclipse.cdt.make.core \
 

@@ -31,12 +31,13 @@ CommandHandler::~CommandHandler() {
 void CommandHandler::execNext(){
 	CommandNode * currCmd;
 	//TODO this is dangerous if it isn't a separate thread.
+	m_cmdScript->setUpIterator();
 	while(1){
 		m_cmdScript->printList();
 		if(m_cmdManual->hasCommands()){
 			currCmd = (m_cmdManual->pop_front());
 		}else if(m_cmdScript->hasCommands()){
-			currCmd = (m_cmdScript->pop_front());
+			currCmd = (m_cmdScript->getNextCmd());
 		}else {
 			continue;
 		}
@@ -66,7 +67,7 @@ void CommandHandler::execNext(){
 			//END GOTO
 		case WAIT:
 			//time in script is in ms, usleep reads in us: convert!
-			std::cout << "Waiting for " << currCmd->getWaitTime() << " ms..." << std::endl;
+			std::cout << "--> Waiting for " << currCmd->getWaitTime() << " ms..." << std::endl;
 			usleep((currCmd->getWaitTime()) * 1000);
 			break;
 			//END WAIT

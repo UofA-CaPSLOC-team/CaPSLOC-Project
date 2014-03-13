@@ -13,6 +13,7 @@
 #include "Preprocessor/InProc/BoostParse.h"
 #include "Preprocessor/CmdH/CommandHandler.h"
 #include "ControlLogic/MCPM/MCPM.h"
+#include <curl/curl.h>
 
 int main(int argv, char ** argc){
 	std::string fn = "/opt/CaPSLOC/scripts/test_script.xml";

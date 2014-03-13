@@ -25,13 +25,15 @@ public:
 	bool hasCommands(){return (m_lNumCmds >= 1);}
 
 	void printList();
+	void setUpIterator();
+
+	CommandNode * getNextCmd();
+
 
 private:
-#ifndef VECTOR
-	CommandNode * m_ptrHead, * m_ptrEnd;
-#else
+
 	std::deque<CommandNode> m_dqCmds;
-#endif
+	std::deque<CommandNode>::iterator m_itCurrNode;
 
 	long m_lNumCmds;
 };
