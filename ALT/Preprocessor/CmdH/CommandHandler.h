@@ -18,13 +18,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "../InProc/Config.h"
+#include "../../DPU/SendToCTRL.h"
 
 
 
 class CommandHandler {
 public:
 
-	CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd);
+	CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd, SendToCTRL * stc);
 	virtual ~CommandHandler();
 
 	/**
@@ -42,6 +43,7 @@ private:
 	CommandList * m_cmdManual;
 	CommandList * m_cmdScript;
 	MCPM * m_ptrMCPM;
+	SendToCTRL * m_stc;
 
 
 	//TODO These have been defined in Config class, call them from there...

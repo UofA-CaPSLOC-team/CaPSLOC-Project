@@ -7,7 +7,7 @@
 
 #include "CommandHandler.h"
 
-CommandHandler::CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd) {
+CommandHandler::CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd, SendToCTRL * stc) {
 	// TODO Auto-generated constructor stub
 	m_cmdManual = ManualCmd;
 	m_cmdScript = ScriptCmd;
@@ -20,6 +20,7 @@ CommandHandler::CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd)
 	m_nQuality = 1080;
 	m_tCapMode = PIC;
 	m_sFrameRate = 30;
+	m_stc = stc;
 }
 
 CommandHandler::~CommandHandler() {
@@ -28,8 +29,9 @@ CommandHandler::~CommandHandler() {
 	delete m_cmdScript;
 }
 
-void CommandHandler::execNext(){
+void CommandHandler::execNext(void){
 	CommandNode * currCmd;
+	std::string stcString;
 	//TODO this is dangerous if it isn't a separate thread.
 	m_cmdScript->setUpIterator();
 	while(1){
@@ -44,11 +46,18 @@ void CommandHandler::execNext(){
 		switch(currCmd->getType()){
 		case HALT:
 			//TODO Stop things!
+			m_stc->sendCommandDebug("HALTING");
 			break;
 			//END HALT
 		case RMOTION:
 			m_ptrMCPM->relativeMotion(currCmd->getRelDirection(),
 					currCmd->getAngle());
+			stcString = "MOVING in DIRECTION ";
+			stcString.append(boost::lexical_cast<std::string>(currCmd->getRelDirection()));
+			stcString.append(" ");
+			stcString.append(boost::lexical_cast<std::string>(currCmd->getAngle()));
+			stcString.append(" degrees.");
+			m_stc->sendCommandDebug(stcString);
 			break;
 			//END RMOTION
 		case CAPTURE:
@@ -73,14 +82,17 @@ void CommandHandler::execNext(){
 			//END WAIT
 		case PAUSE:
 			//TODO Pause stuff!
+			m_stc->sendCommandDebug("PAUSING");
 			break;
 			//END PAUSE
 		case RESUME:
 			//TODO Resume from pause!
+			m_stc->sendCommandDebug("RESUMING");
 			break;
 			//END RESUME
 		case EXEC:
 			//TODO bring in another script file.
+			m_stc->sendCommandDebug("EXECUTING");
 			break;
 			//END EXEC
 		default:

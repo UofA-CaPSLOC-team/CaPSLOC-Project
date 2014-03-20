@@ -66,3 +66,9 @@ bool MCPM::relativeMotion(RelativeDirection tRelDir, double nDegrees){
 	return true;
 #endif
 }
+
+GPSCoordinates MCPM::getGPSCoordinate(){
+#ifdef TESTING
+	return GPSCoordinates(43.298, 23.3429);
+#endif
+}

@@ -14,6 +14,14 @@
 #include <iostream>
 #include <unistd.h>
 #include <string>
+
+typedef struct Coordinates{
+	double longitude;
+	double latitude;
+	Coordinates(double lon, double lat): longitude(lon), latitude(lat){
+	}
+}GPSCoordinates;
+
 class MCPM {
 public:
 	MCPM();
@@ -61,6 +69,13 @@ public:
 	 * @return false: operation tried it's darndest, but in the end was insufficient for the task at hand.
 	 */
 	bool relativeMotion(RelativeDirection tRelDir, double nDegrees);
+
+	/**
+	 * getGPSCoordinate polls the sensors to determine the GPS coordinates of the ALT unit.
+	 *
+	 * @return GPS coordinates in a GPSCoordinates struct.
+	 */
+	GPSCoordinates getGPSCoordinate();
 
 private:
 	//TODO Fill in as needed for private members and methods
