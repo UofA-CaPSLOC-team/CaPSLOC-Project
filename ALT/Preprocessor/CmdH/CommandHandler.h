@@ -52,6 +52,7 @@ private:
 	int m_nQuality;
 	CaptureMode m_tCapMode;
 	short m_sFrameRate;
+	bool m_bPaused;
 };
 
 #endif /* COMMANDHANDLER_H_ */
