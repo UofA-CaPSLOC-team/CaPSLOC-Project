@@ -1,4 +1,23 @@
-﻿
+﻿// refresh the list of debug messages
+function debugRefresh() {
+  $.ajax({
+    url: '/CaPSLOC/ALT/Debug?AltId=2',
+    type: 'GET', 
+    success: function(result) {
+        if (result.success) {
+            $('#interactive-debug').empty();
+            $.each(result.data, function(index, element){
+                var debugString = new Date(parseInt(element.Time.substr(6))).toLocaleString() + ' - ' + element.AltName + ': ' + element.Message;
+                $('<p/>').text(debugString).appendTo($('#interactive-debug'));
+            });
+        }
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      _debugRefreshId = setTimeout(debugRefresh, 5000);
+    }
+  });
+}
 
 $(document).ready(function () {
 

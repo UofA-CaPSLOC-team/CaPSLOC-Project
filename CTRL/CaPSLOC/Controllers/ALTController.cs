@@ -10,6 +10,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Web;
 
 namespace CaPSLOC.Controllers
 {
@@ -216,6 +217,42 @@ namespace CaPSLOC.Controllers
             {
                 return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.DenyGet);
             }
+        }
+
+        // From ALT
+        [HttpPost]
+        public ActionResult Debug(DebugMessageModel debugMessage)
+        {
+            var result = Json(new { success = false }, JsonRequestBehavior.DenyGet);
+
+            List<DebugMessageModel> cachedMessages = HttpRuntime.Cache["AppDebugInfo"] as List<DebugMessageModel>;
+            if (cachedMessages == null)
+            {
+                cachedMessages = new List<DebugMessageModel>();
+            }
+
+            // Timestamp the message, then add it to the list
+            debugMessage.Time = DateTime.Now;
+            cachedMessages.Add(debugMessage);
+
+            HttpRuntime.Cache["AppDebugInfo"] = cachedMessages;
+
+            return Json(new { success = false }, JsonRequestBehavior.DenyGet);
+        }
+
+        // From Browser
+        [HttpGet]
+        public ActionResult Debug(int AltId)
+        {
+            var result = Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+            List<DebugMessageModel> cachedMessages = HttpRuntime.Cache["AppDebugInfo"] as List<DebugMessageModel>;
+            if (cachedMessages != null)
+            {
+                result = Json(new { success = true, data = cachedMessages }, JsonRequestBehavior.AllowGet);
+            }
+
+            return result;
         }
 
         [HttpGet]

@@ -1,14 +1,16 @@
 ﻿
+var _debugRefreshId;
 
 $(document).ready(function () {
 
     var tabs = $('#tabs');
     tabs.tabs({
         beforeActivate: function (event, ui) {
-            switch ($(ui.newPanel).attr('id')) {    
+            switch ($(ui.newPanel).attr('id')) {
                 case 'interactive-mode':
                     interactiveRefreshLocations();
                     interactiveRefreshALTs();
+                    debugRefresh();
                     break;
                 case 'create-script':
                     scriptRefreshLocations();
@@ -24,6 +26,9 @@ $(document).ready(function () {
         activate: function (event, ui) {  // This one has to be done after the panel is displayed
             if (ui.newPanel.attr('id') == 'map-page') {
                 initializeMap();
+            }
+            if (ui.oldPanel.attr('id') == 'interactive-mode') {
+                clearTimeout(_debugRefreshId);  // Don't keep refreshing when we're not on the page
             }
         }
     });
