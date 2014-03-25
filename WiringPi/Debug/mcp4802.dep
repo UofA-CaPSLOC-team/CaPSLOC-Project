@@ -1,0 +1,1 @@
+Debug/mcp4802.o: mcp4802.c wiringPi.h wiringPiSPI.h mcp4802.h

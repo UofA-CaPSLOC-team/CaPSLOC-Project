@@ -1,0 +1,14 @@
+﻿Build started 3/21/2014 2:03:05 PM.
+     1>Project "C:\VisualGDB\Test\PICManager\PICManager.vcxproj" on node 3 (Build target(s)).
+     1>Build:
+         "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\VisualGDB\Test\PICManager\PICManager.vcxproj" "/solution:C:\VisualGDB\Test\Test.sln" "/config:Debug" "/platform:Win32"
+         VisualGDB: Attempting inline build...
+         VisualGDB: Executing prebuild actions
+         VisualGDB: Run "cmd.exe /c "C:\SysGCC\raspberry\bin\make.exe" CONFIG=Debug" in directory "C:\VisualGDB\Test\PICManager" on (unspecified)
+         make: `all' is up to date.
+         VisualGDB: Executing postbuild actions
+     1>Done Building Project "C:\VisualGDB\Test\PICManager\PICManager.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.74

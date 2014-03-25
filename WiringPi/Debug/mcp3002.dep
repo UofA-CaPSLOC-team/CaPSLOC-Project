@@ -1,0 +1,1 @@
+Debug/mcp3002.o: mcp3002.c wiringPi.h wiringPiSPI.h mcp3002.h

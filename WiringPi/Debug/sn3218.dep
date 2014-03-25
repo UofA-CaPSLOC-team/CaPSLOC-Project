@@ -1,0 +1,1 @@
+Debug/sn3218.o: sn3218.c wiringPi.h wiringPiI2C.h sn3218.h

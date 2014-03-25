@@ -1,0 +1,15 @@
+﻿Build started 3/21/2014 2:03:06 PM.
+     1>Project "C:\VisualGDB\Test\Test\Test.vcxproj" on node 2 (Build target(s)).
+     1>Build:
+         "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\VisualGDB\Test\Test\Test.vcxproj" "/solution:C:\VisualGDB\Test\Test.sln" "/config:Debug" "/platform:Win32"
+         VisualGDB: Attempting inline build...
+         VisualGDB: Executing prebuild actions
+         VisualGDB: Run "cmd.exe /c "C:\SysGCC\raspberry\bin\make.exe" CONFIG=Debug" in directory "C:\VisualGDB\Test\Test" on (unspecified)
+         C:/SysGCC/raspberry/bin/arm-linux-gnueabihf-g++.exe -ggdb -ffunction-sections -O0  -IC:/VisualGDB/Test/Sensors -IC:/VisualGDB/Test/WiringPi -IC:\VisualGDB\Test\GPSManager -IC:\VisualGDB\Test\PICManager -DDEBUG  -c Source.cpp -o Debug/Source.o -MD -MF Debug/Source.dep
+         C:/SysGCC/raspberry/bin/arm-linux-gnueabihf-g++.exe -o Debug/Test -Wl,-gc-sections   -LC:/VisualGDB/Test/Sensors/Debug -LC:/VisualGDB/Test/WiringPi/Debug -LC:\VisualGDB\Test\GPSManager\Debug -LC:\VisualGDB\Test\PICManager\Debug -Wl,--start-group Debug/Source.o -lpthread ../GPSManager/Debug/GPSManager.a ../Sensors/Debug/Sensors.a ../PICManager/Debug/PICManager.a ../WiringPi/Debug/WiringPi.a -Wl,--rpath='$ORIGIN' -Wl,--rpath='$ORIGIN/../../GPSManager/Debug/' -Wl,--rpath='$ORIGIN/../../Sensors/Debug/' -Wl,--rpath='$ORIGIN/../../PICManager/Debug/' -Wl,--rpath='$ORIGIN/../../WiringPi/Debug/'  -Wl,--end-group
+         VisualGDB: Executing postbuild actions
+     1>Done Building Project "C:\VisualGDB\Test\Test\Test.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.20
