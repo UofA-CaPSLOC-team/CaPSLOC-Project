@@ -32,10 +32,10 @@ int main(int argv, char ** argc){
 	bp->scriptFileParse(fn);
 	std::cout << "\n\t --> Creating CommandHandler object." << std::endl;
 
-	SendToCTRL * stc = new SendToCTRL();
+	SendToCTRL * stc = new SendToCTRL("130.101.12.131");
 	stc->sendPicToCTRL("/opt/CaPSLOC/pics/Accepted.jpg", "ALT 1", 40.296, -80.125, 360, "Somewhere Over the Rainbow", "13:55");
 //	stc->sendPicToCTRL("/home/dt02/curl.html", "ALT 2", -40.296, 80.125, 360, "Somewhere Under the Rainbow", "14:89");
-	stc->sendPicToCTRL("/home/pi/ALT/ALT/main.cpp", "ALT 2", -26.28, 41.903, 2, "On the Pi!", "15:17"); //TESTING on PI!
+//	stc->sendPicToCTRL("/home/pi/ALT/ALT/main.cpp", "ALT 2", -26.28, 41.903, 2, "On the Pi!", "15:17"); //TESTING on PI!
 	stc->sendCommandDebug("DEBUG is working!");
 
 	CommandHandler * ch = new CommandHandler(bp->getManualCommands(), bp->getScriptCommands(), stc);

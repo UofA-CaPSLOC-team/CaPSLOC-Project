@@ -9,8 +9,11 @@
 //From http://curl.haxx.se/libcurl/c/postit2.html
 
 //TODO modify to fit needs.
-SendToCTRL::SendToCTRL() {
+SendToCTRL::SendToCTRL(std::string strIP) {
 	curl_global_init(CURL_GLOBAL_ALL);
+	m_strIPAddr = HTTP_BEGIN;
+	m_strIPAddr.append(strIP);
+	m_strIPAddr.append(SENDTO_PORT);
 }
 
 SendToCTRL::~SendToCTRL() {
@@ -20,6 +23,9 @@ SendToCTRL::~SendToCTRL() {
 void SendToCTRL::sendPicToCTRL(std::string filename, std::string altName, double longitude, double latitude, double altitude, std::string locname, std::string capTime){
 	CURL *curl;
 	CURLcode res;
+
+	std::string ipAddr = m_strIPAddr;
+	ipAddr.append(PIC_ROUTE);
 
 	struct curl_httppost *formpost=NULL;
 	struct curl_httppost *lastptr=NULL;
@@ -93,8 +99,7 @@ void SendToCTRL::sendPicToCTRL(std::string filename, std::string altName, double
 	headerlist = curl_slist_append(headerlist, buf);
 	if(curl) {
 		/* what URL that receives this POST */
-//		curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:3000/pics");
-		curl_easy_setopt(curl, CURLOPT_URL, "http://130.101.12.131:80/capsloc/image/save"); //TESTING!
+		curl_easy_setopt(curl, CURLOPT_URL, ipAddr.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerlist);
 		curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
@@ -120,6 +125,9 @@ void SendToCTRL::sendCommandDebug(std::string cmdinfo){
 	CURL *curl;
 	CURLcode res;
 
+	std::string ipAddr = m_strIPAddr;
+	ipAddr.append(DEBUG_ROUTE);
+
 	struct curl_httppost *formpost=NULL;
 	struct curl_httppost *lastptr=NULL;
 	struct curl_slist *headerlist=NULL;
@@ -131,17 +139,12 @@ void SendToCTRL::sendCommandDebug(std::string cmdinfo){
 
 	struct curl_slist *headers = NULL;
 	curl_slist_append(headers, "Accept: */*");
-//	curl_slist_append(headers, "Content-Type: application/json");
-//	curl_slist_append(headers, "charsets: utf-8");
 
-//	curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:3000/debug");
-	curl_easy_setopt(curl, CURLOPT_URL, "http://130.101.12.131:8888/capsloc/alt/debug"); //TESTING!
+	curl_easy_setopt(curl, CURLOPT_URL, ipAddr.c_str());
 
 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonObj.c_str());
-//	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-//	curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcrp/0.1");
 
 	res = curl_easy_perform(curl);
 	/* Check for errors */

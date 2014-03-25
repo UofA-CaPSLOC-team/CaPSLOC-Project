@@ -8,6 +8,13 @@
 #ifndef SENDTOCTRL_H_
 #define SENDTOCTRL_H_
 
+#define HTTP_BEGIN "http://"
+
+#define SENDTO_PORT ":80"
+
+#define DEBUG_ROUTE "/capsloc/alt/debug"
+#define PIC_ROUTE "/capsloc/image/save"
+
 #include <curl/curl.h>
 #include <string>
 #include <boost/lexical_cast.hpp>
@@ -17,20 +24,14 @@
 
 class SendToCTRL {
 public:
-	SendToCTRL();
+	SendToCTRL(std::string strIP);
 	virtual ~SendToCTRL();
 
 	void sendPicToCTRL(std::string filename, std::string altName, double longitude, double latitude, double altitude, std::string locname, std::string capTime);
 	void sendCommandDebug(std::string cmdinfo);
 
 private:
-//	CURL *curl;
-//	CURLcode res;
-//
-//	struct curl_httppost *formpost=NULL;
-//	struct curl_httppost *lastptr=NULL;
-//	struct curl_slist *headerlist=NULL;
-
+	std::string m_strIPAddr;
 };
 
 #endif /* SENDTOCTRL_H_ */

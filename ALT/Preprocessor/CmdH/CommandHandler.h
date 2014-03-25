@@ -8,6 +8,8 @@
 #ifndef COMMANDHANDLER_H_
 #define COMMANDHANDLER_H_
 
+#define DEBUG
+
 #include <iostream>
 #include <string>
 #include <vector>

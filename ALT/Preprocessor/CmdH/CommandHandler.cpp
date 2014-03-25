@@ -21,6 +21,7 @@ CommandHandler::CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd,
 	m_tCapMode = PIC;
 	m_sFrameRate = 30;
 	m_stc = stc;
+	m_bPaused = false;
 }
 
 CommandHandler::~CommandHandler() {
@@ -79,8 +80,8 @@ void CommandHandler::execNext(void){
 			stcString.append(" ms at a FRAMERATE of ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getFrameRate()));
 			stcString.append(" in a QUALITY of ");
-			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()))
-					m_stc->sendCommandDebug(stcString);
+			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()));
+			m_stc->sendCommandDebug(stcString);
 #endif
 			break;
 			//END CAPTURE
@@ -97,8 +98,8 @@ void CommandHandler::execNext(void){
 			stcString.append(", LATITUDE ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getLatitude()));
 			stcString.append(", and ALTITUDE ");
-			stcString.append(boost::lexical_cast<std::string>(currCmd->getAltitude()))
-					m_stc->sendCommandDebug(stcString);
+			stcString.append(boost::lexical_cast<std::string>(currCmd->getAltitude()));
+			m_stc->sendCommandDebug(stcString);
 #endif
 			break;
 			//END GOTO
