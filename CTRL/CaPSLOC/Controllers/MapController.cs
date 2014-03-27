@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Net;
+using System.IO;
+using System.Web.Script.Serialization;
+using CaPSLOC.Models;
 
 namespace CaPSLOC.Controllers
 {
@@ -66,6 +70,32 @@ namespace CaPSLOC.Controllers
 
             return result;
 
+        }
+
+        [HttpGet]
+        public JsonResult Altitude(double latitude, double longitude)
+        {
+            JsonResult result = Json(new { success = false, data = "An error has occurred." }, JsonRequestBehavior.AllowGet);
+
+            try
+            {
+                string elevUrl = String.Format("http://maps.googleapis.com/maps/api/elevation/json?sensor=true&locations={0},{1}", latitude, longitude);
+                WebRequest altitudeRequest = WebRequest.CreateDefault(new Uri(elevUrl));
+                WebResponse altitudeResponse = altitudeRequest.GetResponse();
+
+                Stream respStream = altitudeResponse.GetResponseStream();
+                string respString = new StreamReader(respStream).ReadToEnd();
+                JavaScriptSerializer deserial = new JavaScriptSerializer();
+                AltitudeResponseModel respData = deserial.Deserialize<AltitudeResponseModel>(respString);
+                result = Json(new { success = true, data = respData.results[0].elevation }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                result = Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+
+            return result;
         }
 
     }
