@@ -3,10 +3,11 @@ var express = require('express');
 var net = require('net');
 var fs = require('fs');
 
-var CONFIG_FILE_LOCATION = '/opt/CaPSLOC/config.txt'
-var SCRIPT_FOLDER_LOCATION = '/opt/CaPSLOC/scripts'
+var CONFIG_FILE_LOCATION = '/opt/CaPSLOC/config.txt';
+var SCRIPT_FOLDER_LOCATION = '/opt/CaPSLOC/scripts';
+var SOCKET_LOCATION = '/opt/CaPSLOC/socket/socket';
 
-var conn = net.createConnection('/home/jon/capsloc/test_socket');
+var conn = net.createConnection(SOCKET_LOCATION);
 conn.on('connect', function(){
 	console.log('connected to unix socket server');
 });
