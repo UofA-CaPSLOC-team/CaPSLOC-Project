@@ -1,7 +1,15 @@
 ﻿// refresh the list of debug messages
 function debugRefresh() {
+    var useAll = $('input[name=interactive-debug-type]:checked').val();
+    if(useAll != 0){
+        useAll = $('#interactive-alt-list').val();  // Figure out what the active ALT is
+    }
+    if(!useAll){
+        useAll = 0;  // First time through it may not have loaded yet
+    }
+
   $.ajax({
-    url: '/CaPSLOC/ALT/Debug?AltId=2',
+    url: '/CaPSLOC/ALT/Debug?AltId=' + useAll,
     type: 'GET', 
     success: function(result) {
         if (result.success) {
@@ -53,6 +61,16 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    // When the radio button changes, cancel the pending reload and fire immediately
+    $('input[name=interactive-debug-type]').change(function(){    
+        clearTimeout(_debugRefreshId);
+        debugRefresh();
+    });
+    $('#interactive-alt-list').change(function(){    
+        clearTimeout(_debugRefreshId);
+        debugRefresh();
     });
 
     // Remove the unobtrusive validator so we can manually set up validation

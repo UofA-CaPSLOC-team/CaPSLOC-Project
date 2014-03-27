@@ -196,6 +196,13 @@
     </table>
   </div>
   <div id="interactive-mode">
+  <table>
+  <colgroup>
+  <col style="width:600px" />
+  <col style="width:400px" />
+  </colgroup>
+  <tbody><tr>
+    <td>
     <select id="interactive-alt-list">
     </select>
     <br />
@@ -312,7 +319,16 @@
         </div>
         <button id="send-command">Send Command</button>
         </div>
-        <div id="interactive-debug" style="float:right;width:400px">I am another div</div>
+        </td><td>
+            <input type="radio" id="interactive-debug-type-all" name="interactive-debug-type" value="0" checked />
+            <label for="interactive-debug-type-all">All ALTs</label>
+            <br />
+            <input type="radio" id="interactive-debug-type-active" name="interactive-debug-type" value="1" />
+            <label for="interactive-debug-type-active">Active ALT Only</label>
+            <br />
+            <div id="interactive-debug" style="float:right;width:400px"></div>
+        </td>
+        </tr></tbody></table>
     </div>
   <div id="image-gallery">
       <form id=image-filter-form action="#">

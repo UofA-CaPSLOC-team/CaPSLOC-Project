@@ -99,8 +99,8 @@ function addMarker(location) {
         map: map
     });
     var latlng = marker.getPosition();
-    $('#latitude-field').val(latlng.lat());
-    $('#longitude-field').val(latlng.lng());
+    $('#latitude-field').val(latlng.lat().toFixed(6));
+    $('#longitude-field').val(latlng.lng().toFixed(6));
 
     var request = {
         locations: [latlng]
@@ -116,7 +116,7 @@ function reCenterMap(location) {
 }
 
 function setAltitude(locations, status){
-    $('#altitude-field').val(locations[0].elevation);
+    $('#altitude-field').val(locations[0].elevation.toFixed(2));
 }
 
 function submitLocation() {

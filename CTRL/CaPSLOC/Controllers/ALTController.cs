@@ -249,6 +249,13 @@ namespace CaPSLOC.Controllers
             List<DebugMessageModel> cachedMessages = HttpRuntime.Cache["AppDebugInfo"] as List<DebugMessageModel>;
             if (cachedMessages != null)
             {
+                if (AltId != 0)
+                {
+                    var alt = DbModel.ALTs.FirstOrDefault(a => a.Id == AltId);
+                    var name = alt != null ? alt.Name : String.Empty;
+                    cachedMessages = cachedMessages.Where(c => c.AltName == name).ToList();
+                }
+
                 result = Json(new { success = true, data = cachedMessages }, JsonRequestBehavior.AllowGet);
             }
 

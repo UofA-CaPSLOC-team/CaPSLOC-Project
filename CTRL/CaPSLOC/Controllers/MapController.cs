@@ -29,6 +29,11 @@ namespace CaPSLOC.Controllers
                     return result;
                 }
 
+                // Clean up the numbers
+                loc.Latitude = Math.Round(loc.Latitude, 6);
+                loc.Longitude = Math.Round(loc.Longitude, 6);
+                loc.Altitude = Math.Round(loc.Altitude, 2);
+
                 DbModel.Locations.Add(loc);
                 DbModel.SaveChanges();
 
