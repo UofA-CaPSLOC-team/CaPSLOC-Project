@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-16"?>
+<script name="Test">
+	<goto>
+		<latitude>41.654</latitude>
+		<longitude>-80.324</longitude>
+		<altitude>310.5</altitude>
+		<name>Location 1</name>
+	</goto>
+	<capture>
+		<mode>pic</mode>
+		<quality>600</quality>
+		<framerate>10</framerate>
+		<tot>2:04:25:60</tot>
+		
+	</capture>
+	<wait>
+		<time>00:00:05:00</time>
+	</wait>
+	<rmotion>
+		<direction>left</direction>
+		<angle>5</angle>
+	</rmotion>
+</script>

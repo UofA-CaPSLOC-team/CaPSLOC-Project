@@ -9,10 +9,19 @@
 #define MCPM_H_
 
 
-#include "../../Preprocessor/InProc/CommandID.h"
+#include "../../Preprocessor/InProc/CommandNode.h"
+#include "../../Preprocessor/InProc/CommandList.h"
 #include <iostream>
 #include <unistd.h>
 #include <string>
+
+typedef struct Coordinates{
+	double longitude;
+	double latitude;
+	Coordinates(double lon, double lat): longitude(lon), latitude(lat){
+	}
+}GPSCoordinates;
+
 class MCPM {
 public:
 	MCPM();
@@ -46,7 +55,7 @@ public:
 	 * @return true: operation completed successfully
 	 * @return false: operation blew up in your face
 	 */
-	bool capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolution, short sFrameRate = 0);
+	bool capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolution, short sFrameRate);
 
 	/**
 	 * relativeMotion performs the math and system calls necessary to
@@ -60,6 +69,13 @@ public:
 	 * @return false: operation tried it's darndest, but in the end was insufficient for the task at hand.
 	 */
 	bool relativeMotion(RelativeDirection tRelDir, double nDegrees);
+
+	/**
+	 * getGPSCoordinate polls the sensors to determine the GPS coordinates of the ALT unit.
+	 *
+	 * @return GPS coordinates in a GPSCoordinates struct.
+	 */
+	GPSCoordinates getGPSCoordinate();
 
 private:
 	//TODO Fill in as needed for private members and methods
