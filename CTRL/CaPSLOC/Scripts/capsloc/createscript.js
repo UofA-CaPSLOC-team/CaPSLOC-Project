@@ -30,10 +30,10 @@ $(document).ready(function () {
 
     $('#save-script-dialog').dialog({
         autoOpen: false,
-        height: 500,
+        height: 300,
         width: 350,
         title: 'Save Script',
-        // modal: true,
+        modal: true,
         buttons: {
             Save: saveScript,
             Cancel: function () {
@@ -41,6 +41,8 @@ $(document).ready(function () {
             }
         }
     });
+
+    
 
     // Remove the unobtrusive validator so we can manually set up validation
     $('#create-script-add-form').removeData('validator');
@@ -134,6 +136,8 @@ function saveScript() {
         }
     });
 }
+
+ 
 
 function reloadScriptGrid() {
 

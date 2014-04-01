@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace CaPSLOC.Controllers
 {
@@ -217,6 +218,41 @@ namespace CaPSLOC.Controllers
             {
                 return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.DenyGet);
             }
+        }
+
+        //From Browser
+        [HttpGet]
+        public ActionResult Scripts(int altId)
+        {
+            var result = Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+            // Lookup ALT address in list
+            using (DbModelContainer models = new DbModelContainer())
+            {
+                ALT alt = models.ALTs.SingleOrDefault(a => a.Id == altId);
+                if (alt == null)
+                {
+                    return Json(new { success = false, data = "Selected ALT not found in database" }, JsonRequestBehavior.DenyGet);
+                }
+                if (!alt.RecentlyLocated)
+                {
+                    return Json(new { success = false, data = "Selected ALT not recently located. Please scan for ALTs" }, JsonRequestBehavior.DenyGet);
+                }
+
+                // Transmit request to ALT
+                WebRequest altRequest = WebRequest.CreateDefault(new Uri(String.Format("http://{0}/CaPSLOC/Scripts", alt.Address)));
+                altRequest.Method = "GET";
+
+                WebResponse resp = altRequest.GetResponse();
+                Stream respStream = resp.GetResponseStream();
+
+                string respString = new StreamReader(respStream).ReadToEnd();
+                JavaScriptSerializer deserial = new JavaScriptSerializer();
+                ScriptListModel respData = deserial.Deserialize<ScriptListModel>(respString);
+                result = Json(new { success = true, data = respData }, JsonRequestBehavior.AllowGet);
+            }
+
+            return result;
         }
 
         // From ALT

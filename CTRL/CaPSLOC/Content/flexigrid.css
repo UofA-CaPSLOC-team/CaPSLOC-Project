@@ -633,3 +633,15 @@ div.pGroup {
 {
     background: url(images/close.png) no-repeat left;
 }
+
+/* User-defined button classes */
+.flexigrid .add
+{
+    background: url(images/load.png) no-repeat left;
+}
+
+/* User-defined button classes */
+.flexigrid .delete
+{
+    background: url(images/close.png) no-repeat left;
+}

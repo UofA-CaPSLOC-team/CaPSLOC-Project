@@ -16,11 +16,20 @@
 
 <h2>CaPSLOC</h2>
 
-<div id="save-script-dialog" style="display:none;position:absolute;overflow:hidden">
+<div id="save-script-dialog" style="display:none">
     <label for="save-script-name">Name:</label>
     <input type="text" id="save-script-name" />
+    <br />
     <label for="save-script-description">Description:</label>
     <input type="text" id="save-script-description" />
+</div>
+
+<div id="add-script-dialog" style="display:none">
+    <div>ALT: </div>
+    <div id="add-script-alt"></div>
+    <br />
+    <label for="add-script-name">Name:</label>
+    <select id="add-script-name"></select>
 </div>
 
 <div id="tabs">
@@ -28,6 +37,7 @@
     <li><a href="#map-page">Map</a></li>
     <li><a href="#alt-locate">Locate ALT</a></li>
     <li><a href="#create-script">Create Script</a></li>
+    <li><a href="#manage-scripts">Manage Scripts</a></li>
     <li><a href="#interactive-mode">Interactive</a></li>
     <li><a href="#image-gallery">Image Gallery</a></li>
   </ul>
@@ -86,7 +96,7 @@
                         <option value="10">Configure Defaults</option>
                     </select>
                     <br />
-                    <form id="create-script-add-form">
+                    <form id="create-script-add-form" action="#">
                         <div id="command-parameters-2" class="command-parameters" style="display:none">
                             <label for="goto-location-list">Location:</label>
                             <select id="goto-location-list"></select>
@@ -194,6 +204,13 @@
             </tr>
         </tbody>
     </table>
+  </div>
+  <div id="manage-scripts">
+    <label for="manage-alt-list">ALT:</label>
+    <select id="manage-alt-list"></select>
+    <button id="get-scripts-button">Get Scripts</button>
+    <br />
+    <table id="manage-scripts-found"></table>
   </div>
   <div id="interactive-mode">
   <table>
@@ -357,5 +374,6 @@
 <script type="text/javascript" src="~/Scripts/capsloc/map.js"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/alt.js"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/createscript.js"></script>
+<script type="text/javascript" src="~/Scripts/capsloc/managescript.js"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/interactive.js"></script>
 <script type="text/javascript" src="~/Scripts/capsloc/image.js"></script>

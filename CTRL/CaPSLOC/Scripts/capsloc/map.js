@@ -67,6 +67,7 @@ function initializeMap() {
     };
 
     $('#map-canvas').empty();  // Clear this out, so we don't have multiple maps
+    var mapCanvas = document.getElementById('map-canvas');
     map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 

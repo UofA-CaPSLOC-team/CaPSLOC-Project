@@ -15,6 +15,9 @@ $(document).ready(function () {
                 case 'create-script':
                     scriptRefreshLocations();
                     break;
+                case 'manage-scripts':
+                    manageRefreshALTs();
+                    break;
                 case 'image-gallery':
                     imageRefreshALTs();
                     imageRefreshLocations();
