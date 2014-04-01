@@ -16,6 +16,7 @@
 #include <vector>
 #include <deque>
 #include <fstream>
+#include <sstream>
 #include "CommandNode.h"
 #include "CommandList.h"
 #include "Config.h"
