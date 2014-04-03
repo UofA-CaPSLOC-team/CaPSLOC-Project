@@ -25,6 +25,20 @@ app.configure(function() {
 	app.use(express['static'](__dirname )); 
 });
 
+// Route for deleting a script from the ALT
+app.delete('/CaPSLOC/Script', function(req, res){
+	// Debugging
+	console.log('Delete request');
+	console.log(req.query.name);
+	
+	// Delete (unlink) file
+	var filename = SCRIPT_FOLDER_LOCATION + '/' + req.query.name + '.xml';
+	fs.unlinkSync(filename);
+	
+	var respBody = getScriptNamesAndTimes();
+	res.send(JSON.stringify({success: true, data:respBody}));
+});
+
 // Route for sending a script to the ALT
 app.post('/CaPSLOC/Script', function(req, res){
 	// Debugging
@@ -42,9 +56,36 @@ app.post('/CaPSLOC/Script', function(req, res){
 	conn.write(filename);
 	
 	// Send back a success message
-	var respData = {success: true};
+	var respBody = getScriptNamesAndTimes();
+	var respData = {success: true, data: respBody};
 	res.send(JSON.stringify(respData));
 });
+
+// Route to get all the scripts without changing them
+app.get('/CaPSLOC/Scripts', function(req, res){
+	console.log('Received request for scripts');
+	// Send back a success message
+	var respBody = getScriptNamesAndTimes();
+	var respData = {success: true, data: respBody};
+	res.send(JSON.stringify(respData));
+});
+
+function getScriptNamesAndTimes(){
+
+	var files = fs.readdirSync(SCRIPT_FOLDER_LOCATION);
+	var respBody = [];
+	
+	// More debugging
+	console.log(files.length + ' scripts remaining');
+	for(var i = 0; i < files.length; i++){
+		console.log(files[i]);
+		var fileToStat = SCRIPT_FOLDER_LOCATION + '/' + files[i];
+		var stats = fs.statSync(fileToStat);
+		console.log(stats.mtime);
+		respBody.push({Name: files[i], Modified: stats.mtime});
+	}
+	return respBody;
+}
 
 // Route for sending a command to the ALT
 app.post('/CaPSLOC/Command', function(req, res){
