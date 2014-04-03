@@ -4,7 +4,8 @@ namespace CaPSLOC.Models
 {
     public class ScriptListModel
     {
-        public List<ScriptListEntryModel> Scripts { get; set; }
+        public Boolean success { get; set; }
+        public List<ScriptListEntryModel> data { get; set; }
     }
 
     public class ScriptListEntryModel

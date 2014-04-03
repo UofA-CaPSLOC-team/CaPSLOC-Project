@@ -249,7 +249,7 @@ namespace CaPSLOC.Controllers
                 string respString = new StreamReader(respStream).ReadToEnd();
                 JavaScriptSerializer deserial = new JavaScriptSerializer();
                 ScriptListModel respData = deserial.Deserialize<ScriptListModel>(respString);
-                result = Json(new { success = true, data = respData }, JsonRequestBehavior.AllowGet);
+                result = Json(new { success = true, data = respData.data }, JsonRequestBehavior.AllowGet);
             }
 
             return result;
