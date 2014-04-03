@@ -107,11 +107,19 @@ app.get('/CaPSLOC/Status', function(req, res){
 	var contents = fs.readFileSync(CONFIG_FILE_LOCATION, {'encoding': 'utf8'});
 	var configItems = contents.split('\n');
 	var name = "";
+	var ctrlLine = "CTRL=" + req.ip;
+	var ctrlFound = false;
 	for(var i = 0; i < configItems.length; i++){
 		if(configItems[i].indexOf('Name=') == 0){
 			name = configItems[i].substr(5);
-			break;
 		}
+		if(configItems[i].indexOf('CTRL=') == 0){
+			ctrlFound = true;
+			configItems[i] = ctrlLine;	
+		}
+	}
+	if(!ctrlFound){
+		configItems.push(ctrlLine);
 	}
 	res.send(name);
 }); 
