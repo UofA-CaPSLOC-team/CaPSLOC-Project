@@ -1,0 +1,4 @@
+*.o
+*.d
+NodeJS/node_modules
+*~
