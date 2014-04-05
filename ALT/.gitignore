@@ -2,3 +2,5 @@
 *.d
 NodeJS/node_modules
 *~
+.settings
+Default/ALT
