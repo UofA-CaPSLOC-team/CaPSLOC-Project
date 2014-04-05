@@ -23,11 +23,12 @@
 #include "../../DPU/SendToCTRL.h"
 
 
-
+class BoostParse; //Forward Declaration to appease his majesty, G++.
 class CommandHandler {
 public:
 
-	CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd, SendToCTRL * stc);
+	CommandHandler();
+	CommandHandler(BoostParse * bp, SendToCTRL * stc);
 	virtual ~CommandHandler();
 
 	/**
@@ -40,8 +41,12 @@ public:
 	 */
 	void execNext();
 
+	void smoothHalt(){m_bHaltExec = true;}
+	void startFromHalt(){m_bHaltExec = false;}
+
 private:
 	bool m_bExecScript;
+	BoostParse * m_bp;
 	CommandList * m_cmdManual;
 	CommandList * m_cmdScript;
 	MCPM * m_ptrMCPM;
@@ -54,7 +59,7 @@ private:
 	int m_nQuality;
 	CaptureMode m_tCapMode;
 	short m_sFrameRate;
-	bool m_bPaused;
+	bool m_bPaused, m_bHaltExec;
 };
 
 #endif /* COMMANDHANDLER_H_ */

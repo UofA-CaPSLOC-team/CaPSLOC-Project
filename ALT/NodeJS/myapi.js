@@ -109,17 +109,36 @@ app.get('/CaPSLOC/Status', function(req, res){
 	var name = "";
 	var ctrlLine = "CTRL=" + req.ip;
 	var ctrlFound = false;
+	var ctrlChanged = false;
 	for(var i = 0; i < configItems.length; i++){
 		if(configItems[i].indexOf('Name=') == 0){
 			name = configItems[i].substr(5);
 		}
 		if(configItems[i].indexOf('CTRL=') == 0){
 			ctrlFound = true;
-			configItems[i] = ctrlLine;	
+			if(configItems[i] != ctrlLine){
+				console.log('Updating entry...');
+				console.log(ctrlLine);
+				configItems[i] = ctrlLine;
+				ctrlChanged = true;
+			} else {
+				console.log('No changes required.');
+			}
 		}
 	}
 	if(!ctrlFound){
+		console.log('No CTRL address found. Adding a new entry.');
 		configItems.push(ctrlLine);
+		ctrlChanged = true;
+	}
+
+	// Write the changes
+	if(ctrlChanged){
+		console.log('Modifying the config file...');
+		var fd = fs.openSync(CONFIG_FILE_LOCATION, 'w');
+		var allConfig = new Buffer(configItems.join('\n'));
+		var bytesWritten = fs.writeSync(fd, allConfig, 0, allConfig.length, 0);
+		console.log(bytesWritten + ' bytes written');
 	}
 	res.send(name);
 }); 
@@ -139,5 +158,5 @@ app.use(function(err, req, res, next){
 });
 
 
-app.listen(3000);
-console.log('App Server running at port 3000');
+app.listen(80);
+console.log('App Server running at port 80');

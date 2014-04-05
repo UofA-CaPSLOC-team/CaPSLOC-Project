@@ -19,9 +19,12 @@
 #include <sstream>
 #include "CommandNode.h"
 #include "CommandList.h"
+#include "../CmdH/CommandHandler.h"
 #include "Config.h"
 
+#define SCRIPTLOC "/opt/CaPSLOC/scripts/"
 
+class CommandHandler;
 
 
 class BoostParse {
@@ -86,6 +89,8 @@ public:
 	 */
 	CommandList * getManualCommands(){return m_cmdManual;}
 
+	Config * getConfig(){return m_cnfg;}
+
 	/**
 	 * hasManualCommands shows whether the manual command queue contains any elements.
 	 *
@@ -102,11 +107,16 @@ public:
 	 */
 	bool hasScriptCommands(){return m_cmdScript->hasCommands();}
 
+	void setCmdH(CommandHandler * cmdH){
+		m_cmdH = cmdH;
+	}
+
 private:
 
 	boost::property_tree::ptree m_xmlScriptFile;
 	std::string m_strFilename;
 	CommandList * m_cmdScript, * m_cmdManual;
+	CommandHandler * m_cmdH;
 //	std::vector<CommandID> * m_vScriptCmd;
 //	std::deque<CommandID> * m_dqManualCmd;
 	Config * m_cnfg;

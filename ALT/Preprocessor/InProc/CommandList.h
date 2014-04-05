@@ -21,11 +21,14 @@ public:
 
 	void push_back(CommandNode newNode);
 	CommandNode * pop_front();
+	CommandNode * peek_front();
 
 	bool hasCommands(){return (m_lNumCmds >= 1);}
 
 	void printList();
 	void setUpIterator();
+
+	void clear();
 
 	CommandNode * getNextCmd();
 

@@ -10,16 +10,15 @@
 #define TESTING
 
 MCPM::MCPM() {
-	// TODO Auto-generated constructor stub
 
 }
 
 MCPM::~MCPM() {
-	// TODO Auto-generated destructor stub
+
 }
 
 bool MCPM::gotoLocation(double dLongitude, double dLatitude, double dAltitude, std::string strLocName){
-	//TODO implement real algorithm, this just writes out to the terminal.
+
 
 #ifdef TESTING
 	std::cout << "---> Going to " << strLocName <<":\n\tLongitude: " << dLongitude << "\n\tLatitude: " << dLatitude << "\n\tAltitude: " << dAltitude << std::endl;
@@ -29,7 +28,7 @@ bool MCPM::gotoLocation(double dLongitude, double dLatitude, double dAltitude, s
 }
 
 bool MCPM::capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolution, short sFrameRate = 0){
-	//TODO implement real algorithm, this just writes out to the terminal.
+
 
 #ifdef TESTING
 	if(tCapMode == PIC){
@@ -43,7 +42,7 @@ bool MCPM::capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolut
 }
 
 bool MCPM::relativeMotion(RelativeDirection tRelDir, double nDegrees){
-	//TODO implement real algorithm, this just writes out to the terminal.
+
 
 #ifdef TESTING
 	switch(tRelDir){

@@ -11,10 +11,16 @@ BoostParse::BoostParse() {
 	m_cmdScript = new CommandList();
 	m_cmdManual = new CommandList();
 	m_cnfg = new Config();
+	m_cmdH = new CommandHandler();
 }
 
 BoostParse::~BoostParse() {
 }
+
+/*inline bool exists_test (const std::string& name) {
+	struct stat buffer;
+	return (stat (name.c_str(), &buffer) == 0);
+}*/
 
 inline long timeParse(std::string time){
 	long rv, hours = 0, mins = 0, secs = 0, msecs = 0;
@@ -157,7 +163,11 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			m_cmdScript->push_back(newNode);
 			//END WAIT
 		}else if(v.first == "exec"){
-			std::string name = v.second.get<std::string>("name");
+			std::string name = SCRIPTLOC;
+			std::string fName = v.second.get<std::string>("name");
+			name.append(fName);
+			name.append(".xml");
+			//			std::string name = v.second.get<std::string>("name");
 
 			std::cout << "\t --> Parsing EXEC: \n";
 			std::cout << "\t\t --> Name: " << name << std::endl;
@@ -178,6 +188,10 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 	std::ifstream xmlFile(strFileName.c_str(), std::ifstream::in);
 	CommandNode newNode = CommandNode();
 	read_xml(xmlFile, m_xmlScriptFile);
+
+	//TODO Halt script execution NOW!!!!
+	m_cmdH->smoothHalt();
+	m_cmdScript->clear(); //clear script before putting new one into memory
 
 	BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, m_xmlScriptFile.get_child("script")){
 		if(v.first == "config"){
@@ -266,19 +280,27 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			m_cmdScript->push_back(newNode);
 			//END WAIT
 		}else if(v.first == "exec"){
-			std::string name = v.second.get<std::string>("name");
-
+			//This could break. Test that script actually exists,
+			// If it doesn't, exclude this element from the script.
+			std::string name = SCRIPTLOC;
+			std::string fName = v.second.get<std::string>("name");
+			name.append(fName);
+			name.append(".xml");
 			std::cout << "\t --> Parsing EXEC: \n";
 			std::cout << "\t\t --> Name: " << name << std::endl;
 
 			newNode.setExec(name);
-			m_cmdScript->push_back(newNode);
+
+			/*if(exists_test(name)){
+				m_cmdScript->push_back(newNode);
+			}*/
 			//END EXEC
 		}else {
 			//Skip erroneous element.
 			//END DEFAULT
 		}
 	}
+	m_cmdH->startFromHalt();
 	return true;
 }
 
