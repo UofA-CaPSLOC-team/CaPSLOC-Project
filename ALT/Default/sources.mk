@@ -24,6 +24,7 @@ C_UPPER_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
+Preprocessor/SocketComm \
 Preprocessor/InProc \
 Preprocessor/CmdH \
 DPU \

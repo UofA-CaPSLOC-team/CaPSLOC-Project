@@ -70,6 +70,7 @@ public:
 	 */
 	bool relativeMotion(RelativeDirection tRelDir, double nDegrees);
 
+	bool isReadyForNextLocation(){return true;}
 	/**
 	 * getGPSCoordinate polls the sensors to determine the GPS coordinates of the ALT unit.
 	 *
@@ -78,7 +79,7 @@ public:
 	GPSCoordinates getGPSCoordinate();
 
 private:
-	//TODO Fill in as needed for private members and methods
+	//Fill in as needed for private members and methods
 };
 
 #endif /* MCPM_H_ */

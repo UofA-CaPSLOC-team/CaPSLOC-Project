@@ -7,11 +7,10 @@
 
 #include "CommandHandler.h"
 
-CommandHandler::CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd, SendToCTRL * stc) {
-	// TODO Auto-generated constructor stub
-	m_cmdManual = ManualCmd;
-	m_cmdScript = ScriptCmd;
-	m_bExecScript = true;//TODO change for official release.
+CommandHandler::CommandHandler(){
+	m_cmdManual = new CommandList();
+	m_cmdScript = new CommandList();
+	m_bExecScript = true;//change for official release.
 	m_ptrMCPM = new MCPM();
 	m_dLatOffset = m_dLongOffset = m_dAltOffset = 0;
 	m_dRMotionAngle = 5;
@@ -20,8 +19,30 @@ CommandHandler::CommandHandler(CommandList * ManualCmd, CommandList * ScriptCmd,
 	m_nQuality = 1080;
 	m_tCapMode = PIC;
 	m_sFrameRate = 30;
+	m_stc = NULL;
+	m_bPaused = false;
+	m_bHaltExec = false;
+	m_bp = NULL;
+}
+
+CommandHandler::CommandHandler(BoostParse * bp, SendToCTRL * stc) {
+	m_cmdManual = bp->getManualCommands();
+	m_cmdScript = bp->getScriptCommands();
+	m_bExecScript = true;//change for official release.
+	m_ptrMCPM = new MCPM();
+	m_dLatOffset = bp->getConfig()->getLatOffset();
+	m_dLongOffset = bp->getConfig()->getLongOffset();
+	m_dAltOffset = bp->getConfig()->getAltOffset();
+	m_dRMotionAngle = bp->getConfig()->getRMotionAngle();
+	m_lVidtime = bp->getConfig()->getVidTime(); //5 seconds
+	m_lWaitTime = bp->getConfig()->getWaitTime(); // half a second
+	m_nQuality = bp->getConfig()->getQuality();
+	m_tCapMode = bp->getConfig()->getCaptureMode();
+	m_sFrameRate = bp->getConfig()->getFrameRate();
 	m_stc = stc;
 	m_bPaused = false;
+	m_bHaltExec = false;
+	m_bp = bp;
 }
 
 CommandHandler::~CommandHandler() {
@@ -33,11 +54,12 @@ CommandHandler::~CommandHandler() {
 void CommandHandler::execNext(void){
 	CommandNode * currCmd;
 	std::string stcString;
-	//TODO this is dangerous if it isn't a separate thread.
+	//This must run constantly to ensure proper execution of scripts.
 	m_cmdScript->setUpIterator();
 	while(1){
-		m_cmdScript->printList();
-		if(!m_bPaused){
+		//Remove this printList() for production.
+//		m_cmdScript->printList();
+		if(!m_bPaused && !m_bHaltExec){
 			if(m_cmdManual->hasCommands()){
 				currCmd = (m_cmdManual->pop_front());
 			}else if(m_cmdScript->hasCommands()){
@@ -46,11 +68,28 @@ void CommandHandler::execNext(void){
 				continue;
 			}
 		}else {
-			//TODO Peek at the front of both lists. If either one has a RESUME, reset the pause flag and continue.
+			//Peek at the front of both lists. If either one has a RESUME, reset the pause flag and continue.
+			if(m_bPaused){
+				if(m_cmdManual->hasCommands()){
+					if(m_cmdManual->peek_front()->getType() == RESUME){
+						m_bPaused = false;
+						m_stc->sendCommandDebug("RESUMING");
+						continue;
+					}
+				}
+				if(m_cmdScript->hasCommands()){
+					if(m_cmdScript->peek_front()->getType() == RESUME){
+						m_bPaused = false;
+						m_stc->sendCommandDebug("RESUMING");
+						continue;
+					}
+				}
+			}
 		}
 		switch(currCmd->getType()){
 		case HALT:
 			//TODO Stop things!
+			//TODO Need code to stop motors NOW!
 			m_stc->sendCommandDebug("HALTING");
 			break;
 			//END HALT
@@ -68,6 +107,7 @@ void CommandHandler::execNext(void){
 			break;
 			//END RMOTION
 		case CAPTURE:
+			//TODO CHANGE THIS!
 			m_ptrMCPM->capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),
 					currCmd->getQuality(),
@@ -86,6 +126,9 @@ void CommandHandler::execNext(void){
 			break;
 			//END CAPTURE
 		case GOTO:
+			while(!m_ptrMCPM->isReadyForNextLocation()){
+				usleep(50000);
+			}
 			m_ptrMCPM->gotoLocation(currCmd->getLongitude(),
 					currCmd->getLatitude(),
 					currCmd->getAltitude(),
@@ -125,12 +168,12 @@ void CommandHandler::execNext(void){
 			break;
 			//END PAUSE
 		case RESUME:
-			//TODO Resume from pause!
-			m_stc->sendCommandDebug("RESUMING");
+			//Handled above, will only be hit if no matching PAUSE.
 			break;
 			//END RESUME
 		case EXEC:
 			//TODO bring in another script file.
+			m_bp->scriptFileParse(currCmd->getName());
 			m_stc->sendCommandDebug("EXECUTING");
 			break;
 			//END EXEC
