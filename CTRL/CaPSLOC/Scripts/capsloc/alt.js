@@ -63,6 +63,7 @@ $(document).ready(function () {
                 endIP: $('#ip-end').val() != '' ? $('#ip-end').val() : $('#ip-start').val()  // Scan single IP if only one is defined
             }
 
+            openWaitDialog();
             $.ajax({
                 url: '/CaPSLOC/ALT/PingSweep',
                 type: 'POST',
@@ -77,9 +78,11 @@ $(document).ready(function () {
                     } else {
                         alert('An error occurred during the ping sweep: ' + result.data);
                     }
+                    closeWaitDialog();
                 },
                 error: function () {
                     alert('An error occurred during the ping sweep');
+                    closeWaitDialog();
                 }
             });
         }

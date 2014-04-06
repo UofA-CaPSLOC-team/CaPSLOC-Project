@@ -35,7 +35,27 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#wait-dialog').dialog({
+        autoOpen: false,
+        height: 200,
+        width: 250,
+        title: 'Please Wait...',
+        modal: true
+    });
+
+    $('#wait-progress').progressbar({
+        value: false
+    });
 });
+
+function openWaitDialog() {
+    $('#wait-dialog').dialog('open');
+}
+
+function closeWaitDialog() {
+    $('#wait-dialog').dialog('close');
+}
 
 function readScriptInput(cmdType, tab) {
     var serializedInput = { CommandType: cmdType, Params: [] };
@@ -62,7 +82,6 @@ function readScriptInput(cmdType, tab) {
             break;
         case 2:
             serializedInput.CommandName = 'Go To Location';
-            //alert("Not Implemented!");  // Need to read back that value from the server (or store when pulling back all locations)
             var locText = $('[id$=goto-location-list]', tab).text();
             var locName = locText.substr(0, locText.indexOf('('));
             var locArray = locText.substring(locText.indexOf('(') + 1, locText.indexOf(')')).split(',');
