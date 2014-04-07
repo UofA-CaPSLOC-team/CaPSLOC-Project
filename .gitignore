@@ -49,6 +49,9 @@ Makefile
 *.old
 *.mak
 *.data
+*.sln
+*.sou
+*.sdf
 
 
 # Build results
