@@ -10,7 +10,7 @@
       <Transport>None</Transport>
     </BuildHost>
     <DeploymentHost>
-      <HostName>130.101.12.127</HostName>
+      <HostName>130.101.12.1</HostName>
       <Transport>SSH</Transport>
       <UserName>pi</UserName>
     </DeploymentHost>

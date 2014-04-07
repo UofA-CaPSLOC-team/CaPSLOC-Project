@@ -24,7 +24,7 @@ error:
 endif
 
 SOURCEFILES := Source.cpp
-EXTERNAL_LIBS := ../GPSManager/$(BINARYDIR)/GPSManager.a ../Sensors/$(BINARYDIR)/Sensors.a ../WiringPi/$(BINARYDIR)/WiringPi.a
+EXTERNAL_LIBS := ../GPSManager/$(BINARYDIR)/GPSManager.a ../Sensors/$(BINARYDIR)/Sensors.a ../PICManager/$(BINARYDIR)/PICManager.a ../WiringPi/$(BINARYDIR)/WiringPi.a
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
 CFLAGS += $(COMMONFLAGS)
@@ -134,6 +134,9 @@ $(BINARYDIR)/GPSManager.a : ../GPSManager/$(BINARYDIR)/GPSManager.a
 
 $(BINARYDIR)/Sensors.a : ../Sensors/$(BINARYDIR)/Sensors.a
 	$(CP) ../Sensors/$(BINARYDIR)/Sensors.a $(BINARYDIR)/Sensors.a
+
+$(BINARYDIR)/PICManager.a : ../PICManager/$(BINARYDIR)/PICManager.a
+	$(CP) ../PICManager/$(BINARYDIR)/PICManager.a $(BINARYDIR)/PICManager.a
 
 $(BINARYDIR)/WiringPi.a : ../WiringPi/$(BINARYDIR)/WiringPi.a
 	$(CP) ../WiringPi/$(BINARYDIR)/WiringPi.a $(BINARYDIR)/WiringPi.a

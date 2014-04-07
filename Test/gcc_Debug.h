@@ -219,6 +219,7 @@
 //C:/VisualGDB/Test/WiringPi
 //C:\VisualGDB\Test\GPSManager
 //C:\VisualGDB\Test\PICManager
+//C:\VisualGDB\Test\MCPM
 //c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6
 //c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/arm-linux-gnueabihf
 //c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/backward

@@ -4,7 +4,8 @@
 #include "LPS331AP.h"
 #include "LSM303.h"
 #include "GPSManager.h"
-#include "PicManager.h"
+#include "SensorManager.h"
+#include "MCPM.h"
 #include <unistd.h>
 #include <iostream>
 #include <fstream>
@@ -14,7 +15,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <stdlib.h>
 #include "wiringPi.h"
+#include "VerticalAxis.h"
 
 using namespace std;
 
@@ -41,44 +44,9 @@ void testGPS()
 	delete gps;
 }
 
-void testMagnetometer()
-{
-	LSM303 *mag = new LSM303();
-	cout.precision(10);
-
-	while (1)
-	{
-		float accx = mag->accGetXAxisG();
-		float accy = mag->accGetYAxisG();
-		float accz = mag->accGetZAxisG();
-
-		float magx = mag->magGetXAxisGaus();
-		float magy = mag->magGetYAxisGaus();
-		float magz = mag->magGetZAxisGaus();
-
-		float roll = accx*accx + accz*accz;
-		float rollRadians = atan2f(accy, sqrt(roll));
-
-		float pitch = accy*accy + accz*accz;
-		float pitchRadian = atan2f(accx, sqrt(pitch));
-
-		float cosRoll = cosf(rollRadians);
-		float sinRoll = sinf(rollRadians);
-		float cosPitch = cosf(pitchRadian);
-		float sinPitch = sinf(pitchRadian);
-
-		float cmagx = magx * cosPitch + magz*sinPitch;
-		float cmagy = magx * sinRoll * sinPitch + magy * cosRoll - magz * sinRoll * cosPitch;
-
-		float angle = atan2f(cmagy, cmagx) * 180 /3.141592654;
-		//cout << cmagx << " " << cmagy << '\r';
-		//cout << magx << " " <<magy << " " << magz << '\r';
-		cout << angle << '\r';
-	}
-}
-
 void testMagnetometer2()
 {
+	MCPM *b = new MCPM();
 	LSM303* mag = new LSM303();
 	cout.precision(10);
 
@@ -108,84 +76,7 @@ void testMagnetometer2()
 
 		float rollAngle;
 		rollAngle = 90 + atan2f(accz, accy) * 180/3.141592654;
-
-		string level;
-		if (pitchangle < 1 && rollAngle < 1)
-			level = "Level";
-		else
-			level = "Not Level";
-
-		string south;
-		if (magx < 0 && (abs(magy/b) <= 2))
-			south = "South";
-		else
-			south = "not south";
-		//cout << magx/b << " " << magy/b << " " << magz/b << " " <<atan2f(abs(magy), abs(magx))*180/3.141592654 << "        " <<pitchangle << " " << rollAngle << endl;
-		cout << level << "   " << south << "    " << magx/b << " " << magy/b << "  " << atan2f(abs(magy), abs(magx))*180/3.141592654 << "     " << pitchangle << " " << rollAngle << endl;
-		//cout << level << "    " << south << endl;
-		//cout << magx << endl;
-		//cout << atan2f(magx, magy) *180 /3.141592654 << '\r';
-	}
-}
-
-template<typename Ta, typename Tb, typename To> void cross(Ta *a, Tb *b, To *out)
-{
-	out[0] = (a[1] * b[2]) - (a[2] * b[1]);
-	out[1] = (a[2] * b[0]) - (a[0] * b[2]);
-	out[2] = (a[0] * b[1]) - (a[1] * b[0]);
-}
-
-template<typename Ta, typename Tb> float dot(Ta *a, Tb *b)
-{
-	float rVal = 0.0;
-	rVal = float( (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]) );
-	return rVal;
-}
-
-void normalize(int16_t *a)
-{
-	float mag = sqrt(dot(a, a));
-	a[0]/=mag;
-	a[1]/=mag;
-	a[2]/=mag;
-}
-
-void normalize(float *a)
-{
-	float mag = sqrt(dot(a, a));
-	a[0]/=mag;
-	a[1]/=mag;
-	a[2]/=mag;
-}
-
-void testMangnetometer3()
-{
-	LSM303* mag = new LSM303();
-	cout.precision(10);
-
-	while(1)
-	{
-		int from[] = {0, -1, 0};
-		int16_t x = mag->magGetXAxisRaw();
-		int16_t y = mag->magGetYAxisRaw();
-		int16_t z = mag->magGetZAxisRaw();
-
-		int16_t accx = -mag->accGetXAxisRaw();
-		int16_t accy = -mag->accGetYAxisRaw();
-		int16_t accz = -mag->accGetZAxisRaw();
-
-		int16_t m[] = {x, y, z};
-		int16_t a[] = {accx, accy, accz};
-
-		float e[] = {0, 0, 0};
-		float n[] = {0, 0, 0};
-		cross(m, a, e);
-		normalize(e);
-		cross(a, e, n);
-		normalize(n);
-
-		float heading = atan2f(dot(e, from), dot(n, from)) * 180 / 3.141592654;
-		cout << "Heading: " << heading << endl;
+		cout << magx/b << " " << magy/b << " " << magz/b << " " <<atan2f(abs(magy), abs(magx))*180/3.141592654 << "        " <<pitchangle << " " << rollAngle << endl;
 	}
 }
 
@@ -251,37 +142,272 @@ void testGyro()
 	}
 }
 
-void testPicManager()
+void TestVerticalAxis()
 {
-	PicManager * hor = new PicManager(0);
-	PicManager * vert = new PicManager(1);
+	VerticalAxis *vert = new VerticalAxis(1);
 	while(1)
 	{
 		string input;
-		int vertdegress;
-		int hordegrees; 
-		cout << "Enter horizontal Degrees to move: ";
+		cout << "Enter Degrees To Move: ";
 		cin >> input;
 		if (input == "exit")
 			break;
-		hordegrees = atoi(input.c_str());
-		cout << "Enter vertical Degrees to move: ";
-		cin >> input;
-		if (input == "exit")
-			break;
-		vertdegress = atoi(input.c_str());
-		cout << endl;
-		if (abs(hordegrees) <= 360)
-			hor->MoveDegrees(hordegrees);
-		if (abs(vertdegress) <= 180)
-			vert->MoveDegrees(vertdegress);
+		int degrees = atoi(input.c_str());
+		vert->MoveDegrees(degrees);
+		while(!vertIsDoneMoving)
+		{
+			sleep(1);
+		}
 	}
 	delete vert;
-	delete hor;
 }
 
+void TestHorizontalAxis()
+{
+	HorizontalAxis *hor = new HorizontalAxis(1);
+	while(1)
+	{
+		string input;
+		cout << "Enter Degrees To Move: ";
+		cin >> input;
+		if (input == "exit")
+			break;
+		int degrees = atoi(input.c_str());
+		hor->MoveDegrees(degrees);
+		while(!horIsDoneMoving)
+		{
+			sleep(1);
+		}
+	}
+}
+
+void TestMCPM2()
+{
+	bool moveRight = false;
+	MCPM *b = new MCPM();
+	while(1)
+	{
+		while(!b->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		int degrees = rand() % 200;
+		moveRight = degrees % 2;
+		if (moveRight)
+		{
+			b->relativeMotion(RIGHT, degrees);
+		}
+		else
+		{
+			b->relativeMotion(LEFT, degrees);
+		}
+		while(!horIsDoneMoving)
+		{
+			usleep(50000);
+		}
+	}
+}
+
+void TestMCPM()
+{
+	MCPM *b = new MCPM();
+	while(1)
+	{
+		bool canMove = false;
+		string entry;
+		cout << "Enter vertical degrees to move: ";
+		cin >> entry;
+		int degrees = atoi(entry.c_str());
+		if (degrees >= 0)
+			canMove = b->relativeMotion(UP, abs(degrees));
+		else
+			canMove = b->relativeMotion(DOWN, abs(degrees));
+
+		cout << "Is the bastard able to move? " << canMove << endl;
+		while(!vertIsDoneMoving && !horIsDoneMoving)
+		{
+			usleep(50000);
+		}
+	}
+}
+
+void TestyFindySouthy()
+{
+	LSM303 *mag = new LSM303();
+	MCPM *b = new MCPM();
+	while(!b->isReadyForNextLocation())
+	{
+		usleep(50000);
+	}
+	bool foundSouth = false;
+	int c = 50;
+	int magx = 0;
+	int magy= 0;
+	int magz= 0;
+	int prevx;
+	int prevy;
+	bool movedLeft = true;
+	int bounceCount = 0;
+	bool initialize = true;
+	while(bounceCount < 10)
+	{
+		cout << "Das Bounce Count: " << bounceCount << endl;
+		prevx = magz;
+		prevy = magy;
+		magx = 0;
+		magy = 0;
+		magz = 0;
+		for (int i=0; i<c; i++)
+		{
+			magx += mag->magGetXAxisRaw();
+			magy += mag->magGetYAxisRaw();	
+			magz += mag->magGetZAxisRaw();
+		}
+		magx = magx/c;
+		magy = magy/c;
+		cout << magx << " " <<magy << " " << endl;
+		cout << "Previous Y: " << abs(prevy) << " Current Y: " << abs(magy) << endl;
+		int difference = abs(abs(prevy) - abs(magy));
+		if (initialize)
+		{
+			initialize = false;
+			b->relativeMotion(LEFT, 20);
+
+		}
+		else
+		{
+			if (abs(prevy) > abs(magy)) // keep moving the same direction
+			{
+
+				cout << "Prev Y greater than current y" << endl;
+				if (movedLeft)
+				{
+					cout << "Moving left..." << endl;
+					b->relativeMotion(LEFT, difference);
+					movedLeft = true;
+				}
+				else
+				{
+					cout << "Moving Right..." << endl;
+					b->relativeMotion(RIGHT, difference);
+					movedLeft = false;
+				}
+			}
+			else //move opposide direction
+			{
+				cout << "Prev Y less than current y" << endl;
+				if (movedLeft)
+				{
+					cout << "Moving right..." << endl;
+					b->relativeMotion(RIGHT, difference);
+					movedLeft = false;
+				}
+				else
+				{
+					cout << "Moving left..." << endl;
+					b->relativeMotion(LEFT, difference);
+					movedLeft = true;
+				}
+				bounceCount ++;
+			}
+		}
+		while(!b->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+	}
+	delete b;
+	delete mag;
+}
+
+void TestAccAndControl()
+{
+	string answer = "";
+	HorizontalAxis *hor = new HorizontalAxis(1);
+	LSM303 *acc = new LSM303();
+	while (true)
+	{
+		//cout << "Are you ready to control via accelerometer? ";
+		//cin >> answer;
+		//if (answer == "y")
+		//	break;
+		cout << "Enter degrees to move: ";
+		cin >> answer;
+		int degreesToMove = atoi(answer.c_str());
+		hor->MoveDegrees(degreesToMove);
+		while(!horIsDoneMoving)
+		{
+		}
+	}
+	float last = 0;
+	while(1)
+	{
+		float x, z;
+		for (int i = 0; i<10; i++)
+		{
+			x += acc->accGetXAxisG();
+			z += acc->accGetZAxisG();
+		}
+		x = x/10;
+		z = z/10;
+
+		float angle;
+		if (z>0 && x <0)
+			angle = atan2f(z, x) * 180/3.141592654 - 270;
+		else
+			angle = 90 + atan2f(z, x)*180/3.141592654;
+		
+		hor->MoveDegrees(angle - last);
+		last = angle;
+		usleep(50000);
+	}
+}
+
+void TestSensorManager()
+{
+	SensorManager *sen = new SensorManager();
+	while(1)
+	{
+		cout << sen->GetMagXRaw() << " " <<sen->GetMagYRaw() << endl;
+	}
+}
 int main(void)
 {
+	//MCPM *bob = new MCPM();
+	//41.076035, -81.509466
+
+	//cout << "North North East" << endl;
+	//bob->gotoLocation(41.076733, -81.513591, 100);
+	//cout << "East East North" << endl;
+	//bob->gotoLocation(41.076326, -81.512642, 80);
+	//cout << "East East South" << endl;
+	//bob->gotoLocation(41.075772, -81.512579, 50000);
+	//cout << "South South East" << endl;
+	//bob->gotoLocation(41.075203, -81.513449, 40);
+	//cout << "South South West" << endl;
+	//bob->gotoLocation(41.075162, -81.514332, 20);
+	//cout << "West West South" << endl;
+	//bob->gotoLocation(41.075806, -81.515095, 10);
+	//cout << "West West North" << endl;
+	//bob->gotoLocation(41.076280, -81.515299, 200);
+	//cout << "North North West" << endl;
+	//bob->gotoLocation(41.076793, -81.514300, 300);
+	//bob->gotoLocation(1, 1, 0);
+	/*bob->gotoLocation(1, -1, 0);
+	bob->gotoLocation(-1, -1, 0);
+	bob->gotoLocation(-1, 1, 0);
+	*///bob->gotoLocation(1, 1, 0);
+	//bob->gotoLocation(3, 2, 0);
+	//bob->gotoLocation(3, 0, 0);
+	//bob->gotoLocation(0, 3, 0);
+	//bob->gotoLocation(0, 0, 0);
+	//delete bob;
+	//TestSensorManager();
+	//TestyFindySouthy();
+	//testMagnetometer2();
+	//TestMCPM2();
+	//TestMCPM();
+	//TestAccAndControl();
 	//wiringPiSetupGpio();
 	//pinMode(29, INPUT);
 	//pinMode(31, INPUT);
@@ -293,13 +419,16 @@ int main(void)
 	//	int threeOne = digitalRead(31);
 	//	cout << twoNine << "  " << threeOne << "\r";
 	//}
-	testPicManager();
-	//testGPS();
+	//testPicManager();
+	//TestVerticalAxis();
+	//TestHorizontalAxis();
+	//testMagnetometer2();
+
+	testGPS();
 	//testMagnetometer2();
 	//testAccelerometer();
 	//testPressure();
 	//testGyro();
-	//LSM303 *acc = new LSM303();
 	////testMagnetometer();
 	//FloatAverage *xAxis = new FloatAverage(5000);
 	//FloatAverage *yAxis = new FloatAverage(5000);
@@ -312,6 +441,5 @@ int main(void)
 	//	zAxis->Add(acc->accGetZAxisG());
 	//}
 	//cout << "x: " <<xAxis->GetAverage() << " y: " << yAxis->GetAverage() << " z: " << zAxis->GetAverage() << endl;
-	cin.get();
 	return 0;
 }

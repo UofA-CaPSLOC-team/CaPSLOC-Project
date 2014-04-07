@@ -1,14 +1,15 @@
-﻿Build started 3/21/2014 2:03:04 PM.
+﻿Build started 4/7/2014 5:36:13 PM.
      1>Project "C:\VisualGDB\Test\GPSManager\GPSManager.vcxproj" on node 3 (Build target(s)).
      1>Build:
          "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\VisualGDB\Test\GPSManager\GPSManager.vcxproj" "/solution:C:\VisualGDB\Test\Test.sln" "/config:Debug" "/platform:Win32"
          VisualGDB: Attempting inline build...
          VisualGDB: Executing prebuild actions
          VisualGDB: Run "cmd.exe /c "C:\SysGCC\raspberry\bin\make.exe" CONFIG=Debug" in directory "C:\VisualGDB\Test\GPSManager" on (unspecified)
-         make: `all' is up to date.
+         C:/SysGCC/raspberry/bin/arm-linux-gnueabihf-g++.exe -ggdb -ffunction-sections -O0  -IC:/VisualGDB/Test/WiringPi -DDEBUG  -c GPSManager.cpp -o Debug/GPSManager.o -MD -MF Debug/GPSManager.dep
+         C:/SysGCC/raspberry/bin/arm-linux-gnueabihf-ar.exe -r Debug/GPSManager.a Debug/FloatAverage.o Debug/GGA.o Debug/GPSManager.o Debug/NSS.o
          VisualGDB: Executing postbuild actions
      1>Done Building Project "C:\VisualGDB\Test\GPSManager\GPSManager.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.69
+Time Elapsed 00:00:01.20

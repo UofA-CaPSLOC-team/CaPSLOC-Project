@@ -23,7 +23,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := PicManager.cpp
+SOURCEFILES := HorizontalAxis.cpp PicManager.cpp VerticalAxis.cpp
 EXTERNAL_LIBS := ../WiringPi/$(BINARYDIR)/WiringPi.a
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 

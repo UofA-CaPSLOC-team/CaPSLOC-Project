@@ -23,8 +23,8 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES :=
-EXTERNAL_LIBS := 
+SOURCEFILES := MCPM.cpp
+EXTERNAL_LIBS := ../GPSManager/$(BINARYDIR)/GPSManager.a ../Sensors/$(BINARYDIR)/Sensors.a ../PICManager/$(BINARYDIR)/PICManager.a ../WiringPi/$(BINARYDIR)/WiringPi.a
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
 CFLAGS += $(COMMONFLAGS)
@@ -129,3 +129,15 @@ $(BINARYDIR)/%.o : %.s $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) $(ASFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated
+$(BINARYDIR)/GPSManager.a : ../GPSManager/$(BINARYDIR)/GPSManager.a
+	$(CP) ../GPSManager/$(BINARYDIR)/GPSManager.a $(BINARYDIR)/GPSManager.a
+
+$(BINARYDIR)/Sensors.a : ../Sensors/$(BINARYDIR)/Sensors.a
+	$(CP) ../Sensors/$(BINARYDIR)/Sensors.a $(BINARYDIR)/Sensors.a
+
+$(BINARYDIR)/PICManager.a : ../PICManager/$(BINARYDIR)/PICManager.a
+	$(CP) ../PICManager/$(BINARYDIR)/PICManager.a $(BINARYDIR)/PICManager.a
+
+$(BINARYDIR)/WiringPi.a : ../WiringPi/$(BINARYDIR)/WiringPi.a
+	$(CP) ../WiringPi/$(BINARYDIR)/WiringPi.a $(BINARYDIR)/WiringPi.a
+

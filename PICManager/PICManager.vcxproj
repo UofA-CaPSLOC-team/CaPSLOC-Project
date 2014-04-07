@@ -66,10 +66,14 @@
     <None Include="release.mak" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HorizontalAxis.h" />
     <ClInclude Include="PicManager.h" />
+    <ClInclude Include="VerticalAxis.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HorizontalAxis.cpp" />
     <ClCompile Include="PicManager.cpp" />
+    <ClCompile Include="VerticalAxis.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

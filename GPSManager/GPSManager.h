@@ -74,6 +74,8 @@ public:
 	float GetLongitude();
 	float GetLattitude();
 	float GetAltitude();
+
+	bool HasLock(){return gga->HasFix();}
 private:
 	int _handle;
 	GGA *gga;
@@ -82,6 +84,9 @@ private:
 	FloatAverage *_longitude;
 	FloatAverage *_latitude;
 	FloatAverage *_altitude;
+	float _long;
+	float _lat;
+	float _alt;
 
 	void updateAppropiateNmeaObject( std::string message );
 };

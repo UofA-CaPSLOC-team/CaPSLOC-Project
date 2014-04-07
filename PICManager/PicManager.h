@@ -10,6 +10,7 @@
 #include <string>
 #include <iostream>
 #include <stdint.h>
+#include <cmath>
 
 using namespace std;
 
@@ -19,10 +20,10 @@ public:
 	PicManager(int spiDevice);
 	~PicManager();
 
-	void MoveDegrees(int degreesToMove);
+	virtual bool MoveDegrees(int degreesToMove);
 	void Stop();
 
-private:
+protected:
 	int _spiDevice;
 	unsigned char _spiMode;
 	unsigned char _bitsPerWord;

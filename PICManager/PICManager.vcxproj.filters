@@ -31,9 +31,21 @@
     <ClInclude Include="PicManager.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="VerticalAxis.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalAxis.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PicManager.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="VerticalAxis.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalAxis.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

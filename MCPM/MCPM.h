@@ -5,14 +5,15 @@
  *      Author: dt02
  */
 
-#ifndef MCPM_H_
-#define MCPM_H_
+#ifndef __MCPM_H_
+#define __MCPM_H_
 
 
-#include "../../Preprocessor/InProc/CommandNode.h"
-#include "../../Preprocessor/InProc/CommandList.h"
-#include "GPSManager.h"
-#include "PicManager.h"
+//#include "../../Preprocessor/InProc/CommandNode.h"
+//#include "../../Preprocessor/InProc/CommandList.h"
+#include "SensorManager.h"
+#include "HorizontalAxis.h"
+#include "VerticalAxis.h"
 #include <iostream>
 #include <unistd.h>
 #include <string>
@@ -24,10 +25,18 @@ typedef struct Coordinates{
 	}
 }GPSCoordinates;
 
+typedef enum Direction
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+} RelativeDirection;
+
 class MCPM {
 public:
 	MCPM();
-	virtual ~MCPM();
+	~MCPM();
 
 	/**
 	 * gotoLocation performs the math and system calls necessary to
@@ -43,7 +52,7 @@ public:
 	 * @return true: operation completed successfully
 	 * @return false: operation failed miserably
 	 */
-	bool gotoLocation(double dLongitude, double dLatitude, double dAltitude, std::string strLocName);
+	bool gotoLocation(double dLongitude, double dLatitude, double dAltitude);
 
 	/**
 	 * capturePicture performs the necessary system calls to capture a picture or
@@ -57,7 +66,7 @@ public:
 	 * @return true: operation completed successfully
 	 * @return false: operation blew up in your face
 	 */
-	bool capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolution, short sFrameRate);
+	//bool capturePicture(CaptureMode tCapMode, long lTimeOnTarget, int nResolution, short sFrameRate);
 
 	/**
 	 * relativeMotion performs the math and system calls necessary to
@@ -79,10 +88,28 @@ public:
 	 */
 	GPSCoordinates getGPSCoordinate();
 
-private:
-	GPSManager *gps;
+	/**
+	* isReadyForNextLocation indicates when the MCPM has reached the assigned location and is ready for the next.
+	*
+	* @return true: ready for the next location
+	* @return false: not ready for the next location
+	*/
+	bool isReadyForNextLocation();
 
-	//TODO Fill in as needed for private members and methods
+	void SetGPSCoordinatesFromGoogle(float latititude, float longitude);
+
+	void SetAltitudeFromGoogle(float altitudeInMeters);
+
+private:
+	SensorManager *sensors;
+	VerticalAxis *vertical;
+	HorizontalAxis *horizontal;
+
+	int _degreesFromSouth;
+	void findLimitSwitch();
+	void findSouth();
+	bool moveVerticalDegrees(int degreesToMove);
+	bool moveHorizontalDegrees(int degreesToMove);
 };
 
 #endif /* MCPM_H_ */

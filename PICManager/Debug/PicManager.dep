@@ -129,4 +129,13 @@ Debug/PicManager.o: PicManager.cpp PicManager.h \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/istream \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/bits/istream.tcc \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/include/stdint.h \
- c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/stdint.h
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/stdint.h \
+ c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/cmath \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/math.h \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/huge_val.h \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/huge_valf.h \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/huge_vall.h \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/inf.h \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/nan.h \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/mathdef.h \
+ c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/mathcalls.h

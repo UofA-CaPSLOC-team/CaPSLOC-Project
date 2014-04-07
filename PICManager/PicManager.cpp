@@ -21,9 +21,9 @@ PicManager::~PicManager()
 	closePort();
 }
 
-void PicManager::MoveDegrees(int degreesToMove)
+bool PicManager::MoveDegrees(int degreesToMove)
 {
-	uint16_t pulseCount = abs(degreesToMove * _gearReductionRatio / _shaftDegreesPerPulse);
+	uint16_t pulseCount = roundf(abs(degreesToMove * _gearReductionRatio / _shaftDegreesPerPulse));
 	unsigned char lowerByte = pulseCount & 0x00FF;
 	unsigned char upperByte = 0x00;
 	if (degreesToMove < 0)
@@ -36,8 +36,16 @@ void PicManager::MoveDegrees(int degreesToMove)
 		upperByte = 0x3F & (pulseCount >> 8);
 	}
 	writeAndRead( &lowerByte );
-	usleep(50000);
+	usleep(100);
 	writeAndRead( &upperByte );
+	return true;
+}
+
+void PicManager::Stop()
+{
+	writeAndRead(0x00);
+	usleep(100);
+	writeAndRead(0x00);
 }
 
 int PicManager::openPort ()

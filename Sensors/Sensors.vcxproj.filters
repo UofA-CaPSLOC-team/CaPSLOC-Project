@@ -37,6 +37,9 @@
     <ClInclude Include="LSM303.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="SensorManager.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="L3GD20.cpp">
@@ -46,6 +49,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="LPS331AP.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="SensorManager.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

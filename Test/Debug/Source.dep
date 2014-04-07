@@ -127,6 +127,10 @@ Debug/Source.o: Source.cpp \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/bits/stl_vector.h \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/bits/stl_bvector.h \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/bits/vector.tcc \
+ C:/VisualGDB/Test/Sensors/SensorManager.h \
+ C:/VisualGDB/Test/Sensors/L3GD20.h C:/VisualGDB/Test/Sensors/LPS331AP.h \
+ C:/VisualGDB/Test/Sensors/LSM303.h C:\VisualGDB\Test\MCPM/MCPM.h \
+ C:\VisualGDB\Test\PICManager/HorizontalAxis.h \
  C:\VisualGDB\Test\PICManager/PicManager.h \
  c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/fcntl.h \
  c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/fcntl.h \
@@ -154,10 +158,11 @@ Debug/Source.o: Source.cpp \
  c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/_G_config.h \
  c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/stdio_lim.h \
  c:\sysgcc\raspberry\bin\../arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/bits/sys_errlist.h \
+ C:/VisualGDB/Test/WiringPi/wiringPi.h \
+ C:\VisualGDB\Test\PICManager/VerticalAxis.h \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/fstream \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/bits/codecvt.h \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/cstdio \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/arm-linux-gnueabihf/./bits/basic_file.h \
  c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/arm-linux-gnueabihf/./bits/c++io.h \
- c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/bits/fstream.tcc \
- C:/VisualGDB/Test/WiringPi/wiringPi.h
+ c:\sysgcc\raspberry\bin\../lib/gcc/arm-linux-gnueabihf/4.6/../../../../arm-linux-gnueabihf/include/c++/4.6/bits/fstream.tcc

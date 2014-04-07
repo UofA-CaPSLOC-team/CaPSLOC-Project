@@ -37,16 +37,25 @@ void GPSManager::UpdateGPSData()
 
 float GPSManager::GetLongitude()
 {
+	//UpdateGPSData();
+	//return _long;
+	//TODO: uncomment
 	return _longitude->GetAverage();
 }
 
 float GPSManager::GetLattitude()
 {
+	//UpdateGPSData();
+	//return _lat;
+	//TODO: uncomment
 	return _latitude->GetAverage();
 }
 
 float GPSManager::GetAltitude()
 {
+	//UpdateGPSData();
+	//return _alt;
+	//TODO: uncomment
 	return _altitude->GetAverage();
 }
 
@@ -59,9 +68,13 @@ void GPSManager::updateAppropiateNmeaObject( std::string message )
 		gga->ParseData( message );
 		if (gga->HasFix())
 		{
+			std::cout << "Longitude: " << gga->GetLongitude() << " Latitude: " << gga->GetLatitude() << std::endl;
 			_longitude->Add(gga->GetLongitude());
 			_latitude->Add(gga->GetLatitude());
 			_altitude->Add(gga->GetAltitude());
+			//_long = gga->GetLongitude();
+			//_lat = gga->GetLatitude();
+			//_alt = gga->GetAltitude();
 		}
 	}
 	else if (type == "$GPGSA")

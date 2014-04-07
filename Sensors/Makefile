@@ -23,8 +23,8 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := L3GD20.cpp LPS331AP.cpp LSM303.cpp
-EXTERNAL_LIBS := ../WiringPi/$(BINARYDIR)/WiringPi.a
+SOURCEFILES := L3GD20.cpp LPS331AP.cpp LSM303.cpp SensorManager.cpp
+EXTERNAL_LIBS := ../GPSManager/$(BINARYDIR)/GPSManager.a ../WiringPi/$(BINARYDIR)/WiringPi.a
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
 CFLAGS += $(COMMONFLAGS)
@@ -129,6 +129,9 @@ $(BINARYDIR)/%.o : %.s $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) $(ASFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated
+$(BINARYDIR)/GPSManager.a : ../GPSManager/$(BINARYDIR)/GPSManager.a
+	$(CP) ../GPSManager/$(BINARYDIR)/GPSManager.a $(BINARYDIR)/GPSManager.a
+
 $(BINARYDIR)/WiringPi.a : ../WiringPi/$(BINARYDIR)/WiringPi.a
 	$(CP) ../WiringPi/$(BINARYDIR)/WiringPi.a $(BINARYDIR)/WiringPi.a
 

@@ -13,8 +13,8 @@ OBJCOPY := C:/SysGCC/raspberry/bin/arm-linux-gnueabihf-objcopy.exe
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG
-INCLUDE_DIRS :=C:/VisualGDB/Test/Sensors C:/VisualGDB/Test/WiringPi C:\VisualGDB\Test\GPSManager C:\VisualGDB\Test\PICManager
-LIBRARY_DIRS :=C:/VisualGDB/Test/Sensors/Debug C:/VisualGDB/Test/WiringPi/Debug C:\VisualGDB\Test\GPSManager\Debug C:\VisualGDB\Test\PICManager\Debug
+INCLUDE_DIRS :=C:/VisualGDB/Test/Sensors C:/VisualGDB/Test/WiringPi C:\VisualGDB\Test\GPSManager C:\VisualGDB\Test\PICManager C:\VisualGDB\Test\MCPM
+LIBRARY_DIRS :=C:/VisualGDB/Test/Sensors/Debug C:/VisualGDB/Test/WiringPi/Debug C:\VisualGDB\Test\GPSManager\Debug C:\VisualGDB\Test\PICManager\Debug C:\VisualGDB\Test\MCPM\Debug
 LIBRARY_NAMES :=pthread
 ADDITIONAL_LINKER_INPUTS :=
 MACOS_FRAMEWORKS :=

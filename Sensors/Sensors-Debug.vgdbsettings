@@ -10,7 +10,7 @@
       <Transport>None</Transport>
     </BuildHost>
     <DeploymentHost>
-      <HostName>130.101.12.127</HostName>
+      <HostName>130.101.12.128</HostName>
       <Transport>SSH</Transport>
       <UserName>pi</UserName>
     </DeploymentHost>
@@ -61,6 +61,9 @@
     </Toolchain>
     <MakeCommandTemplate>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
+      <RemoteHost>
+        <Transport>None</Transport>
+      </RemoteHost>
       <Command>cmd.exe</Command>
       <Arguments>/c "C:\SysGCC\raspberry\bin\make.exe"</Arguments>
       <WorkingDirectory>$(BuildDir)</WorkingDirectory>

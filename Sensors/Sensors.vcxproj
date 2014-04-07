@@ -35,7 +35,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>C:\VisualGDB\Test\WiringPi;c:\sysgcc\raspberry\arm-linux-gnueabihf\include\c++\4.6;c:\sysgcc\raspberry\arm-linux-gnueabihf\include\c++\4.6\arm-linux-gnueabihf;c:\sysgcc\raspberry\arm-linux-gnueabihf\include\c++\4.6\backward;c:\sysgcc\raspberry\lib\gcc\arm-linux-gnueabihf\4.6\include;c:\sysgcc\raspberry\lib\gcc\arm-linux-gnueabihf\4.6\include-fixed;c:\sysgcc\raspberry\arm-linux-gnueabihf\include;c:\sysgcc\raspberry\arm-linux-gnueabihf\sysroot\usr\include\arm-linux-gnueabihf;c:\sysgcc\raspberry\arm-linux-gnueabihf\sysroot\usr\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>C:\VisualGDB\Test\WiringPi;C:\VisualGDB\Test\GPSManager;c:\sysgcc\raspberry\arm-linux-gnueabihf\include\c++\4.6;c:\sysgcc\raspberry\arm-linux-gnueabihf\include\c++\4.6\arm-linux-gnueabihf;c:\sysgcc\raspberry\arm-linux-gnueabihf\include\c++\4.6\backward;c:\sysgcc\raspberry\lib\gcc\arm-linux-gnueabihf\4.6\include;c:\sysgcc\raspberry\lib\gcc\arm-linux-gnueabihf\4.6\include-fixed;c:\sysgcc\raspberry\arm-linux-gnueabihf\include;c:\sysgcc\raspberry\arm-linux-gnueabihf\sysroot\usr\include\arm-linux-gnueabihf;c:\sysgcc\raspberry\arm-linux-gnueabihf\sysroot\usr\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -69,11 +69,13 @@
     <ClInclude Include="L3GD20.h" />
     <ClInclude Include="LPS331AP.h" />
     <ClInclude Include="LSM303.h" />
+    <ClInclude Include="SensorManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="L3GD20.cpp" />
     <ClCompile Include="LPS331AP.cpp" />
     <ClCompile Include="LSM303.cpp" />
+    <ClCompile Include="SensorManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
