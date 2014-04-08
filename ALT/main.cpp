@@ -12,7 +12,7 @@
 //Local includes
 #include "Preprocessor/InProc/BoostParse.h"
 #include "Preprocessor/CmdH/CommandHandler.h"
-#include "ControlLogic/MCPM/MCPM.h"
+#include "../MCPM/MCPM.h"
 #include "DPU/SendToCTRL.h"
 //#include <boost/thread.hpp>
 #include <curl/curl.h>

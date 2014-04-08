@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include <cmath>
-#include "wiringPiI2C.h"
+#include "../WiringPi/wiringPiI2C.h"
 
 class LPS331AP
 {

@@ -12,6 +12,7 @@
 #define COMMANDNODE_ALT
 
 #include <string>
+#include "../../ControlLogic/MCPM/MCPM.h"
 
 typedef enum CommandType{
 	NOTYPE,
@@ -47,12 +48,12 @@ typedef enum CaptureMode{
 	VID
 }CaptureMode;
 
-typedef enum RelativeDirection{
+/*typedef enum RelativeDirection{
 	RIGHT,
 	LEFT,
 	UP,
 	DOWN
-}RelativeDirection;
+}RelativeDirection;*/
 
 class CommandNode{
 public:

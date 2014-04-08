@@ -141,8 +141,7 @@ void CommandHandler::execNext(void){
 			m_strLocName = currCmd->getName();
 			m_ptrMCPM->gotoLocation(currCmd->getLongitude(),
 					currCmd->getLatitude(),
-					currCmd->getAltitude(),
-					currCmd->getName());
+					currCmd->getAltitude());
 #ifdef DEBUG
 			stcString = "GOING to ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getName()));
@@ -195,7 +194,8 @@ void CommandHandler::execNext(void){
 }
 
 
-/*void CommandHandler::capturePicture(CaptureMode mode, long tot, int qual, short framerate){
+/*
+void CommandHandler::capturePicture(CaptureMode mode, long tot, int qual, short framerate){
 	std::ofstream picFile(m_strLocName.c_str(), std::ofstream::binary));
 	if(mode == PIC){
 		CCamera * cam = StartCamera((int)((qual * 4)/3), qual, 30, 0, true);
@@ -208,3 +208,4 @@ void CommandHandler::execNext(void){
 	}
 }
 */
+

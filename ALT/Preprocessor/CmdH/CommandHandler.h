@@ -16,11 +16,12 @@
 #include "../InProc/CommandNode.h"
 #include "../InProc/CommandList.h"
 #include "../InProc/BoostParse.h"
-#include "../../ControlLogic/MCPM/MCPM.h"
+#include "../../../MCPM/MCPM.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include "../InProc/Config.h"
 #include "../../DPU/SendToCTRL.h"
+#include <boost/lexical_cast.hpp>
 
 
 class BoostParse; //Forward Declaration to appease his majesty, G++.

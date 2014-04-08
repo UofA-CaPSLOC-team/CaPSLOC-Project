@@ -1,7 +1,7 @@
 
 #include <stdint.h>
 #include <cmath>
-#include "wiringSerial.h"
+#include "../WiringPi/wiringSerial.h"
 #include <iostream>
 
 class GPS

@@ -28,6 +28,8 @@ Preprocessor/SocketComm \
 Preprocessor/InProc \
 Preprocessor/CmdH \
 DPU \
+ControlLogic/SensorArray \
 ControlLogic/MCPM \
+ControlLogic/HI \
 .metadata/.plugins/org.eclipse.cdt.make.core \
 
