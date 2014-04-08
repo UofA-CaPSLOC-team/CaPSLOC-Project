@@ -17,10 +17,7 @@ float SensorManager::GetLongitude()
 	}
 	else
 	{
-		//TODO: uncomment this.
-		//return _gps->GetLongitude();
-		return -81.513858;
-		//41.075970, -81.513858
+		return _gps->GetLongitude();
 	}
 }
 
@@ -32,9 +29,7 @@ float SensorManager::GetLatitude()
 	}
 	else
 	{
-		//TODO: uncomment this.
-		//return _gps->GetLattitude();
-		return 41.075970;
+		return _gps->GetLattitude();
 	}
 }
 

@@ -8,18 +8,22 @@
 #include "SendToCTRL.h"
 //From http://curl.haxx.se/libcurl/c/postit2.html
 
-//TODO modify to fit needs.
 SendToCTRL::SendToCTRL() {
-	curl_global_init(CURL_GLOBAL_ALL);
+
 }
 
 SendToCTRL::~SendToCTRL() {
 
 }
 
+
+
 void SendToCTRL::sendPicToCTRL(std::string filename, std::string altName, double longitude, double latitude, double altitude, std::string locname, std::string capTime){
 	CURL *curl;
 	CURLcode res;
+
+	std::string ipAddr = m_strIPAddr;
+	ipAddr.append(PIC_ROUTE);
 
 	struct curl_httppost *formpost=NULL;
 	struct curl_httppost *lastptr=NULL;
@@ -93,7 +97,7 @@ void SendToCTRL::sendPicToCTRL(std::string filename, std::string altName, double
 	headerlist = curl_slist_append(headerlist, buf);
 	if(curl) {
 		/* what URL that receives this POST */
-		curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:3000/pics");
+		curl_easy_setopt(curl, CURLOPT_URL, ipAddr.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerlist);
 		curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
@@ -119,26 +123,24 @@ void SendToCTRL::sendCommandDebug(std::string cmdinfo){
 	CURL *curl;
 	CURLcode res;
 
-	struct curl_httppost *formpost=NULL;
-	struct curl_httppost *lastptr=NULL;
+	std::string ipAddr = m_strIPAddr;
+	ipAddr.append(DEBUG_ROUTE);
+
 	struct curl_slist *headerlist=NULL;
-	std::string jsonObj = "{ \"cmdInfo\" : \"";
-	jsonObj.append(cmdinfo);
-	jsonObj.append("\" }");
+	std::string jsonObj = "AltName=ALT1&Message=";
+	//TODO: Add variable for AltName.
+	jsonObj.append(curl_easy_escape(curl, cmdinfo.c_str(), 0));
 
 	curl = curl_easy_init();
 
 	struct curl_slist *headers = NULL;
-	curl_slist_append(headers, "Accept: application/json");
-	curl_slist_append(headers, "Content-Type: application/json");
-	curl_slist_append(headers, "charsets: utf-8");
+	curl_slist_append(headers, "Accept: */*");
 
-	curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:3000/debug");
+	curl_easy_setopt(curl, CURLOPT_URL, ipAddr.c_str());
 
 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonObj.c_str());
-	curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcrp/0.1");
 
 	res = curl_easy_perform(curl);
 	/* Check for errors */
@@ -149,8 +151,73 @@ void SendToCTRL::sendCommandDebug(std::string cmdinfo){
 //	/* always cleanup */
 	curl_easy_cleanup(curl);
 //
-//	/* then cleanup the formpost chain */
-	curl_formfree(formpost);
 //	/* free slist */
 	curl_slist_free_all (headerlist);
+}
+
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
+double SendToCTRL::sendGPS(GPSCoordinates coordinates)
+{
+	CURL *curl;
+	CURLcode res;
+	std::string readBuffer;
+	double altitude = std::numeric_limits<double>::min();
+
+	std::string ipAddr = m_strIPAddr;
+	ipAddr.append(ALTITUDE_ROUTE);
+	// Append longitude and latitude
+	ipAddr.append("?longitude=");
+	ipAddr.append(boost::lexical_cast<std::string>(coordinates.longitude));
+	ipAddr.append("&latitude=");
+	ipAddr.append(boost::lexical_cast<std::string>(coordinates.latitude));
+
+	struct curl_slist *headerlist=NULL;
+
+	curl = curl_easy_init();
+
+	struct curl_slist *headers = NULL;
+	curl_slist_append(headers, "Accept: */*");
+
+	curl_easy_setopt(curl, CURLOPT_URL, ipAddr.c_str());
+
+	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
+	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+
+	res = curl_easy_perform(curl);
+	/* Check for errors */
+	if(res != CURLE_OK){
+		fprintf(stderr, "curl_easy_perform() failed: %s\n",
+				curl_easy_strerror(res));
+	}
+	else{  // We should have data
+		std::cout << "Data Received: \n";
+		std::cout << readBuffer << "\n";
+
+		int offset = readBuffer.find("\"data\":") + 7;
+		altitude = strtod(readBuffer.substr(offset, std::string::npos).c_str(), NULL);
+	}
+
+	//	/* always cleanup */
+		curl_easy_cleanup(curl);
+	//
+	//	/* free slist */
+		curl_slist_free_all (headerlist);
+
+		return altitude;
+}
+
+
+
+void SendToCTRL::setIPAddr(std::string ip){
+	curl_global_init(CURL_GLOBAL_ALL);
+	m_strIPAddr = HTTP_BEGIN;
+	m_strIPAddr.append(ip);
+	m_strIPAddr.append(SENDTO_PORT);
 }

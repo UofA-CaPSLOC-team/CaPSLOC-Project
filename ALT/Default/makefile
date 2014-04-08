@@ -8,10 +8,14 @@ RM := rm
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Preprocessor/SocketComm/subdir.mk
 -include Preprocessor/InProc/subdir.mk
 -include Preprocessor/CmdH/subdir.mk
 -include DPU/subdir.mk
+-include ControlLogic/SensorArray/subdir.mk
 -include ControlLogic/MCPM/subdir.mk
+-include ControlLogic/HI/subdir.mk
+-include ControlLogic/subdir.mk
 -include .metadata/.plugins/org.eclipse.cdt.make.core/subdir.mk
 -include subdir.mk
 -include objects.mk

@@ -1,4 +1,4 @@
-﻿Build started 4/7/2014 7:58:00 PM.
+﻿Build started 4/8/2014 3:55:28 PM.
      1>Project "C:\VisualGDB\Test\Test\Test.vcxproj" on node 3 (Build target(s)).
      1>Build:
          "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\VisualGDB\Test\Test\Test.vcxproj" "/solution:C:\VisualGDB\Test\Test.sln" "/config:Debug" "/platform:Win32"
@@ -11,4 +11,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.65
+Time Elapsed 00:00:00.68

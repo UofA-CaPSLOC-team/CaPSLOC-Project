@@ -6,13 +6,13 @@ MCPM::MCPM()
 	vertical = new VerticalAxis(0);
 	horizontal = new HorizontalAxis(1);
 	sensors = new SensorManager();
-	//findLimitSwitch();
+	findLimitSwitch();
 	//while(!(abs(sensors->GetMagYRaw()) < 15))
-	/*{
-		findLimitSwitch();
-		findSouth();
-	}*/
-	_degreesFromSouth = 0;
+	//{
+	//	findLimitSwitch();
+	//	findSouth();
+	//}
+	_degreesFromNorth = 0;
 }
 
 MCPM::~MCPM()
@@ -33,9 +33,8 @@ bool MCPM::gotoLocation( double dLatitude, double dLongitude, double dAltitude )
 {
 	float tPosNorth = sensors->CalculateHorizontalDegreesOfMovementFromNorth(dLatitude, dLongitude);
 	float verticalOffsetInDegrees = sensors->CalculateVerticalDegreesOfMovement(dLatitude, dLongitude, dAltitude);
-	//TODO: come up with the math to determine the number of degrees and direction we need to turn.
-	//float horDegreesToMove = -tPosNorth + _degreesFromSouth;
-	//moveHorizontalDegrees(horDegreesToMove);
+	float horDegreesToMove = tPosNorth - _degreesFromNorth;
+	moveHorizontalDegrees(horDegreesToMove);
 	moveVerticalDegrees(verticalOffsetInDegrees);
 	return false;
 }
@@ -127,7 +126,7 @@ bool MCPM::moveHorizontalDegrees(int degreesToMove)
 	if (rVal)
 	{
 		degreesMovedFromLimitSwitch += degreesToMove;
-		_degreesFromSouth += degreesToMove;
+		_degreesFromNorth += degreesToMove;
 		//cout << "Degrees moved from Limit Switch: " << degreesMovedFromLimitSwitch << endl;
 	}
 	return rVal;

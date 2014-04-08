@@ -1,4 +1,4 @@
-﻿Build started 4/7/2014 7:57:58 PM.
+﻿Build started 4/8/2014 3:55:26 PM.
      1>Project "C:\VisualGDB\Test\PICManager\PICManager.vcxproj" on node 3 (Build target(s)).
      1>Build:
          "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\VisualGDB\Test\PICManager\PICManager.vcxproj" "/solution:C:\VisualGDB\Test\Test.sln" "/config:Debug" "/platform:Win32"
@@ -11,4 +11,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.82
+Time Elapsed 00:00:00.75
