@@ -73,7 +73,7 @@ int main(int argv, char ** argc){
 	    std::string ipaddr;//don't set this in real code.
 	    while(ipaddr.empty()){
 		    //Get IP address from config file in /opt/CaPSLOC/config.txt, look for "CTRL="
-	    	//TODO Test to make sure this works... (JMP - It didn't but I fixed it)
+	    	//Test to make sure this works... (JMP - It didn't but I fixed it)
 	    	ipaddr = getCTRLIp();
 	    	usleep(50);
 	    }
@@ -81,7 +81,6 @@ int main(int argv, char ** argc){
 		stc->setIPAddr(ipaddr);
 	    boost::thread bt2(runCmdH, ch);
 
-	    double altitude = stc->sendGPS(GPSCoordinates(-80.123, 40.785));  // This is a demo (really belongs wherever the GPS gets a fix)
 
 	    // NO CODE BELOW THIS LINE
 	    bt2.join();

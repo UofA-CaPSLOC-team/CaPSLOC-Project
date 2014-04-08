@@ -17,10 +17,10 @@ BoostParse::BoostParse() {
 BoostParse::~BoostParse() {
 }
 
-/*inline bool exists_test (const std::string& name) {
+inline bool exists_test(const std::string& name) {
 	struct stat buffer;
 	return (stat (name.c_str(), &buffer) == 0);
-}*/
+}
 
 inline long timeParse(std::string time){
 	long rv, hours = 0, mins = 0, secs = 0, msecs = 0;
@@ -291,9 +291,9 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 
 			newNode.setExec(name);
 
-			/*if(exists_test(name)){
+			if(exists_test(name)){
 				m_cmdScript->push_back(newNode);
-			}*/
+			}
 			//END EXEC
 		}else {
 			//Skip erroneous element.

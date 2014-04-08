@@ -52,6 +52,10 @@ CommandHandler::~CommandHandler() {
 }
 
 void CommandHandler::execNext(void){
+	while(!m_ptrMCPM->GPSHasLock()){
+		sleep(1);
+	}
+	m_ptrMCPM->SetAltitudeFromGoogle(m_stc->sendGPS(m_ptrMCPM->getGPSCoordinate()));
 	CommandNode * currCmd;
 	std::string stcString;
 	//This must run constantly to ensure proper execution of scripts.
@@ -108,10 +112,15 @@ void CommandHandler::execNext(void){
 			//END RMOTION
 		case CAPTURE:
 			//TODO CHANGE THIS!
-			m_ptrMCPM->capturePicture(currCmd->getCapMode(),
+			while(!m_ptrMCPM->isReadyForNextLocation()){
+				usleep(50000);
+			}
+
+			/*capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),
 					currCmd->getQuality(),
 					currCmd->getFrameRate());
+					*/
 #ifdef DEBUG
 			stcString = "CAPTURING in MODE ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getCapMode()));
@@ -129,6 +138,7 @@ void CommandHandler::execNext(void){
 			while(!m_ptrMCPM->isReadyForNextLocation()){
 				usleep(50000);
 			}
+			m_strLocName = currCmd->getName();
 			m_ptrMCPM->gotoLocation(currCmd->getLongitude(),
 					currCmd->getLatitude(),
 					currCmd->getAltitude(),
@@ -162,7 +172,7 @@ void CommandHandler::execNext(void){
 			break;
 			//END WAIT
 		case PAUSE:
-			//TODO Pause stuff!
+			//Pause stuff!
 			m_bPaused = true;
 			m_stc->sendCommandDebug("PAUSING");
 			break;
@@ -172,7 +182,7 @@ void CommandHandler::execNext(void){
 			break;
 			//END RESUME
 		case EXEC:
-			//TODO bring in another script file.
+			//bring in another script file.
 			m_bp->scriptFileParse(currCmd->getName());
 			m_stc->sendCommandDebug("EXECUTING");
 			break;
@@ -183,3 +193,18 @@ void CommandHandler::execNext(void){
 
 	}
 }
+
+
+/*void CommandHandler::capturePicture(CaptureMode mode, long tot, int qual, short framerate){
+	std::ofstream picFile(m_strLocName.c_str(), std::ofstream::binary));
+	if(mode == PIC){
+		CCamera * cam = StartCamera((int)((qual * 4)/3), qual, 30, 0, true);
+		int size = (qual * 4)/3) * qual * 4;
+		char buffer[size];
+		cam->ReadFrame(0, buffer, sizeof(buffer));
+		picFile.write(buffer, size);
+	}else {
+		m_stc->sendCommandDebug("VIDEO NOT YET SUPPORTED!!!");
+	}
+}
+*/

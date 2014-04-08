@@ -45,6 +45,8 @@ public:
 	void startFromHalt(){m_bHaltExec = false;}
 
 private:
+	void capturePicture(CaptureMode mode, long tot, int qual, short framerate);
+
 	bool m_bExecScript;
 	BoostParse * m_bp;
 	CommandList * m_cmdManual;
@@ -60,6 +62,7 @@ private:
 	CaptureMode m_tCapMode;
 	short m_sFrameRate;
 	bool m_bPaused, m_bHaltExec;
+	std::string m_strLocName;
 };
 
 #endif /* COMMANDHANDLER_H_ */

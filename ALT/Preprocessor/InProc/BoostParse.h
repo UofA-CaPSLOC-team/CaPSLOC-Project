@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <deque>
+#include <sys/stat.h>
 #include <fstream>
 #include <sstream>
 #include "CommandNode.h"
