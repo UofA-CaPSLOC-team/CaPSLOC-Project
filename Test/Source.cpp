@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "wiringPi.h"
 #include "VerticalAxis.h"
+#include <linux/i2c-dev.h>
 
 using namespace std;
 
@@ -371,8 +372,37 @@ void TestSensorManager()
 		cout << sen->GetMagXRaw() << " " <<sen->GetMagYRaw() << endl;
 	}
 }
+
+void TestI2C()
+{
+	int fd;														// File descrition
+	char *fileName = "/dev/i2c-1";								// Name of the port we will be using
+	int  address = 0x6B;										// Address of CMPS03 shifted right one bit
+	unsigned char buf[10];										// Buffer for data being read/ written on the i2c bus
+	
+	if ((fd = open(fileName, O_RDWR)) < 0)
+	{					// Open port for reading and writing
+		cout << "Failed to open i2c port" << endl;
+		exit(1);
+	}
+
+	if (ioctl(fd, I2C_SLAVE, address) < 0) 
+	{					// Set the port options and set the address of the device we wish to speak to
+		printf("Unable to get bus access to talk to slave\n");
+		exit(1);
+	}
+
+	buf[0] = 0x0F;													// This is the register we want to read from
+	buf[1] = 0x00;
+	if(ioctl(fd, I2C_RDWR, buf, 2))
+	{
+		cout << "ERROR!!!" << endl;
+	}
+	cout << buf[0] << " " << buf[1] << endl;
+}
 int main(void)
 {
+	TestI2C();
 	//MCPM *bob = new MCPM();
 	//41.076035, -81.509466
 
@@ -424,7 +454,7 @@ int main(void)
 	//TestHorizontalAxis();
 	//testMagnetometer2();
 
-	testGPS();
+	//testGPS();
 	//testMagnetometer2();
 	//testAccelerometer();
 	//testPressure();

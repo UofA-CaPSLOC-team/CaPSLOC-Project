@@ -1,4 +1,4 @@
-﻿Build started 4/7/2014 5:36:13 PM.
+﻿Build started 4/7/2014 7:57:57 PM.
      1>Project "C:\VisualGDB\Test\WiringPi\WiringPi.vcxproj" on node 2 (Build target(s)).
      1>Build:
          "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\VisualGDB\Test\WiringPi\WiringPi.vcxproj" "/solution:C:\VisualGDB\Test\Test.sln" "/config:Debug" "/platform:Win32"

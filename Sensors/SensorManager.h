@@ -38,6 +38,11 @@ public:
 	int GetMagXRaw();
 	int GetMagYRaw();
 
+	bool GPSHasLock()
+	{
+		return _gps->HasLock();
+	}
+
 private:
 	GPSManager *_gps;
 	L3GD20 *_gyro;

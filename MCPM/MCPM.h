@@ -100,6 +100,11 @@ public:
 
 	void SetAltitudeFromGoogle(float altitudeInMeters);
 
+	bool GPSHasLock()
+	{
+		return sensors->GPSHasLock();
+	}
+
 private:
 	SensorManager *sensors;
 	VerticalAxis *vertical;
