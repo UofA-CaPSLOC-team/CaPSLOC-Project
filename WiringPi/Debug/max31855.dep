@@ -1,0 +1,1 @@
+Debug/max31855.o: max31855.c wiringPi.h wiringPiSPI.h max31855.h

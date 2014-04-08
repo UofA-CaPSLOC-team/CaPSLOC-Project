@@ -1,0 +1,14 @@
+﻿Build started 4/7/2014 7:58:00 PM.
+     1>Project "C:\VisualGDB\Test\Test\Test.vcxproj" on node 3 (Build target(s)).
+     1>Build:
+         "C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "C:\VisualGDB\Test\Test\Test.vcxproj" "/solution:C:\VisualGDB\Test\Test.sln" "/config:Debug" "/platform:Win32"
+         VisualGDB: Attempting inline build...
+         VisualGDB: Executing prebuild actions
+         VisualGDB: Run "cmd.exe /c "C:\SysGCC\raspberry\bin\make.exe" CONFIG=Debug" in directory "C:\VisualGDB\Test\Test" on (unspecified)
+         make: Nothing to be done for `all'.
+         VisualGDB: Executing postbuild actions
+     1>Done Building Project "C:\VisualGDB\Test\Test\Test.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.65

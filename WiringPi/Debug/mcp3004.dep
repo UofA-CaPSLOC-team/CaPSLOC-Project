@@ -1,0 +1,1 @@
+Debug/mcp3004.o: mcp3004.c wiringPi.h wiringPiSPI.h mcp3004.h

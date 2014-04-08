@@ -1,0 +1,1 @@
+Debug/max5322.o: max5322.c wiringPi.h wiringPiSPI.h max5322.h

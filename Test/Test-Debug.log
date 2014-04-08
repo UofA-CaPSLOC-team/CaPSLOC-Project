@@ -1,0 +1,33 @@
+C:\SysGCC\raspberry\bin\arm-linux-gnueabihf-gdb.exe --interpreter mi "C:\VisualGDB\Test\Test/Debug/Test"
+-list-features
+=thread-group-added,id="i1"
+~"GNU gdb (GDB) 7.5.1\n"
+~"Copyright (C) 2012 Free Software Foundation, Inc.\n"
+~"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.  Type \"show copying\"\nand \"show warranty\" for details.\n"
+~"This GDB was configured as \"--host=i686-pc-mingw32 --target=arm-linux-gnueabihf\".\nFor bug reporting instructions, please see:\n"
+~"<http://www.gnu.org/software/gdb/bugs/>...\n"
+~"Reading symbols from C:\\VisualGDB\\Test\\Test\\Debug\\Test..."
+~"done.\n"
+^done,features=["frozen-varobjs","pending-breakpoints","thread-info","data-read-memory-bytes","breakpoint-notifications","ada-task-info"]
+-gdb-set stop-on-solib-events 1
+^done
+-data-list-register-names
+^done,register-names=["r0","r1","r2","r3","r4","r5","r6","r7","r8","r9","r10","r11","r12","sp","lr","pc","f0","f1","f2","f3","f4","f5","f6","f7","fps","cpsr","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+-gdb-set disassembly-flavor intel
+^error,msg="No symbol \"disassembly\" in current context."
+^error,msg="No symbol \"disassembly\" in current context."
+-gdb-set print demangle off
+^done
+-gdb-version
+~"GNU gdb (GDB) 7.5.1\n"
+~"Copyright (C) 2012 Free Software Foundation, Inc.\n"
+~"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.  Type \"show copying\"\nand \"show warranty\" for details.\n"
+~"This GDB was configured as \"--host=i686-pc-mingw32 --target=arm-linux-gnueabihf\".\nFor bug reporting instructions, please see:\n"
+~"<http://www.gnu.org/software/gdb/bugs/>.\n"
+^done
+-break-insert -f main
+^done,bkpt={number="1",type="breakpoint",disp="keep",enabled="y",addr="0x00009ae0",func="main()",file="Source.cpp",fullname="C:\\VisualGDB\\Test\\Test\\Source.cpp",line="275",times="0",original-location="main"}
+-gdb-set solib-search-path C:/VisualGDB/Test/Test/Debug;C:/VisualGDB/Test/GPSManager/Debug;C:/VisualGDB/Test/Sensors/Debug;C:/VisualGDB/Test/PICManager/Debug;C:/VisualGDB/Test/WiringPi/Debug
+^done
+-target-select remote 130.101.12.128:2000
+^error,msg="Quit (expect signal SIGINT when the program is resumed)"
