@@ -4,8 +4,7 @@
 extern bool horIsDoneMoving;
 
 #include "PicManager.h"
-//TODO CHANGE TO BETTER PATH. Maybe in /opt/WiringPi
-#include "/opt/WiringPi/wiringPi.h"
+#include "wiringPi.h"
 
 extern int degreesMovedFromLimitSwitch;
 
@@ -13,7 +12,6 @@ class HorizontalAxis: public PicManager
 {
 public:
 	HorizontalAxis(int spiChannel);//:PicManager(spiChannel);
-	virtual ~HorizontalAxis(){}
 	//bool IsDoneMoving();
 	bool MoveDegrees(int degreesToMove);
 private:

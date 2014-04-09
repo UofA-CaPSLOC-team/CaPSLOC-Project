@@ -11,9 +11,9 @@
 
 //#include "../../Preprocessor/InProc/CommandNode.h"
 //#include "../../Preprocessor/InProc/CommandList.h"
-#include "../SensorArray/SensorManager.h"
-#include "../HI/HorizontalAxis.h"
-#include "../HI/VerticalAxis.h"
+#include "../Sensors/SensorManager.h"
+#include "../PICManager/HorizontalAxis.h"
+#include "../PICManager/VerticalAxis.h"
 #include <iostream>
 #include <unistd.h>
 #include <string>
@@ -31,7 +31,7 @@ typedef enum Direction
 	DOWN,
 	LEFT,
 	RIGHT
-}RelativeDirection;
+} RelativeDirection;
 
 class MCPM {
 public:
@@ -110,9 +110,11 @@ private:
 	VerticalAxis *vertical;
 	HorizontalAxis *horizontal;
 
-	int _degreesFromSouth;
+	int _degreesFromNorth;
+	int _horMoveCount;
 	void findLimitSwitch();
 	void findSouth();
+	void findLevel();
 	bool moveVerticalDegrees(int degreesToMove);
 	bool moveHorizontalDegrees(int degreesToMove);
 };

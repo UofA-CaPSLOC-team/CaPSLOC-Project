@@ -2,17 +2,19 @@
 
 MCPM::MCPM()
 {
-	std::cout << "Initializing MCPM..." << std::endl;
+	cout << "Initializing MCPM..." << endl;
 	vertical = new VerticalAxis(0);
 	horizontal = new HorizontalAxis(1);
 	sensors = new SensorManager();
-	//findLimitSwitch();
+	findLimitSwitch();
+	findLevel();
 	//while(!(abs(sensors->GetMagYRaw()) < 15))
-	/*{
-		findLimitSwitch();
-		findSouth();
-	}*/
-	_degreesFromSouth = 0;
+	//{
+	//	findLimitSwitch();
+	//	findSouth();
+	//}
+	_horMoveCount = 0;
+	_degreesFromNorth = 360;
 }
 
 MCPM::~MCPM()
@@ -31,19 +33,36 @@ GPSCoordinates MCPM::getGPSCoordinate()
 
 bool MCPM::gotoLocation( double dLatitude, double dLongitude, double dAltitude )
 {
+	if (_horMoveCount > 10)
+	{
+		findLimitSwitch();
+	}
+	getGPSCoordinate();
+	getGPSCoordinate();
 	float tPosNorth = sensors->CalculateHorizontalDegreesOfMovementFromNorth(dLatitude, dLongitude);
+	cout << "Position from north: " << tPosNorth << endl;
 	float verticalOffsetInDegrees = sensors->CalculateVerticalDegreesOfMovement(dLatitude, dLongitude, dAltitude);
-	//TODO: come up with the math to determine the number of degrees and direction we need to turn.
-	//float horDegreesToMove = -tPosNorth + _degreesFromSouth;
-	//moveHorizontalDegrees(horDegreesToMove);
-	moveVerticalDegrees(verticalOffsetInDegrees);
-	return false;
+
+	float changeInVert = -(sensors->GetPitch() - verticalOffsetInDegrees);
+
+	float horDegreesToMove = tPosNorth - _degreesFromNorth;
+	cout << "Degrees moved from north: " << _degreesFromNorth << endl;
+
+	cout <<"Horizontal degrees to move: " << 360 - horDegreesToMove << endl;
+	cout <<"Vertical degrees to move: " << changeInVert << endl;
+
+	bool hor = moveHorizontalDegrees(360- horDegreesToMove);
+	bool vert = moveVerticalDegrees(changeInVert);
+	cout <<"Horizontal can move: " << hor << endl;
+	cout <<"Vertical can move: " << vert << endl;
+
+	return (hor & vert);
 }
 
-bool MCPM::relativeMotion(RelativeDirection tRelDir, double nDegrees)
+bool MCPM::relativeMotion( RelativeDirection tRelDir, double nDegrees)
 {
 	bool rVal = false;
-	if (horIsDoneMoving) 
+	if (vertIsDoneMoving) 
 	{
 		if (tRelDir == UP)
 		{
@@ -104,13 +123,17 @@ bool MCPM::moveVerticalDegrees(int degreesToMove)
 	{
 		rVal = vertical->MoveDegrees(degreesToMove);
 	}
+	else
+	{
+		//cout << "Final position is going to be: " << finalPosition << endl;
+	}
 	return rVal;
 }
 
 bool MCPM::moveHorizontalDegrees(int degreesToMove)
 {
 	bool rVal = false;
-	//cout << "Moving " << degreesToMove << " degrees." << endl;
+	cout << "Moving " << degreesToMove << " degrees." << endl;
 	int endingDegrees = degreesMovedFromLimitSwitch + degreesToMove;
 	//cout << "Ending degrees " << endingDegrees << " degrees." << endl;
 
@@ -126,11 +149,19 @@ bool MCPM::moveHorizontalDegrees(int degreesToMove)
 	rVal = horizontal->MoveDegrees(degreesToMove);
 	if (rVal)
 	{
+		_horMoveCount++;
 		degreesMovedFromLimitSwitch += degreesToMove;
-		_degreesFromSouth += degreesToMove;
+		_degreesFromNorth -= degreesToMove;
 		//cout << "Degrees moved from Limit Switch: " << degreesMovedFromLimitSwitch << endl;
 	}
 	return rVal;
+}
+
+void MCPM::findLevel()
+{
+	float currentAngle = sensors->GetPitch();
+	cout << "Going to level by moving " << -currentAngle << " degrees." << endl;
+	vertical->MoveDegrees(-currentAngle);
 }
 
 void MCPM::findLimitSwitch()
@@ -141,8 +172,11 @@ void MCPM::findLimitSwitch()
 	horizontal->MoveDegrees(-360);
 	while(!horIsDoneMoving)
 	{
-		usleep(50000);
+		sensors->GetLatitude();
+		sensors->GetLongitude();
 	}
+	_horMoveCount = 0;
+	_degreesFromNorth = 360;
 }
 
 void MCPM::findSouth()

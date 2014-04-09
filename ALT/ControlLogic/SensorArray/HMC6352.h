@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <unistd.h>
-#include "/opt/WiringPi/wiringPiI2C.h"
+#include "wiringPiI2C.h"
 
 class HMC6352
 {
