@@ -11,7 +11,7 @@
 #include <ctime>
 #include <fstream>
 #include <iostream>
-#include <raspicam/raspicam.h>
+//#include <raspicam/raspicam.h>
 
 class CameraControl {
 public:
@@ -21,7 +21,7 @@ public:
 	void takeAPicture(std::string filename);
 
 private:
-	raspicam::RaspiCam Camera;
+	//raspicam::RaspiCam Camera;
 };
 
 #endif /* CAMERACONTROL_H_ */

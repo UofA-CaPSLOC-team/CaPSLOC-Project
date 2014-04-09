@@ -79,22 +79,75 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 	BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, m_xmlScriptFile.get_child("command")){
 		if(v.first == "config"){
 			//TODO May need to check that these exist.
-			m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));
-			m_cnfg->setVidTime(v.second.get<long>("vidtime"));
-			m_cnfg->setFrameRate(v.second.get<short>("framerate"));
-			m_cnfg->setCaptureMode(((v.second.get<std::string>("imagemode").compare("pic")) ? VID : PIC));
-			m_cnfg->setQuality(v.second.get<int>("quality"));
-			m_cnfg->setWaitTime(timeParse(v.second.get<std::string>("waittime")));
-			m_cnfg->setLatOffset(v.second.get<double>("latoffset"));
-			m_cnfg->setLongOffset(v.second.get<double>("longoffset"));
-			m_cnfg->setAltOffset(v.second.get<double>("altoffset"));
+			try{
+				m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setRMotionAngle(5);
+			}
+			try{
+				m_cnfg->setVidTime(v.second.get<long>("vidtime"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setVidTime(5);
+			}
+			try{
+				m_cnfg->setFrameRate(v.second.get<short>("framerate"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setFrameRate(30);
+			}
+			try{
+				m_cnfg->setCaptureMode(((v.second.get<std::string>("imagemode").compare("pic")) ? VID : PIC));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setCaptureMode(PIC);
+			}
+			try{
+				m_cnfg->setQuality(v.second.get<int>("quality"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setQuality(600);
+			}
+			try{
+				m_cnfg->setWaitTime(timeParse(v.second.get<std::string>("waittime")));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setWaitTime(5000);
+			}
+			try{
+				m_cnfg->setLatOffset(v.second.get<double>("latoffset"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setLatOffset(0);
+			}
+			try{
+				m_cnfg->setLongOffset(v.second.get<double>("longoffset"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setLongOffset(0);
+			}
+			try{
+				m_cnfg->setAltOffset(v.second.get<double>("altoffset"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setAltOffset(0);
+			}
 			//END CONFIG
 		}else if(v.first == "goto"){
-			float latitude = v.second.get<float>("latitude");
-			float longitude = v.second.get<float>("longitude");
-			float altitude = v.second.get<float>("altitude");
-			std::string name = v.second.get<std::string>("name");
-
+			float latitude, longitude, altitude;
+			std::string name;
+			try{
+				latitude = v.second.get<float>("latitude");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				latitude = 0;
+			}
+			try{
+				longitude = v.second.get<float>("longitude");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				longitude = 0;
+			}
+			try{
+				altitude = v.second.get<float>("altitude");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				altitude = 0;
+			}
+			try{
+				name = v.second.get<std::string>("name");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				name = "Unknown Name";
+			}
 			std::cout << "\t --> Parsing GOTO: \n";
 			std::cout << "\t\t --> Lat: " << latitude << "\n";
 			std::cout << "\t\t --> Long: " << longitude << "\n";
@@ -125,10 +178,30 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			m_cmdManual->push_back(newNode);
 			//END RESUME
 		}else if(v.first == "capture"){
-			CaptureMode cm = v.second.get<std::string>("mode").compare("pic") ? VID : PIC;
-			long tot = timeParse(v.second.get<std::string>("tot"));
-			short fr = v.second.get<short>("framerate");
-			int qual = v.second.get<int>("quality");
+			CaptureMode cm;
+			long tot;
+			short fr;
+			int qual;
+			try{
+				cm = v.second.get<std::string>("mode").compare("pic") ? VID : PIC;
+			} catch(boost::property_tree::ptree_bad_path * e){
+				cm = m_cnfg->getCaptureMode();
+			}
+			try{
+				tot = timeParse(v.second.get<std::string>("tot"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				tot = m_cnfg->getVidTime();
+			}
+			try{
+				fr = v.second.get<short>("framerate");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				fr = m_cnfg->getFrameRate();
+			}
+			try{
+				qual = v.second.get<int>("quality");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				qual = m_cnfg->getQuality();
+			}
 
 			std::cout << "\t --> Parsing CAPTURE: \n";
 			std::cout << "\t\t --> Mode: " << ((cm == PIC) ? "PIC" : "VID") << "\n";
@@ -143,8 +216,18 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			m_cmdManual->push_back(newNode);
 			//END CAPTURE
 		}else if(v.first == "rmotion"){
-			RelativeDirection rd = directionParse(v.second.get<std::string>("direction"));
-			double ang = v.second.get<double>("angle");
+			RelativeDirection rd;
+			double ang;
+			try{
+				rd = directionParse(v.second.get<std::string>("direction"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				rd = RIGHT;
+			}
+			try{
+				ang = v.second.get<double>("angle");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				ang = m_cnfg->getRMotionAngle();
+			}
 
 			std::cout << "\t --> Parsing RMOTION: \n";
 			std::cout << "\t\t --> Direction: " << rd << "\n";
@@ -154,7 +237,12 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			m_cmdManual->push_back(newNode);
 			//END RMOTION
 		}else if(v.first == "wait"){
-			long time = timeParse(v.second.get<std::string>("time"));
+			long time;
+			try{
+				time = timeParse(v.second.get<std::string>("time"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				time = m_cnfg->getWaitTime();
+			}
 
 			std::cout << "\t --> Parsing WAIT: \n";
 			std::cout << "\t\t --> Time: " << time << std::endl;
@@ -164,7 +252,12 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			//END WAIT
 		}else if(v.first == "exec"){
 			std::string name = SCRIPTLOC;
-			std::string fName = v.second.get<std::string>("name");
+			std::string fName;
+			try{
+				fName = v.second.get<std::string>("name");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				fName = "NoScriptNameGiven";
+			}
 			name.append(fName);
 			name.append(".xml");
 			//			std::string name = v.second.get<std::string>("name");
@@ -196,22 +289,75 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 	BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, m_xmlScriptFile.get_child("script")){
 		if(v.first == "config"){
 			//TODO May need to check that these exist.
-			m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));
-			m_cnfg->setVidTime(v.second.get<long>("vidtime"));
-			m_cnfg->setFrameRate(v.second.get<short>("framerate"));
-			m_cnfg->setCaptureMode(((v.second.get<std::string>("imagemode").compare("pic")) ? VID : PIC));
-			m_cnfg->setQuality(v.second.get<int>("quality"));
-			m_cnfg->setWaitTime(timeParse(v.second.get<std::string>("waittime")));
-			m_cnfg->setLatOffset(v.second.get<double>("latoffset"));
-			m_cnfg->setLongOffset(v.second.get<double>("longoffset"));
-			m_cnfg->setAltOffset(v.second.get<double>("altoffset"));
+			try{
+				m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setRMotionAngle(5);
+			}
+			try{
+				m_cnfg->setVidTime(v.second.get<long>("vidtime"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setVidTime(5);
+			}
+			try{
+				m_cnfg->setFrameRate(v.second.get<short>("framerate"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setFrameRate(30);
+			}
+			try{
+				m_cnfg->setCaptureMode(((v.second.get<std::string>("imagemode").compare("pic")) ? VID : PIC));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setCaptureMode(PIC);
+			}
+			try{
+				m_cnfg->setQuality(v.second.get<int>("quality"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setQuality(600);
+			}
+			try{
+				m_cnfg->setWaitTime(timeParse(v.second.get<std::string>("waittime")));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setWaitTime(5000);
+			}
+			try{
+				m_cnfg->setLatOffset(v.second.get<double>("latoffset"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setLatOffset(0);
+			}
+			try{
+				m_cnfg->setLongOffset(v.second.get<double>("longoffset"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setLongOffset(0);
+			}
+			try{
+				m_cnfg->setAltOffset(v.second.get<double>("altoffset"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				m_cnfg->setAltOffset(0);
+			}
 			//END CONFIG
 		}else if(v.first == "goto"){
-			float latitude = v.second.get<float>("latitude");
-			float longitude = v.second.get<float>("longitude");
-			float altitude = v.second.get<float>("altitude");
-			std::string name = v.second.get<std::string>("name");
-
+			float latitude, longitude, altitude;
+			std::string name;
+			try{
+				latitude = v.second.get<float>("latitude");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				latitude = 0;
+			}
+			try{
+				longitude = v.second.get<float>("longitude");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				longitude = 0;
+			}
+			try{
+				altitude = v.second.get<float>("altitude");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				altitude = 0;
+			}
+			try{
+				name = v.second.get<std::string>("name");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				name = "Unknown Name";
+			}
 			std::cout << "\t --> Parsing GOTO: \n";
 			std::cout << "\t\t --> Lat: " << latitude << "\n";
 			std::cout << "\t\t --> Long: " << longitude << "\n";
@@ -242,11 +388,30 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			m_cmdScript->push_back(newNode);
 			//END RESUME
 		}else if(v.first == "capture"){
-			CaptureMode cm = v.second.get<std::string>("mode").compare("pic") ? VID : PIC;
-			long tot = timeParse(v.second.get<std::string>("tot"));
-			short fr = v.second.get<short>("framerate");
-			int qual = v.second.get<int>("quality");
-
+			CaptureMode cm;
+			long tot;
+			short fr;
+			int qual;
+			try{
+				cm = v.second.get<std::string>("mode").compare("pic") ? VID : PIC;
+			} catch(boost::property_tree::ptree_bad_path * e){
+				cm = m_cnfg->getCaptureMode();
+			}
+			try{
+				tot = timeParse(v.second.get<std::string>("tot"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				tot = m_cnfg->getVidTime();
+			}
+			try{
+				fr = v.second.get<short>("framerate");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				fr = m_cnfg->getFrameRate();
+			}
+			try{
+				qual = v.second.get<int>("quality");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				qual = m_cnfg->getQuality();
+			}
 			std::cout << "\t --> Parsing CAPTURE: \n";
 			std::cout << "\t\t --> Mode: " << ((cm == PIC) ? "PIC" : "VID") << "\n";
 			std::cout << "\t\t --> TOT: " << tot << "\n";
@@ -260,9 +425,18 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			m_cmdScript->push_back(newNode);
 			//END CAPTURE
 		}else if(v.first == "rmotion"){
-			RelativeDirection rd = directionParse(v.second.get<std::string>("direction"));
-			double ang = v.second.get<double>("angle");
-
+			RelativeDirection rd;
+			double ang;
+			try{
+				rd = directionParse(v.second.get<std::string>("direction"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				rd = RIGHT;
+			}
+			try{
+				ang = v.second.get<double>("angle");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				ang = m_cnfg->getRMotionAngle();
+			}
 			std::cout << "\t --> Parsing RMOTION: \n";
 			std::cout << "\t\t --> Direction: " << rd << "\n";
 			std::cout << "\t\t --> Angle: " << ang << std::endl;
@@ -271,7 +445,12 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			m_cmdScript->push_back(newNode);
 			//END RMOTION
 		}else if(v.first == "wait"){
-			long time = timeParse(v.second.get<std::string>("time"));
+			long time;
+			try{
+				time = timeParse(v.second.get<std::string>("time"));
+			} catch(boost::property_tree::ptree_bad_path * e){
+				time = m_cnfg->getWaitTime();
+			}
 
 			std::cout << "\t --> Parsing WAIT: \n";
 			std::cout << "\t\t --> Time: " << time << std::endl;
@@ -283,7 +462,12 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			//This could break. Test that script actually exists,
 			// If it doesn't, exclude this element from the script.
 			std::string name = SCRIPTLOC;
-			std::string fName = v.second.get<std::string>("name");
+			std::string fName;
+			try{
+				fName = v.second.get<std::string>("name");
+			} catch(boost::property_tree::ptree_bad_path * e){
+				fName = "NoScriptNameGiven";
+			}
 			name.append(fName);
 			name.append(".xml");
 			std::cout << "\t --> Parsing EXEC: \n";

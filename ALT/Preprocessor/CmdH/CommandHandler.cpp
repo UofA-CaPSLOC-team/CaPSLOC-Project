@@ -56,6 +56,7 @@ void CommandHandler::execNext(void){
 		sleep(1);
 	}
 	m_ptrMCPM->SetAltitudeFromGoogle(m_stc->sendGPS(m_ptrMCPM->getGPSCoordinate()));
+	m_ptrMCPM->SetGPSCoordinatesFromGoogle(m_dLatOffset, m_dLongOffset);
 	CommandNode * currCmd;
 	std::string stcString;
 	//This must run constantly to ensure proper execution of scripts.

@@ -9,8 +9,8 @@
 #include <iostream>
 #include <string>
 
-int main(void){
+/*int main(void){
 	CameraControl cam();
-	cam.takeAPicture("image001.ppm");
+	//cam.takeAPicture("image001.ppm");
 	return 0;
-}
+}*/
