@@ -7,11 +7,13 @@ SensorManager::SensorManager()
 	_accMag = new LSM303();
 	_pressure = new LPS331AP();
 	_altitudeFromGoogle = -1;
+	_longitutdeFromGoogle = 0.0;
+	_latititudeFromGoogle = 0.0;
 }
 
 float SensorManager::GetLongitude()
 {
-	if (_longitutdeFromGoogle != 0)
+	if (_longitutdeFromGoogle != 0.0)
 	{
 		return _longitutdeFromGoogle;
 	}
@@ -23,7 +25,7 @@ float SensorManager::GetLongitude()
 
 float SensorManager::GetLatitude()
 {
-	if (_latititudeFromGoogle != 0)
+	if (_latititudeFromGoogle != 0.0)
 	{
 		return _latititudeFromGoogle;
 	}
@@ -80,12 +82,12 @@ float SensorManager::CalculateHorizontalDegreesOfMovementFromNorth( float target
 	{
 		if ( y > 0 )
 		{
-			//std::cout << " X > 0 Y > 0 " << std::endl;
+			std::cout << " X > 0 Y > 0 " << std::endl;
 			angle = angle;
 		}
 		else if ( y < 0 )
 		{
-			//std::cout << " X > 0 Y < 0 " << std::endl;
+			std::cout << " X > 0 Y < 0 " << std::endl;
 			angle = 360 - angle;
 		}
 	}
@@ -93,12 +95,12 @@ float SensorManager::CalculateHorizontalDegreesOfMovementFromNorth( float target
 	{
 		if ( y < 0 )
 		{
-			//std::cout << " X < 0 Y < 0 " << std::endl;
+			std::cout << " X < 0 Y < 0 " << std::endl;
 			angle = 270-angle;
 		}
 		else if ( y > 0 ) //Bottom right
 		{
-			//std::cout << " X < 0 Y > 0 " << std::endl;
+			std::cout << " X < 0 Y > 0 " << std::endl;
 			angle = angle + 90;
 		}
 	}
@@ -110,7 +112,7 @@ float SensorManager::CalculateVerticalDegreesOfMovement( float targetLatitude, f
 	float rVal = 0.0;
 	float distanceToTarget = calculateDistanceToTarget( targetLatitude, targetLongitude );
 	float atitudeDifference = targetAltidue - getAltitudeInMeters();
-	std::cout << atitudeDifference << "  " << getAltitudeInMeters() << std::endl;
+	std::cout << "Current Altitude: " << getAltitudeInMeters() << std::endl;
 	rVal = atan2f(atitudeDifference, distanceToTarget)*180/M_PI;
 
 	return rVal;
