@@ -65,7 +65,7 @@ $(document).ready(function () {
             data: { 'altId': altId },
             success: function (result) {
                 if (result.success) {
-                    refreshScriptList(result.data);
+                    manageRefreshScriptList(result.data);
                 } else {
                     alert('An error occurred while finding the scripts: ' + result.data);
                 }
@@ -112,7 +112,7 @@ function addAltScript() {
         success: function (result) {
             if (result.success) {
                 alert('Script added successfully');
-                refreshScriptList(result.data);
+                manageRefreshScriptList(result.data);
             } else {
                 alert('An error occurred while adding the script: ' + result.data);
             }
@@ -139,7 +139,7 @@ function deleteAltScript() {
             success: function (result) {
                 if (result.success) {
                     alert('Script deleted successfully');
-                    refreshScriptList(result.data);
+                    manageRefreshScriptList(result.data);
                 } else {
                     alert('An error occurred while deleting the script: ' + result.data);
                 }
@@ -154,7 +154,7 @@ function deleteAltScript() {
     }
 }
 
-function refreshScriptList(scripts) {
+function manageRefreshScriptList(scripts) {
     var newData = { page: 1, total: scripts.length, rows: [] };
     _scriptList = scripts;
     $.each(scripts, function (index, element) {

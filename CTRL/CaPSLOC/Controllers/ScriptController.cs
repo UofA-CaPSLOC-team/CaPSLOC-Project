@@ -135,7 +135,7 @@ namespace CaPSLOC.Controllers
                 string respString = new StreamReader(respStream).ReadToEnd();
                 JavaScriptSerializer deserial = new JavaScriptSerializer();
                 ScriptListModel respData = deserial.Deserialize<ScriptListModel>(respString);
-                return Json(new { success = true, data = respData }, JsonRequestBehavior.AllowGet);               
+                return Json(respData, JsonRequestBehavior.AllowGet);               
             }
             catch (Exception ex)
             {
@@ -159,6 +159,11 @@ namespace CaPSLOC.Controllers
                     return Json(new { success = false, data = "Selected ALT not recently located. Please scan for ALTs" }, JsonRequestBehavior.DenyGet);
                 }
 
+                if (scriptName.LastIndexOf('.') > 0)
+                {
+                    scriptName = scriptName.Substring(0, scriptName.LastIndexOf('.'));
+                }
+
                 // Transmit request to ALT
                 WebRequest altRequest = WebRequest.CreateDefault(new Uri(String.Format("http://{0}/CaPSLOC/Script?name={1}", alt.Address, scriptName)));
                 altRequest.Method = "DELETE";
@@ -169,7 +174,7 @@ namespace CaPSLOC.Controllers
                 string respString = new StreamReader(respStream).ReadToEnd();
                 JavaScriptSerializer deserial = new JavaScriptSerializer();
                 ScriptListModel respData = deserial.Deserialize<ScriptListModel>(respString);
-                return Json(new { success = true, data = respData }, JsonRequestBehavior.AllowGet);                
+                return Json(respData, JsonRequestBehavior.AllowGet);                
             }
             catch (Exception ex)
             {

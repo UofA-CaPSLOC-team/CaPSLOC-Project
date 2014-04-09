@@ -197,13 +197,16 @@ namespace CaPSLOC.Controllers
 
                     // Transmit XML to ALT
                     WebRequest altRequest = WebRequest.CreateDefault(new Uri(String.Format("http://{0}/CaPSLOC/Command", alt.Address)));
-                    altRequest.ContentType = "text/xml";
+                    altRequest.ContentType = "application/json";
                     altRequest.Method = "POST";
 
-                    byte[] xmlBytes = Encoding.UTF8.GetBytes(xml);
-                    altRequest.ContentLength = xmlBytes.Length;
+                    JavaScriptSerializer serial = new JavaScriptSerializer();
+                    string json = serial.Serialize(new { name = "Command", command = xml });
+
+                    byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
+                    altRequest.ContentLength = jsonBytes.Length;
                     Stream dataStream = altRequest.GetRequestStream();
-                    dataStream.Write(xmlBytes, 0, xmlBytes.Length);
+                    dataStream.Write(jsonBytes, 0, jsonBytes.Length);
                     dataStream.Close();
 
                     WebResponse resp = altRequest.GetResponse();

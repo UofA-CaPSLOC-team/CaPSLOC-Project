@@ -71,6 +71,7 @@ $(document).ready(function () {
     $('#interactive-alt-list').change(function(){    
         clearTimeout(_debugRefreshId);
         debugRefresh();
+        interactiveRefreshScriptList();
     });
 
     // Remove the unobtrusive validator so we can manually set up validation
@@ -101,6 +102,8 @@ $(document).ready(function () {
     });
 });
 
+var altIdForLoad;
+
 function interactiveRefreshALTs(){
     var $altList = $('#interactive-alt-list');
     $altList.empty();
@@ -112,6 +115,7 @@ function interactiveRefreshALTs(){
                 $.each(result.data, function (index, element) {
                     $('<option/>').val(element.Id).text(element.Name + ' (' + element.Address + ')').appendTo($altList);
                 });
+                $('#interactive-alt-list').change();  // This is like a change, but the event doesn't get fired
             } else {
                 alert('An error occurred while finding the ALTs: ' + result.data);
             }
@@ -120,6 +124,7 @@ function interactiveRefreshALTs(){
             alert('An error occurred while finding the ALTs');
         }
     });
+    
 }
 
 function interactiveRefreshLocations(){
@@ -144,4 +149,31 @@ function interactiveRefreshLocations(){
             alert('An error occurred while finding the locations');
         }
     });
+}
+
+function interactiveRefreshScriptList() {
+
+    var altId = $('#interactive-alt-list').val();
+
+    if(altId != null){
+        $.ajax({
+            url: '/CaPSLOC/ALT/Scripts?altId=' + altId,
+            type: 'GET',
+            success: function (result) {
+                if (result.success) {
+                    var $list = $('#interactive-script-list');
+                     $list.empty();
+
+                    $.each(result.data, function (index, element) {
+                        $('<option/>').val(element.Name).text(element.Name).appendTo($list);        
+                    });
+                } else {
+                    alert('An error occurred while refreshing the script list: ' + result.data);
+                }
+            },
+            error: function () {
+                alert('An error occurred while refreshing the script list');
+            }
+         });
+     }
 }
