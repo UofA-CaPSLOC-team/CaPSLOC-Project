@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lcurl -lboost_thread -lboost_system
+LIBS := -lcurl -lboost_thread -lboost_system -lWiringPi -lraspicam
 

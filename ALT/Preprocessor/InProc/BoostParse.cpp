@@ -76,7 +76,7 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 		return false;
 	}
 
-	BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, m_xmlScriptFile.get_child("script")){
+	BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, m_xmlScriptFile.get_child("command")){
 		if(v.first == "config"){
 			//TODO May need to check that these exist.
 			m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));

@@ -13,7 +13,7 @@ class HorizontalAxis: public PicManager
 {
 public:
 	HorizontalAxis(int spiChannel);//:PicManager(spiChannel);
-	virtual ~HorizontalAxis();
+	virtual ~HorizontalAxis(){}
 	//bool IsDoneMoving();
 	bool MoveDegrees(int degreesToMove);
 private:

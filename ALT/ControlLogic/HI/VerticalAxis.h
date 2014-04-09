@@ -10,7 +10,7 @@ class VerticalAxis: public PicManager
 {
 public:
 	VerticalAxis(int spiChannel);//:PicManager(spiChannel);
-	virtual ~VerticalAxis();
+	virtual ~VerticalAxis(){};
 	//bool IsDoneMoving();
 	bool MoveDegrees(int degreesToMove);
 private:
