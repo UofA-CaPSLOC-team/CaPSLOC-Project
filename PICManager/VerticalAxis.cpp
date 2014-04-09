@@ -17,7 +17,7 @@ void VerticalAxis::setupInterrupts()
 {
 	wiringPiSetupGpio();
 	pinMode(_isDoneMovingPin, INPUT);
-	pullUpDnControl(_isDoneMovingPin, PUD_OFF);
+	pullUpDnControl(_isDoneMovingPin, PUD_DOWN);
 	wiringPiISR(_isDoneMovingPin, INT_EDGE_FALLING, &verticalAxisDoneISR);
 }
 

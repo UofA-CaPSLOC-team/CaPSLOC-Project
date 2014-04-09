@@ -12,7 +12,7 @@ void horIsDoneMovingISR()
 
 void horLimitSwitchHit()
 {
-	cout << "OH SHIT WE HIT THE LIMIT SWITCH!" << endl;
+	cout << "Barnacles. We hit the limit switch.!" << endl;
 	if (degreesMovedFromLimitSwitch > 180)
 		degreesMovedFromLimitSwitch = 360;
 	else

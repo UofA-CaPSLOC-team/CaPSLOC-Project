@@ -32,7 +32,7 @@ void CameraControl::takeAPicture(std::string filename){
 //	sleep(3);
 
 	//capture
-//	Camera.grab();
+/*	Camera.grab();
 
 	//allocate memory
 //	unsigned char *data = new unsigned char[Camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
@@ -47,5 +47,5 @@ void CameraControl::takeAPicture(std::string filename){
 //	std::cout << "Image saved at raspicam_image.ppm" << std::endl;
 
 	//free resrources
-//	delete data;
+	delete data;*/
 }
