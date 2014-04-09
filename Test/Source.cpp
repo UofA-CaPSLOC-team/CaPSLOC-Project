@@ -19,6 +19,9 @@
 #include "wiringPi.h"
 #include "VerticalAxis.h"
 #include <linux/i2c-dev.h>
+#include <linux/i2c.h>
+#include <sys/ioctl.h>
+
 
 using namespace std;
 
@@ -45,6 +48,24 @@ void testGPS()
 	delete gps;
 }
 
+void TestGPS2()
+{
+	int handle = serialOpen("/dev/ttyAMA0", 9600);
+	while(1)
+	{
+		std::string message;
+		int i = 0;
+		char currentChar = serialGetchar( handle );
+		while (currentChar != '\n')
+		{
+			message.append(1, currentChar);
+			currentChar = serialGetchar( handle );
+			i++;
+		}
+		cout << message << endl;
+		message.clear();
+	}
+}
 void testMagnetometer2()
 {
 	MCPM *b = new MCPM();
@@ -145,7 +166,7 @@ void testGyro()
 
 void TestVerticalAxis()
 {
-	VerticalAxis *vert = new VerticalAxis(1);
+	VerticalAxis *vert = new VerticalAxis(0);
 	while(1)
 	{
 		string input;
@@ -375,53 +396,179 @@ void TestSensorManager()
 
 void TestI2C()
 {
-	int fd;														// File descrition
-	char *fileName = "/dev/i2c-1";								// Name of the port we will be using
-	int  address = 0x6B;										// Address of CMPS03 shifted right one bit
-	unsigned char buf[10];										// Buffer for data being read/ written on the i2c bus
-	
-	if ((fd = open(fileName, O_RDWR)) < 0)
-	{					// Open port for reading and writing
-		cout << "Failed to open i2c port" << endl;
-		exit(1);
-	}
-
-	if (ioctl(fd, I2C_SLAVE, address) < 0) 
-	{					// Set the port options and set the address of the device we wish to speak to
-		printf("Unable to get bus access to talk to slave\n");
-		exit(1);
-	}
-
-	buf[0] = 0x0F;													// This is the register we want to read from
-	buf[1] = 0x00;
-	if(ioctl(fd, I2C_RDWR, buf, 2))
+	L3GD20 *b = new L3GD20();
+	while(1)
 	{
-		cout << "ERROR!!!" << endl;
+		cout << "Press Enter when ready" << endl;
+		cin.get();
+		b->getXAxisRaw();
 	}
-	cout << buf[0] << " " << buf[1] << endl;
 }
+
+void TestMCPM3()
+{
+	MCPM *m = new MCPM();
+	while(!m->isReadyForNextLocation())
+	{
+		usleep(10000);
+	}
+	while(1)
+	{
+		string input;
+		cout << "Enter horizontal degrees: ";
+		cin >> input;
+		int hor = atoi(input.c_str());
+		cout << "Enter vertical degrees: ";
+		cin >> input;
+		int vert = atoi(input.c_str());
+		if (hor < 0)
+			m->relativeMotion(RIGHT, abs(hor));
+		else
+			m->relativeMotion(LEFT, abs(hor));
+		if (vert < 0)
+			m->relativeMotion(DOWN, abs(vert));
+		else
+			m->relativeMotion(UP, abs(vert));
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(10000);
+		}
+	}
+	delete m;
+}
+
+void TestMCPM4()
+{
+	MCPM *m = new MCPM();
+	while(!m->isReadyForNextLocation())
+	{
+		usleep(50000);
+	}
+	while(1)
+	{
+		cout << "STARTING NEW GIGGITY!!!" << endl;
+		cout << " -----------------------------" << endl;
+		//41.082432, -81.518510
+		cout << "East Parking deck" << endl;
+		m->gotoLocation(41.075983, -81.505137, 300); // east parking deck.
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+
+		cout << "Polsky Building" << endl;
+		m->gotoLocation(41.078940, -81.519820, 300); // polsky building
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+
+		cout <<"Home plate of the Akron Aeors" << endl;
+		m->gotoLocation(41.077763, -81.522180 , 300); //home plate of Akron Aeors
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+
+		cout <<"Exchange Parking Deck" << endl;
+		m->gotoLocation(41.075133, -81.514702 , 300); //Exchange Parking Deck.
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+		cout <<"Route 8 Bridge" << endl;
+		m->gotoLocation(41.087007, -81.501889 , 300); //Route 8 Bridge.
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+		cout <<"Somewhat north" << endl;
+		m->gotoLocation(41.087770, -81.513103, 300); 
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+	
+		sleep(5);
+		cout <<"Home plate of the Akron Aeors" << endl;
+		m->gotoLocation(41.077763, -81.522180 , 300); //home plate of Akron Aeors
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+		cout << "East Parking deck" << endl;
+		m->gotoLocation(41.075983, -81.505137, 300); // east parking deck.
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+			sleep(5);
+
+		cout << "Polsky Building" << endl;
+		m->gotoLocation(41.078940, -81.519820, 300); // polsky building
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+
+		cout <<"Home plate of the Akron Aeors" << endl;
+		m->gotoLocation(41.077763, -81.522180 , 300); //home plate of Akron Aeors
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+
+		cout <<"Exchange Parking Deck" << endl;
+		m->gotoLocation(41.075133, -81.514702 , 300); //Exchange Parking Deck.
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+		sleep(5);
+		cout <<"Route 8 Bridge" << endl;
+		m->gotoLocation(41.087007, -81.501889 , 300); //Route 8 Bridge.
+		while(!m->isReadyForNextLocation())
+		{
+			usleep(50000);
+		}
+	}
+}
+
+
 int main(void)
 {
-	TestI2C();
+	TestMCPM4();
+	//TestGPS2();
+	//TestMCPM3();
+	//TestVerticalAxis();
+	//TestI2C();
 	//MCPM *bob = new MCPM();
-	//41.076035, -81.509466
+	////41.076035, -81.509466
 
-	//cout << "North North East" << endl;
-	//bob->gotoLocation(41.076733, -81.513591, 100);
-	//cout << "East East North" << endl;
-	//bob->gotoLocation(41.076326, -81.512642, 80);
-	//cout << "East East South" << endl;
-	//bob->gotoLocation(41.075772, -81.512579, 50000);
-	//cout << "South South East" << endl;
-	//bob->gotoLocation(41.075203, -81.513449, 40);
-	//cout << "South South West" << endl;
-	//bob->gotoLocation(41.075162, -81.514332, 20);
-	//cout << "West West South" << endl;
-	//bob->gotoLocation(41.075806, -81.515095, 10);
-	//cout << "West West North" << endl;
-	//bob->gotoLocation(41.076280, -81.515299, 200);
-	//cout << "North North West" << endl;
-	//bob->gotoLocation(41.076793, -81.514300, 300);
+	//cout << endl << "North North East" << endl;
+	//bob->gotoLocation(41.083822, -81.513145, 100);
+	//cout << endl<< "East East North" << endl;
+	//bob->gotoLocation(41.077494, -81.500365, 80);
+	//cout << endl<< "East East South" << endl;
+	//bob->gotoLocation(41.074965, -81.498636, 50000);
+	//cout << endl<< "South South East" << endl;
+	//bob->gotoLocation(41.070043, -81.512756, 40);
+	//cout << endl<< "South South West" << endl;
+	//bob->gotoLocation(41.069576, -81.515742, 20);
+	//cout << endl<< "West West South" << endl;
+	//bob->gotoLocation(41.075497, -81.526247, 10);
+	//cout << endl<< "West West North" << endl;
+	//bob->gotoLocation(41.077847, -81.523128, 200);
+	//cout << endl<< "North North West" << endl;
+	//bob->gotoLocation(41.084941, -81.517941, 300);
 	//bob->gotoLocation(1, 1, 0);
 	/*bob->gotoLocation(1, -1, 0);
 	bob->gotoLocation(-1, -1, 0);

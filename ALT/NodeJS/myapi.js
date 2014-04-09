@@ -49,7 +49,6 @@ app.post('/CaPSLOC/Script', function(req, res){
 		console.log('connected to unix socket server');
 	});
 
-	
 	// Send the script location through the socket
 	conn.end(filename);
 	

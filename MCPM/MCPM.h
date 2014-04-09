@@ -110,9 +110,11 @@ private:
 	VerticalAxis *vertical;
 	HorizontalAxis *horizontal;
 
-	int _degreesFromSouth;
+	int _degreesFromNorth;
+	int _horMoveCount;
 	void findLimitSwitch();
 	void findSouth();
+	void findLevel();
 	bool moveVerticalDegrees(int degreesToMove);
 	bool moveHorizontalDegrees(int degreesToMove);
 };

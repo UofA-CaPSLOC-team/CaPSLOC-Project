@@ -148,6 +148,7 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			} catch(std::exception * e){
 				name = "Unknown Name";
 			}
+
 			std::cout << "\t --> Parsing GOTO: \n";
 			std::cout << "\t\t --> Lat: " << latitude << "\n";
 			std::cout << "\t\t --> Long: " << longitude << "\n";
