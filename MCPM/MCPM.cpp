@@ -32,11 +32,22 @@ GPSCoordinates MCPM::getGPSCoordinate()
 bool MCPM::gotoLocation( double dLatitude, double dLongitude, double dAltitude )
 {
 	float tPosNorth = sensors->CalculateHorizontalDegreesOfMovementFromNorth(dLatitude, dLongitude);
+
 	float verticalOffsetInDegrees = sensors->CalculateVerticalDegreesOfMovement(dLatitude, dLongitude, dAltitude);
+
+	float changeInVert = -(sensors->GetPitch() - verticalOffsetInDegrees);
+
 	float horDegreesToMove = tPosNorth - _degreesFromNorth;
-	moveHorizontalDegrees(horDegreesToMove);
-	moveVerticalDegrees(verticalOffsetInDegrees);
-	return false;
+
+	cout <<"Horizontal degrees to move: " << horDegreesToMove << endl;
+	cout <<"Vertical degrees to move: " << changeInVert << endl;
+
+	bool hor = moveHorizontalDegrees(horDegreesToMove);
+	bool vert = moveVerticalDegrees(changeInVert);
+	cout <<"Horizontal can move: " << hor << endl;
+	cout <<"Vertical can move: " << vert << endl;
+
+	return (hor & vert);
 }
 
 bool MCPM::relativeMotion( RelativeDirection tRelDir, double nDegrees)
@@ -102,6 +113,10 @@ bool MCPM::moveVerticalDegrees(int degreesToMove)
 	if (finalPosition <= 90 && finalPosition >= -90)
 	{
 		rVal = vertical->MoveDegrees(degreesToMove);
+	}
+	else
+	{
+		//cout << "Final position is going to be: " << finalPosition << endl;
 	}
 	return rVal;
 }
