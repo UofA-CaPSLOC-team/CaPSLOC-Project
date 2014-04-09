@@ -10,7 +10,6 @@
 #include <string>
 #include <iostream>
 #include <stdint.h>
-#include <unistd.h>
 #include <cmath>
 
 using namespace std;
@@ -19,7 +18,7 @@ class PicManager
 {
 public:
 	PicManager(int spiDevice);
-	virtual ~PicManager();
+	~PicManager();
 
 	virtual bool MoveDegrees(int degreesToMove);
 	void Stop();

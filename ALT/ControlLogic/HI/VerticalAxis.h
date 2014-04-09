@@ -4,13 +4,12 @@
 extern bool vertIsDoneMoving;
 
 #include "PicManager.h"
-#include "/opt/WiringPi/wiringPi.h"
+#include "wiringPi.h"
 
 class VerticalAxis: public PicManager
 {
 public:
 	VerticalAxis(int spiChannel);//:PicManager(spiChannel);
-	virtual ~VerticalAxis(){};
 	//bool IsDoneMoving();
 	bool MoveDegrees(int degreesToMove);
 private:

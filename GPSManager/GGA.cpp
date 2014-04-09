@@ -22,46 +22,88 @@ void GGA::ParseData(std::string data)
 		switch(loopCount)
 		{
 			case 0: //MessageID
-				_messageID = subString;
+				{
+					_messageID = subString;
+				}
 				break;
 			case 1: //UTCTime
-				_utcTime = atof( subString.c_str() );
+				{
+					_utcTime = atof( subString.c_str() );
+				}
 				break;
 			case 2: //Latitude
-				_latitude = atof( subString.c_str() );
+				{
+					if (subString.length() > 0)
+					{
+						float d = atof( subString.substr(0, 2).c_str() );
+						std::size_t decimalLocation = subString.find_first_of(".");
+						std::string minutes = subString.substr(decimalLocation-2, subString.length()-(decimalLocation - 2));
+						float m = atof( minutes.c_str()) / 60;
+						_latitude = d + m;
+					}
+				}
 				break;
 			case 3: //North/South indicator
-				_nsIndicator = subString;
+				{
+					_nsIndicator = subString;
+				}
 				break;
 			case 4: //Longitude
-				_longitude = atof( subString.c_str() );
+				{
+					if (subString.length() > 0)
+					{
+						float d = atof( subString.substr(0, 3).c_str() );
+						std::size_t decimalLocation = subString.find_first_of(".");
+						std::string minutes = subString.substr(decimalLocation-2, subString.length()-(decimalLocation-2));
+						float m = atof( minutes.c_str()) / 60;
+						_longitude = d + m;
+					}
+				}
 				break;
 			case 5:// East/West indicator
-				_ewIndicator = subString;
+				{
+					_ewIndicator = subString;
+				}
 				break;
 			case 6: //position indicator
-				_positionIndicator = atoi( subString.c_str() );
+				{
+					_positionIndicator = atoi( subString.c_str() );
+				}
 				break;
 			case 7: //Satellites Used
-				_satellitesUsed = atoi( subString.c_str() );
+				{
+					_satellitesUsed = atoi( subString.c_str() );
+				}
 				break;
 			case 8: //hdop
-				_hdop = atof( subString.c_str() );
+				{
+					_hdop = atof( subString.c_str() );
+				}
 				break;
 			case 9: //MSL altitude
-				_mslAltitude = atof( subString.c_str() );
+				{
+					_mslAltitude = atof( subString.c_str() );
+				}
 				break;
 			case 10: //units
-				_mslUnits = subString;
+				{
+					_mslUnits = subString;
+				}
 				break;
 			case 11: //geoidal separation
-				_geoidalSeparation = atof( subString.c_str() );
+				{
+					_geoidalSeparation = atof( subString.c_str() );
+				}
 				break;
 			case 12: //units
-				_geoidalUnits = subString;
+				{
+					_geoidalUnits = subString;
+				}
 				break;
 			case 13: //AgeofDiffCorrection
-				_ageOfDiffCorrection = atof (subString.c_str() );
+				{
+					_ageOfDiffCorrection = atof (subString.c_str() );
+				}
 				break;
 		}
 		startIndex = endIndex + 1;

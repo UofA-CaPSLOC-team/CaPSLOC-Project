@@ -2,7 +2,7 @@
 #ifndef __GPSManager_H_
 #define __GPSManager_H_
 
-#include "/opt/WiringPi/wiringSerial.h"
+#include "wiringSerial.h"
 #include "GGA.h"
 #include "NSS.h"
 #include <string>

@@ -7,14 +7,6 @@ var CONFIG_FILE_LOCATION = '/opt/CaPSLOC/config.txt';
 var SCRIPT_FOLDER_LOCATION = '/opt/CaPSLOC/scripts';
 var SOCKET_LOCATION = '/opt/CaPSLOC/socket/socket';
 
-var conn = net.createConnection(SOCKET_LOCATION);
-conn.on('connect', function(){
-	console.log('connected to unix socket server');
-});
-conn.on('data', function(data){
-	console.log('data returned from socket:');
-	console.log(data.toString());
-});
 
 var app = express();
 app.use(express.bodyParser());
@@ -51,9 +43,14 @@ app.post('/CaPSLOC/Script', function(req, res){
 	var fd = fs.openSync(filename, 'w');
 	var scriptBuffer = new Buffer(req.body.script);
 	fs.writeSync(fd, scriptBuffer, 0, scriptBuffer.length, 0);
-	
+
+	var conn = net.createConnection(SOCKET_LOCATION);
+	conn.on('connect', function(){
+		console.log('connected to unix socket server');
+	});
+
 	// Send the script location through the socket
-	conn.write(filename);
+	conn.end(filename);
 	
 	// Send back a success message
 	var respBody = getScriptNamesAndTimes();
@@ -92,10 +89,15 @@ app.post('/CaPSLOC/Command', function(req, res){
 	// Debugging
 	console.log('Command Received:');
 	console.log(req.body.command);
-		
+	
+	var conn = net.createConnection(SOCKET_LOCATION);
+	conn.on('connect', function(){
+		console.log('connected to unix socket server');
+	});
+	
 	// Send the script location through the socket
 	var cmdBuffer = new Buffer(req.body.command);
-	conn.write(cmdBuffer);
+	conn.end(cmdBuffer);
 	
 	// Send back a success message
 	var respData = {success: true};
