@@ -81,47 +81,47 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			//TODO May need to check that these exist.
 			try{
 				m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setRMotionAngle(5);
 			}
 			try{
 				m_cnfg->setVidTime(v.second.get<long>("vidtime"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setVidTime(5);
 			}
 			try{
 				m_cnfg->setFrameRate(v.second.get<short>("framerate"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setFrameRate(30);
 			}
 			try{
 				m_cnfg->setCaptureMode(((v.second.get<std::string>("imagemode").compare("pic")) ? VID : PIC));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setCaptureMode(PIC);
 			}
 			try{
 				m_cnfg->setQuality(v.second.get<int>("quality"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setQuality(600);
 			}
 			try{
 				m_cnfg->setWaitTime(timeParse(v.second.get<std::string>("waittime")));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setWaitTime(5000);
 			}
 			try{
 				m_cnfg->setLatOffset(v.second.get<double>("latoffset"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setLatOffset(0);
 			}
 			try{
 				m_cnfg->setLongOffset(v.second.get<double>("longoffset"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setLongOffset(0);
 			}
 			try{
 				m_cnfg->setAltOffset(v.second.get<double>("altoffset"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setAltOffset(0);
 			}
 			//END CONFIG
@@ -130,22 +130,22 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			std::string name;
 			try{
 				latitude = v.second.get<float>("latitude");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				latitude = 0;
 			}
 			try{
 				longitude = v.second.get<float>("longitude");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				longitude = 0;
 			}
 			try{
 				altitude = v.second.get<float>("altitude");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				altitude = 0;
 			}
 			try{
 				name = v.second.get<std::string>("name");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				name = "Unknown Name";
 			}
 			std::cout << "\t --> Parsing GOTO: \n";
@@ -184,22 +184,22 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			int qual;
 			try{
 				cm = v.second.get<std::string>("mode").compare("pic") ? VID : PIC;
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				cm = m_cnfg->getCaptureMode();
 			}
 			try{
 				tot = timeParse(v.second.get<std::string>("tot"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				tot = m_cnfg->getVidTime();
 			}
 			try{
 				fr = v.second.get<short>("framerate");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				fr = m_cnfg->getFrameRate();
 			}
 			try{
 				qual = v.second.get<int>("quality");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				qual = m_cnfg->getQuality();
 			}
 
@@ -220,12 +220,12 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			double ang;
 			try{
 				rd = directionParse(v.second.get<std::string>("direction"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				rd = RIGHT;
 			}
 			try{
 				ang = v.second.get<double>("angle");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				ang = m_cnfg->getRMotionAngle();
 			}
 
@@ -240,7 +240,7 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			long time;
 			try{
 				time = timeParse(v.second.get<std::string>("time"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				time = m_cnfg->getWaitTime();
 			}
 
@@ -255,7 +255,7 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 			std::string fName;
 			try{
 				fName = v.second.get<std::string>("name");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				fName = "NoScriptNameGiven";
 			}
 			name.append(fName);
@@ -291,47 +291,47 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			//TODO May need to check that these exist.
 			try{
 				m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setRMotionAngle(5);
 			}
 			try{
 				m_cnfg->setVidTime(v.second.get<long>("vidtime"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setVidTime(5);
 			}
 			try{
 				m_cnfg->setFrameRate(v.second.get<short>("framerate"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setFrameRate(30);
 			}
 			try{
 				m_cnfg->setCaptureMode(((v.second.get<std::string>("imagemode").compare("pic")) ? VID : PIC));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setCaptureMode(PIC);
 			}
 			try{
 				m_cnfg->setQuality(v.second.get<int>("quality"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setQuality(600);
 			}
 			try{
 				m_cnfg->setWaitTime(timeParse(v.second.get<std::string>("waittime")));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setWaitTime(5000);
 			}
 			try{
 				m_cnfg->setLatOffset(v.second.get<double>("latoffset"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setLatOffset(0);
 			}
 			try{
 				m_cnfg->setLongOffset(v.second.get<double>("longoffset"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setLongOffset(0);
 			}
 			try{
 				m_cnfg->setAltOffset(v.second.get<double>("altoffset"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				m_cnfg->setAltOffset(0);
 			}
 			//END CONFIG
@@ -340,22 +340,22 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			std::string name;
 			try{
 				latitude = v.second.get<float>("latitude");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				latitude = 0;
 			}
 			try{
 				longitude = v.second.get<float>("longitude");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				longitude = 0;
 			}
 			try{
 				altitude = v.second.get<float>("altitude");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				altitude = 0;
 			}
 			try{
 				name = v.second.get<std::string>("name");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				name = "Unknown Name";
 			}
 			std::cout << "\t --> Parsing GOTO: \n";
@@ -394,22 +394,22 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			int qual;
 			try{
 				cm = v.second.get<std::string>("mode").compare("pic") ? VID : PIC;
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				cm = m_cnfg->getCaptureMode();
 			}
 			try{
 				tot = timeParse(v.second.get<std::string>("tot"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				tot = m_cnfg->getVidTime();
 			}
 			try{
 				fr = v.second.get<short>("framerate");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				fr = m_cnfg->getFrameRate();
 			}
 			try{
 				qual = v.second.get<int>("quality");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				qual = m_cnfg->getQuality();
 			}
 			std::cout << "\t --> Parsing CAPTURE: \n";
@@ -429,12 +429,12 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			double ang;
 			try{
 				rd = directionParse(v.second.get<std::string>("direction"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				rd = RIGHT;
 			}
 			try{
 				ang = v.second.get<double>("angle");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				ang = m_cnfg->getRMotionAngle();
 			}
 			std::cout << "\t --> Parsing RMOTION: \n";
@@ -448,7 +448,7 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			long time;
 			try{
 				time = timeParse(v.second.get<std::string>("time"));
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				time = m_cnfg->getWaitTime();
 			}
 
@@ -465,7 +465,7 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			std::string fName;
 			try{
 				fName = v.second.get<std::string>("name");
-			} catch(boost::property_tree::ptree_bad_path * e){
+			} catch(std::exception * e){
 				fName = "NoScriptNameGiven";
 			}
 			name.append(fName);
