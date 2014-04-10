@@ -140,8 +140,7 @@ void CommandHandler::execNext(void){
 			std::string fullName = "/usr/bin/raspistill -w 640 -h 480 -e png -o ";
 			fullName.append(m_strLocName);
 			fullName.append(".png");
-
-//			system(fullName);
+			system(fullName.c_str());
 //			m_ptrCD->takePicture(fullName);
 			/*capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),
