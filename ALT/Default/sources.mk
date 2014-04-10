@@ -31,6 +31,5 @@ DPU \
 ControlLogic/SensorArray \
 ControlLogic/MCPM \
 ControlLogic/HI \
-ControlLogic \
 .metadata/.plugins/org.eclipse.cdt.make.core \
 
