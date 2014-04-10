@@ -230,7 +230,7 @@ void CommandHandler::execNext(void){
 		default:
 			break;
 		}
-
+		usleep(500);
 	}
 }
 
