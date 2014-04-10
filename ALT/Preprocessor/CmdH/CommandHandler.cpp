@@ -78,8 +78,10 @@ void CommandHandler::execNext(void){
 		m_ptrMCPM->SetGPSCoordinatesFromGoogle(m_dLatOffset, m_dLongOffset);
 	}
 	std::cout << "Waiting for GPS Lock.\n";
-	while(!m_ptrMCPM->GPSHasLock()){
+	int counter = 0;
+	while(!m_ptrMCPM->GPSHasLock() && counter < 5){
 			sleep(1);
+			++counter;
 		}
 	std::cout << "GPS lock acquired.\n";
 	m_stc->sendCommandDebug("INFO: GPS lock aqcuired.");
