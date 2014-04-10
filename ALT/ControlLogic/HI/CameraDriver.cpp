@@ -8,15 +8,16 @@
 #include "CameraDriver.h"
 
 CameraDriver::CameraDriver(std::string name) {
-	m_strName = name;
-	m_strName.append(".ppm");
+
 }
 
 CameraDriver::~CameraDriver() {
 
 }
 
-void CameraDriver::takePicture(){
+void CameraDriver::takePicture(std::string name){
+	m_strName = name;
+	m_strName.append(".ppm");
 	raspicam::RaspiCam Camera; //Camera object
     //Open camera
     std::cout << "Opening Camera..." << std::endl;

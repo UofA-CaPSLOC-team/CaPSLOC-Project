@@ -65,6 +65,7 @@ private:
 	short m_sFrameRate;
 	bool m_bPaused, m_bHaltExec;
 	std::string m_strLocName;
+	CameraDriver * m_ptrCD;
 };
 
 #endif /* COMMANDHANDLER_H_ */
