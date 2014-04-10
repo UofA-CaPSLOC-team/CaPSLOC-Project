@@ -279,10 +279,13 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 
 bool BoostParse::scriptFileParse(std::string strFileName){
 	//TODO Implement using Boost Library
+	try{
 	std::ifstream xmlFile(strFileName.c_str(), std::ifstream::in);
 	CommandNode newNode = CommandNode();
 	read_xml(xmlFile, m_xmlScriptFile);
-
+	} catch(std::exception * e){
+		std::cerr << "Cannot read file.\n";
+	}
 	//TODO Halt script execution NOW!!!!
 	m_cmdH->smoothHalt();
 	m_cmdScript->clear(); //clear script before putting new one into memory
