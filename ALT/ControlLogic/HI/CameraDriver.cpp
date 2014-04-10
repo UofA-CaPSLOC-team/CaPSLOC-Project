@@ -7,7 +7,7 @@
 
 #include "CameraDriver.h"
 
-CameraDriver::CameraDriver(std::string name) {
+CameraDriver::CameraDriver() {
 
 }
 
