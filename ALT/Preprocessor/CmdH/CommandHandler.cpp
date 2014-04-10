@@ -126,6 +126,7 @@ void CommandHandler::execNext(void){
 			//END RMOTION
 		case CAPTURE:
 			//TODO CHANGE THIS!
+		{
 			while(!m_ptrMCPM->isReadyForNextLocation()){
 				usleep(50000);
 			}
@@ -147,6 +148,7 @@ void CommandHandler::execNext(void){
 			stcString.append(" in a QUALITY of ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()));
 			m_stc->sendCommandDebug(stcString);
+		}
 			break;
 			//END CAPTURE
 		case GOTO:
