@@ -80,12 +80,16 @@ void CommandHandler::execNext(void){
 						m_bPaused = false;
 						m_stc->sendCommandDebug("RESUMING");
 						continue;
+					}else {
+						continue;
 					}
 				}
 				if(m_cmdScript->hasCommands()){
 					if(m_cmdScript->peek_front()->getType() == RESUME){
 						m_bPaused = false;
 						m_stc->sendCommandDebug("RESUMING");
+						continue;
+					} else {
 						continue;
 					}
 				}
