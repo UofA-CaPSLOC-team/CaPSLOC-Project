@@ -89,6 +89,8 @@ void CommandHandler::execNext(void){
 						continue;
 					}
 				}
+			} else if(m_bHaltExec){
+				continue;
 			}
 		}
 		switch(currCmd->getType()){
@@ -101,14 +103,12 @@ void CommandHandler::execNext(void){
 		case RMOTION:
 			m_ptrMCPM->relativeMotion(currCmd->getRelDirection(),
 					currCmd->getAngle());
-#ifdef DEBUG
 			stcString = "MOVING in DIRECTION ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getRelDirection()));
 			stcString.append(" ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getAngle()));
 			stcString.append(" degrees.");
 			m_stc->sendCommandDebug(stcString);
-#endif
 			break;
 			//END RMOTION
 		case CAPTURE:
@@ -122,7 +122,6 @@ void CommandHandler::execNext(void){
 					currCmd->getQuality(),
 					currCmd->getFrameRate());
 					*/
-#ifdef DEBUG
 			stcString = "CAPTURING in MODE ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getCapMode()));
 			stcString.append(" for ");
@@ -132,7 +131,6 @@ void CommandHandler::execNext(void){
 			stcString.append(" in a QUALITY of ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()));
 			m_stc->sendCommandDebug(stcString);
-#endif
 			break;
 			//END CAPTURE
 		case GOTO:
@@ -143,7 +141,6 @@ void CommandHandler::execNext(void){
 			m_ptrMCPM->gotoLocation(currCmd->getLongitude(),
 					currCmd->getLatitude(),
 					currCmd->getAltitude());
-#ifdef DEBUG
 			stcString = "GOING to ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getName()));
 			stcString.append(" at LONGITUDE ");
@@ -153,22 +150,17 @@ void CommandHandler::execNext(void){
 			stcString.append(", and ALTITUDE ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getAltitude()));
 			m_stc->sendCommandDebug(stcString);
-#endif
 			break;
 			//END GOTO
 		case WAIT:
 			//time in script is in ms, usleep reads in us: convert!
 			std::cout << "--> Waiting for " << currCmd->getWaitTime() << " ms..." << std::endl;
-#ifdef DEBUG
 			stcString = "WAITING for ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getWaitTime()));
 			m_stc->sendCommandDebug(stcString);
-#endif
 			usleep((currCmd->getWaitTime()) * 1000);
-#ifdef DEBUG
 			stcString = "RESUMING from WAIT.";
 			m_stc->sendCommandDebug(stcString);
-#endif
 			break;
 			//END WAIT
 		case PAUSE:
