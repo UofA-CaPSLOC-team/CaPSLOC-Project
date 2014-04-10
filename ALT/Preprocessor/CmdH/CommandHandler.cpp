@@ -7,7 +7,24 @@
 
 #include "CommandHandler.h"
 
+std::string getALTName(){
+	char rawResult[256];
+	std::string rv;
+	std::ifstream is(CNFGFILELOC, std::ifstream::in);
+	while(is.is_open() && rv.empty() && !is.eof()){
+		is.getline(rawResult, 256);
+		rv = rawResult;
+		if(rv.find("Name=") != std::string::npos){
+			rv = rv.substr(5, std::string::npos);
+		} else {
+			rv.clear();
+		}
+	}
+	return rv;
+}
+
 CommandHandler::CommandHandler(){
+	m_strAltName = getALTName();
 	m_cmdManual = new CommandList();
 	m_cmdScript = new CommandList();
 	m_bExecScript = true;//change for official release.
@@ -26,6 +43,7 @@ CommandHandler::CommandHandler(){
 }
 
 CommandHandler::CommandHandler(BoostParse * bp, SendToCTRL * stc) {
+	m_strAltName = getALTName();
 	m_cmdManual = bp->getManualCommands();
 	m_cmdScript = bp->getScriptCommands();
 	m_bExecScript = true;//change for official release.
@@ -149,7 +167,7 @@ void CommandHandler::execNext(void){
 			stcString.append(" in a QUALITY of ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()));
 			m_stc->sendCommandDebug(stcString);
-			//m_stc->sendPicToCTRL(fullName, altName, longitude, latitude, altitude, locname, capTime);
+			m_stc->sendPicToCTRL(fullName, m_strAltName, m_dcurrLong, m_dcurrLat, m_dcurrAlt, m_strLocName, "null");
 		}
 			break;
 			//END CAPTURE
@@ -158,9 +176,9 @@ void CommandHandler::execNext(void){
 				usleep(50000);
 			}
 			m_strLocName = currCmd->getName();
-			m_ptrMCPM->gotoLocation(currCmd->getLongitude(),
-					currCmd->getLatitude(),
-					currCmd->getAltitude());
+			m_ptrMCPM->gotoLocation(m_dcurrLong = currCmd->getLongitude(),
+					m_dcurrLat = currCmd->getLatitude(),
+					m_dcurrAlt = currCmd->getAltitude());
 			stcString = "GOING to ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getName()));
 			stcString.append(" at LONGITUDE ");

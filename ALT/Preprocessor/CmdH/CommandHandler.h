@@ -24,6 +24,7 @@
 #include <boost/lexical_cast.hpp>
 #include "../../ControlLogic/HI/CameraDriver.h";
 
+#define CNFGFILELOC "/opt/CaPSLOC/config.txt"
 
 class BoostParse; //Forward Declaration to appease his majesty, G++.
 class CommandHandler {
@@ -59,6 +60,7 @@ private:
 
 	//TODO These have been defined in Config class, call them from there...
 	double m_dLatOffset, m_dLongOffset, m_dAltOffset, m_dRMotionAngle;
+	double m_dcurrLat, m_dcurrLong, m_dcurrAlt;
 	long m_lVidtime, m_lWaitTime;
 	int m_nQuality;
 	CaptureMode m_tCapMode;
@@ -66,6 +68,7 @@ private:
 	bool m_bPaused, m_bHaltExec;
 	std::string m_strLocName;
 	CameraDriver * m_ptrCD;
+	std::string m_strAltName;
 };
 
 #endif /* COMMANDHANDLER_H_ */
