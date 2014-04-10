@@ -59,7 +59,7 @@ int main(int argv, char ** argc){
 	CommandHandler * ch = new CommandHandler(bp, stc);
 	std::cout << "\t --> Executing scripts..." << std::endl;
 
-	bp->setCmdH(ch);
+	bp->setCmdH(new CommandHandler(bp, stc));
 
 	 try
 	  {

@@ -105,6 +105,14 @@ public:
 		return sensors->GPSHasLock();
 	}
 
+	void stopMovement(){
+		vertical->Stop();
+		horizontal->Stop();
+		while(!isReadyForNextLocation()){
+			usleep(5000);
+		}
+		needToCalibrate = true;
+	}
 private:
 	SensorManager *sensors;
 	VerticalAxis *vertical;
@@ -117,6 +125,8 @@ private:
 	void findLevel();
 	bool moveVerticalDegrees(int degreesToMove);
 	bool moveHorizontalDegrees(int degreesToMove);
+
+	bool needToCalibrate;
 };
 
 #endif /* MCPM_H_ */

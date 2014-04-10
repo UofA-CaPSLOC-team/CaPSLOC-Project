@@ -36,6 +36,10 @@ GPSCoordinates MCPM::getGPSCoordinate()
 
 bool MCPM::gotoLocation( double dLatitude, double dLongitude, double dAltitude )
 {
+	if(needToCalibrate){
+		findLimitSwitch();
+	}
+
 	if (_horMoveCount > 10)
 	{
 		findLimitSwitch();
@@ -64,6 +68,15 @@ bool MCPM::gotoLocation( double dLatitude, double dLongitude, double dAltitude )
 
 bool MCPM::relativeMotion( RelativeDirection tRelDir, double nDegrees)
 {
+	if(needToCalibrate){
+		findLimitSwitch();
+	}
+
+	if (_horMoveCount > 10)
+	{
+		findLimitSwitch();
+	}
+
 	bool rVal = false;
 	if (vertIsDoneMoving) 
 	{

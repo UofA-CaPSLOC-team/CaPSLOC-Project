@@ -4,26 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../ControlLogic/HI/CameraDriver.cpp \
-../ControlLogic/HI/HorizontalAxis.cpp \
-../ControlLogic/HI/PicManager.cpp \
-../ControlLogic/HI/VerticalAxis.cpp 
+../ControlLogic/CameraTest.cpp 
 
 OBJS += \
-./ControlLogic/HI/CameraDriver.o \
-./ControlLogic/HI/HorizontalAxis.o \
-./ControlLogic/HI/PicManager.o \
-./ControlLogic/HI/VerticalAxis.o 
+./ControlLogic/CameraTest.o 
 
 CPP_DEPS += \
-./ControlLogic/HI/CameraDriver.d \
-./ControlLogic/HI/HorizontalAxis.d \
-./ControlLogic/HI/PicManager.d \
-./ControlLogic/HI/VerticalAxis.d 
+./ControlLogic/CameraTest.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-ControlLogic/HI/%.o: ../ControlLogic/HI/%.cpp
+ControlLogic/%.o: ../ControlLogic/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
 	g++ -I/opt/local/include -O0 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"

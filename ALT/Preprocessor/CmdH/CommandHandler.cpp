@@ -11,7 +11,7 @@ CommandHandler::CommandHandler(){
 	m_cmdManual = new CommandList();
 	m_cmdScript = new CommandList();
 	m_bExecScript = true;//change for official release.
-	m_ptrMCPM = new MCPM();
+	m_ptrMCPM = NULL;
 	m_dLatOffset = m_dLongOffset = m_dAltOffset = 0;
 	m_dRMotionAngle = 5;
 	m_lVidtime = 5000000; //5 seconds
@@ -29,7 +29,7 @@ CommandHandler::CommandHandler(BoostParse * bp, SendToCTRL * stc) {
 	m_cmdManual = bp->getManualCommands();
 	m_cmdScript = bp->getScriptCommands();
 	m_bExecScript = true;//change for official release.
-	m_ptrMCPM = new MCPM();
+	m_ptrMCPM = NULL;
 	m_dLatOffset = bp->getConfig()->getLatOffset();
 	m_dLongOffset = bp->getConfig()->getLongOffset();
 	m_dAltOffset = bp->getConfig()->getAltOffset();
@@ -52,11 +52,15 @@ CommandHandler::~CommandHandler() {
 }
 
 void CommandHandler::execNext(void){
+	m_ptrMCPM = new MCPM();
+	std::cout << "Waiting for GPS Lock.\n";
 	while(!m_ptrMCPM->GPSHasLock()){
 		sleep(1);
 	}
+	std::cout << "GPS lock acquired.\n";
+	m_stc->sendCommandDebug("INFO: GPS lock aqcuired.");
 	m_ptrMCPM->SetAltitudeFromGoogle(m_stc->sendGPS(m_ptrMCPM->getGPSCoordinate()));
-	m_ptrMCPM->SetGPSCoordinatesFromGoogle(m_dLatOffset, m_dLongOffset);
+//	m_ptrMCPM->SetGPSCoordinatesFromGoogle(m_dLatOffset, m_dLongOffset);
 	CommandNode * currCmd;
 	std::string stcString;
 	//This must run constantly to ensure proper execution of scripts.
@@ -99,9 +103,13 @@ void CommandHandler::execNext(void){
 		}
 		switch(currCmd->getType()){
 		case HALT:
-			//TODO Stop things!
-			//TODO Need code to stop motors NOW!
+			//Stop things!
+			//Need code to stop motors NOW!
 			m_stc->sendCommandDebug("HALTING");
+			m_ptrMCPM->stopMovement();
+			m_cmdScript->clear();
+			m_cmdManual->clear();
+			m_bHaltExec = true;
 			break;
 			//END HALT
 		case RMOTION:
@@ -120,7 +128,10 @@ void CommandHandler::execNext(void){
 			while(!m_ptrMCPM->isReadyForNextLocation()){
 				usleep(50000);
 			}
-
+			std::string fullName = "/opt/CaPSLOC/pics/";
+			fullName.append(m_strLocName);
+			CameraDriver cd = CameraDriver(fullName);
+			cd.takePicture();
 			/*capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),
 					currCmd->getQuality(),
