@@ -38,11 +38,12 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.344691774" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
 								<option id="gnu.cpp.link.option.libs.2052858467" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="raspicam"/>
 									<listOptionValue builtIn="false" value="WiringPi"/>
 									<listOptionValue builtIn="false" value="boost_thread"/>
 									<listOptionValue builtIn="false" value="boost_system"/>
 								</option>
-								<option id="gnu.cpp.link.option.paths.2105017444" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+								<option id="gnu.cpp.link.option.paths.2105017444" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/opt/WiringPi/Debug"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.157615344" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">

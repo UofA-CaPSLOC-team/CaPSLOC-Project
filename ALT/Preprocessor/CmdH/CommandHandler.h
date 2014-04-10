@@ -22,6 +22,7 @@
 #include "../InProc/Config.h"
 #include "../../DPU/SendToCTRL.h"
 #include <boost/lexical_cast.hpp>
+#include "../../ControlLogic/HI/CameraDriver.h";
 
 
 class BoostParse; //Forward Declaration to appease his majesty, G++.
