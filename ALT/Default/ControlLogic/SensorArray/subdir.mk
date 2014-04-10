@@ -6,6 +6,7 @@
 CPP_SRCS += \
 ../ControlLogic/SensorArray/FloatAverage.cpp \
 ../ControlLogic/SensorArray/GGA.cpp \
+../ControlLogic/SensorArray/GPS.cpp \
 ../ControlLogic/SensorArray/GPSManager.cpp \
 ../ControlLogic/SensorArray/L3GD20.cpp \
 ../ControlLogic/SensorArray/LPS331AP.cpp \
@@ -16,6 +17,7 @@ CPP_SRCS += \
 OBJS += \
 ./ControlLogic/SensorArray/FloatAverage.o \
 ./ControlLogic/SensorArray/GGA.o \
+./ControlLogic/SensorArray/GPS.o \
 ./ControlLogic/SensorArray/GPSManager.o \
 ./ControlLogic/SensorArray/L3GD20.o \
 ./ControlLogic/SensorArray/LPS331AP.o \
@@ -26,6 +28,7 @@ OBJS += \
 CPP_DEPS += \
 ./ControlLogic/SensorArray/FloatAverage.d \
 ./ControlLogic/SensorArray/GGA.d \
+./ControlLogic/SensorArray/GPS.d \
 ./ControlLogic/SensorArray/GPSManager.d \
 ./ControlLogic/SensorArray/L3GD20.d \
 ./ControlLogic/SensorArray/LPS331AP.d \
