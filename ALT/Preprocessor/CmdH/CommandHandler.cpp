@@ -139,6 +139,7 @@ void CommandHandler::execNext(void){
 					currCmd->getQuality(),
 					currCmd->getFrameRate());
 					*/
+			fullName.append(".png");
 			stcString = "CAPTURING in MODE ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getCapMode()));
 			stcString.append(" for ");
@@ -148,6 +149,7 @@ void CommandHandler::execNext(void){
 			stcString.append(" in a QUALITY of ");
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()));
 			m_stc->sendCommandDebug(stcString);
+			//m_stc->sendPicToCTRL(fullName, altName, longitude, latitude, altitude, locname, capTime);
 		}
 			break;
 			//END CAPTURE
