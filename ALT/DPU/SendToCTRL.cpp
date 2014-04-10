@@ -169,6 +169,7 @@ double SendToCTRL::sendGPS(GPSCoordinates coordinates)
 	double altitude = std::numeric_limits<double>::min();
 
 	std::string ipAddr = m_strIPAddr;
+
 	ipAddr.append(ALTITUDE_ROUTE);
 	// Append longitude and latitude
 	ipAddr.append("?longitude=");
@@ -190,6 +191,7 @@ double SendToCTRL::sendGPS(GPSCoordinates coordinates)
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
 
+	std::cout << "Sending to IP address: " << ipAddr;
 	res = curl_easy_perform(curl);
 	/* Check for errors */
 	if(res != CURLE_OK){
