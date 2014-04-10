@@ -102,6 +102,10 @@ public:
 
 	bool GPSHasLock()
 	{
+		if (!sensors->GPSHasLock() && sensors->GetLatitude() != 0.0)
+		{
+			return true;
+		}
 		return sensors->GPSHasLock();
 	}
 

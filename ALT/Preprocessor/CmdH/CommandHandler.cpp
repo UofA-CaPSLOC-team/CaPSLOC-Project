@@ -72,14 +72,17 @@ CommandHandler::~CommandHandler() {
 void CommandHandler::execNext(void){
 	m_ptrMCPM = new MCPM();
 	m_ptrCD = new CameraDriver();
+	m_ptrMCPM->SetAltitudeFromGoogle(m_stc->sendGPS(m_ptrMCPM->getGPSCoordinate()));
+	if (m_dLatOffset != 0.0)
+	{
+		m_ptrMCPM->SetGPSCoordinatesFromGoogle(m_dLatOffset, m_dLongOffset);
+	}
 	std::cout << "Waiting for GPS Lock.\n";
 	while(!m_ptrMCPM->GPSHasLock()){
-		sleep(1);
-	}
+			sleep(1);
+		}
 	std::cout << "GPS lock acquired.\n";
 	m_stc->sendCommandDebug("INFO: GPS lock aqcuired.");
-	m_ptrMCPM->SetAltitudeFromGoogle(m_stc->sendGPS(m_ptrMCPM->getGPSCoordinate()));
-//	m_ptrMCPM->SetGPSCoordinatesFromGoogle(m_dLatOffset, m_dLongOffset);
 	CommandNode * currCmd;
 	std::string stcString;
 	//This must run constantly to ensure proper execution of scripts.
