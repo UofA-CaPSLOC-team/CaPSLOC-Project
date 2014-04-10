@@ -123,27 +123,21 @@ function readScriptInput(cmdType, tab) {
                 Name: 'Image Type',
                 Value: $('input[name$=image-capture-type]:checked', tab).val()
             });
-            if ($('[id$=image-capture-duration]', tab).val() && $('input[name$=image-capture-type]:checked', tab).val() == "vid") {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-2',
-                    Name: 'Duration',
-                    Value: $('[id$=image-capture-duration]', tab).val()
-                });
-            }
-            if ($('[id$=image-capture-frame-rate]', tab).val() && $('input[name$=image-capture-type]:checked', tab).val() == "vid") {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-3',
-                    Name: 'Frame Rate',
-                    Value: $('[id$=image-capture-frame-rate]', tab).val()
-                });
-            }
-            if ($('[id$=image-capture-resolution]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-4',
-                    Name: 'Resolution',
-                    Value: $('[id$=image-capture-resolution]', tab).val()
-                });
-            }
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-2',
+                Name: 'Duration',
+                Value: 0 //$('[id$=image-capture-duration]', tab).val()
+            });
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-3',
+                Name: 'Frame Rate',
+                Value: 10 //$('[id$=image-capture-frame-rate]', tab).val()
+            });           
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-4',
+                Name: 'Resolution',
+                Value: $('[id$=image-capture-resolution]', tab).val() || 480
+            });
             break;
         case 7:
             serializedInput.CommandName = 'Rotate';
@@ -152,23 +146,19 @@ function readScriptInput(cmdType, tab) {
                 Name: 'Direction',
                 Value: $('[id$=rotate-direction]', tab).val()
             });
-            if ($('[id$=rotate-degrees]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-2',
-                    Name: 'Degrees',
-                    Value: $('[id$=rotate-degrees]', tab).val()
-                });
-            }
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-2',
+                Name: 'Degrees',
+                Value: $('[id$=rotate-degrees]', tab).val()
+            });
             break;
         case 8:
             serializedInput.CommandName = 'Wait';
-            if ($('[id$=wait-duration]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-1',
-                    Name: 'Duration',
-                    Value: $('[id$=wait-duration]', tab).val()
-                });
-            }
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-1',
+                Name: 'Duration',
+                Value: $('[id$=wait-duration]', tab).val()
+            });
             break;
         case 9:
             serializedInput.CommandName = 'Execute Script';
@@ -180,62 +170,46 @@ function readScriptInput(cmdType, tab) {
             break;
         case 10:
             serializedInput.CommandName = 'Set Defaults';
-            if ($('[id$=default-rotate-degrees]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-1',
-                    Name: 'Degrees',
-                    Value: $('[id$=default-rotate-degrees]', tab).val()
-                });
-            }
-            if ($('[id$=default-image-capture-duration]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-2',
-                    Name: 'Video Duration',
-                    Value: $('[id$=default-image-capture-duration]', tab).val()
-                });
-            }
-            if ($('[id$=default-image-capture-frame-rate]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-3',
-                    Name: 'Video Frame Rate',
-                    Value: $('[id$=default-image-capture-frame-rate]', tab).val()
-                });
-            }
-            if ($('[id$=default-image-capture-resolution]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-4',
-                    Name: 'Image Resolution',
-                    Value: $('[id$=default-image-capture-resolution]', tab).val()
-                });
-            }
-            if ($('[id$=default-wait-duration]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-5',
-                    Name: 'Wait Duration',
-                    Value: $('[id$=default-wait-duration]').val()
-                });
-            }
-            if ($('[id$=latitude-offset]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-6',
-                    Name: 'Latitude Offset',
-                    Value: $('[id$=latitude-offset]', tab).val()
-                });
-            }
-            if ($('[id$=longitude-offset]', tab).val()) {
-                serializedInput.Params.push({
-                    Id: serializedInput.CommandId + '-7',
-                    Name: 'Longitude Offset',
-                    Value: $('[id$=longitude-offset]', tab).val()
-                });
-            }
-            if ($('[id$=altitude-offset]', tab).val()) {
-                serializedInput.Params.push({
-                    id: serializedInput.CommandId + '-8',
-                    Name: 'Altitude Offset',
-                    Value: $('[id$=altitude-offset]', tab).val()
-                });
-            }
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-1',
+                Name: 'Degrees',
+                Value: $('[id$=default-rotate-degrees]', tab).val() || 5
+            });
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-2',
+                Name: 'Video Duration',
+                Value: $('[id$=default-image-capture-duration]', tab).val() || "00:00"
+            });
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-3',
+                Name: 'Video Frame Rate',
+                Value: $('[id$=default-image-capture-frame-rate]', tab).val() || 5
+            });
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-4',
+                Name: 'Image Resolution',
+                Value: $('[id$=default-image-capture-resolution]', tab).val() || 600
+            });
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-5',
+                Name: 'Wait Duration',
+                Value: $('[id$=default-wait-duration]').val() || "00:05"
+            });
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-6',
+                Name: 'Latitude Offset',
+                Value: $('[id$=latitude-offset]', tab).val() || 0
+            });
+            serializedInput.Params.push({
+                Id: serializedInput.CommandId + '-7',
+                Name: 'Longitude Offset',
+                Value: $('[id$=longitude-offset]', tab).val() || 0
+            });
+            serializedInput.Params.push({
+                id: serializedInput.CommandId + '-8',
+                Name: 'Altitude Offset',
+                Value: $('[id$=altitude-offset]', tab).val() || 0
+            });
             break;
         default:
             alert('Invalid command type');
