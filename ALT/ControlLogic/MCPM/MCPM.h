@@ -11,9 +11,9 @@
 
 //#include "../../Preprocessor/InProc/CommandNode.h"
 //#include "../../Preprocessor/InProc/CommandList.h"
-#include "../Sensors/SensorManager.h"
-#include "../PICManager/HorizontalAxis.h"
-#include "../PICManager/VerticalAxis.h"
+#include "../SensorArray/SensorManager.h"
+#include "../HI/HorizontalAxis.h"
+#include "../HI/VerticalAxis.h"
 #include <iostream>
 #include <unistd.h>
 #include <string>
