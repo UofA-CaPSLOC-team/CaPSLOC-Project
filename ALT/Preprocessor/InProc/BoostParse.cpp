@@ -79,47 +79,57 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 	BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, m_xmlScriptFile.get_child("command")){
 		if(v.first == "config"){
 			//TODO May need to check that these exist.
+			std::cout << "Parsing Config Element.\n";
 			try{
+				std::cout << "getting rmotionangle \n";
 				m_cnfg->setRMotionAngle(v.second.get<double>("rmotionangle"));
 			} catch(std::exception * e){
 				m_cnfg->setRMotionAngle(5);
 			}
 			try{
+				std::cout << "getting vidtime \n";
 				m_cnfg->setVidTime(v.second.get<long>("vidtime"));
 			} catch(std::exception * e){
 				m_cnfg->setVidTime(5);
 			}
 			try{
+				std::cout << "getting framerate \n";
 				m_cnfg->setFrameRate(v.second.get<short>("framerate"));
 			} catch(std::exception * e){
 				m_cnfg->setFrameRate(30);
 			}
 			try{
+				std::cout << "getting imagemode \n";
 				m_cnfg->setCaptureMode(((v.second.get<std::string>("imagemode").compare("pic")) ? VID : PIC));
 			} catch(std::exception * e){
 				m_cnfg->setCaptureMode(PIC);
 			}
 			try{
+				std::cout << "getting quality \n";
 				m_cnfg->setQuality(v.second.get<int>("quality"));
 			} catch(std::exception * e){
 				m_cnfg->setQuality(600);
 			}
 			try{
+				std::cout << "getting waittime \n";
 				m_cnfg->setWaitTime(timeParse(v.second.get<std::string>("waittime")));
 			} catch(std::exception * e){
 				m_cnfg->setWaitTime(5000);
 			}
 			try{
+				std::cout << "getting latoffset \n";
 				m_cnfg->setLatOffset(v.second.get<double>("latoffset"));
 			} catch(std::exception * e){
 				m_cnfg->setLatOffset(0);
 			}
 			try{
+				std::cout << "getting longoffset \n";
 				m_cnfg->setLongOffset(v.second.get<double>("longoffset"));
 			} catch(std::exception * e){
 				m_cnfg->setLongOffset(0);
 			}
 			try{
+				std::cout << "getting altoffset \n";
 				m_cnfg->setAltOffset(v.second.get<double>("altoffset"));
 			} catch(std::exception * e){
 				m_cnfg->setAltOffset(0);
