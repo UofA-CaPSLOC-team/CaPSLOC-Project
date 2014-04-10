@@ -12,7 +12,7 @@
 #include <fstream>
 #include <iostream>
 
-#include <raspicam/raspicam.h>
+#include <raspicam/raspicam_still.h>
 
 class CameraDriver {
 public:

@@ -132,7 +132,7 @@ void CommandHandler::execNext(void){
 			}
 			std::string fullName = "/opt/CaPSLOC/pics/";
 			fullName.append(m_strLocName);
-
+//			system(fullName);
 			m_ptrCD->takePicture(fullName);
 			/*capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),

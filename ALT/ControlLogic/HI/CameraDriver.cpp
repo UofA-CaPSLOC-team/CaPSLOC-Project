@@ -17,27 +17,26 @@ CameraDriver::~CameraDriver() {
 
 void CameraDriver::takePicture(std::string name){
 	m_strName = name;
-	m_strName.append(".ppm");
-	raspicam::RaspiCam Camera; //Camera object
+	m_strName.append(".png");
+	raspicam::RaspiCam_Still * rpc = new raspicam::RaspiCam_Still(); //Camera object
+	rpc->setEncoding(raspicam::RASPICAM_ENCODING_JPEG);
+	rpc->setCaptureSize(640,480);
     //Open camera
     std::cout << "Opening Camera..." << std::endl;
-    if ( !Camera.open()) {
+    if ( !rpc->open()) {
     	std::cerr << "Error opening camera" << std::endl;
     	return;
     }
     //wait a while until camera stabilizes
     std::cout << "Sleeping for 3 secs" << std::endl;
-    sleep(3);
     //capture
-    Camera.grab();
     //allocate memory
-    unsigned char *data=new unsigned char[Camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB)];
-    //extract the image in rgb format
-    Camera.retrieve(data, raspicam::RASPICAM_FORMAT_RGB);//get camera image
+    unsigned char * data = new unsigned char[rpc->getImageBufferSize()];
+    //extract 
+    rpc->grab_retrieve(data,rpc->getImageBufferSize());//get camera image
     //save
     std::ofstream outFile (m_strName.c_str(), std::ios::binary);
-    outFile << "P6\n" << Camera.getWidth() << " " << Camera.getHeight() << " 255\n";
-    outFile.write((char*)data, Camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB));
+    outFile.write((char*)data, rpc->getImageBufferSize());
     std::cout << "Image saved at raspicam_image.ppm" << std::endl;
     //free resrources
     delete data;
