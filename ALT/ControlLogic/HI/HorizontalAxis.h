@@ -4,7 +4,7 @@
 extern bool horIsDoneMoving;
 
 #include "PicManager.h"
-#include "wiringPi.h"
+#include "/opt/WiringPi/wiringPi.h"
 
 extern int degreesMovedFromLimitSwitch;
 

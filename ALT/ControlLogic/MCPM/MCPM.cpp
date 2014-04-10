@@ -4,8 +4,11 @@ MCPM::MCPM()
 {
 	cout << "Initializing MCPM..." << endl;
 	vertical = new VerticalAxis(0);
+	cout << "Got vertical" << endl;
 	horizontal = new HorizontalAxis(1);
+	cout << "Got horizontal" << endl;
 	sensors = new SensorManager();
+	cout <<"Got das sensors" << endl;
 	findLimitSwitch();
 	findLevel();
 	//while(!(abs(sensors->GetMagYRaw()) < 15))

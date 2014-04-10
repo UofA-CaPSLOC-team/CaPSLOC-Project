@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <time.h>
-#include "../WiringPi/wiringPiI2C.h"
+#include "/opt/WiringPi/wiringPiI2C.h"
 
 
 /* Author: Curtis Hendrix.

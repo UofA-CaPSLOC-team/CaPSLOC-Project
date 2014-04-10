@@ -10,7 +10,7 @@
 
 #include <unistd.h>
 #include <stdint.h>
-#include "../WiringPi/wiringPiI2C.h"
+#include "/opt/WiringPi/wiringPiI2C.h"
 
 class LSM303
 {

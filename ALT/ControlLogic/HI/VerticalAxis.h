@@ -4,7 +4,7 @@
 extern bool vertIsDoneMoving;
 
 #include "PicManager.h"
-#include "wiringPi.h"
+#include "/opt/WiringPi/wiringPi.h"
 
 class VerticalAxis: public PicManager
 {
