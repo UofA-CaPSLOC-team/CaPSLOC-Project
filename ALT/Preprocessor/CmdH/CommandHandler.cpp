@@ -53,6 +53,7 @@ CommandHandler::~CommandHandler() {
 
 void CommandHandler::execNext(void){
 	m_ptrMCPM = new MCPM();
+	m_ptrCD = new CameraDriver();
 	std::cout << "Waiting for GPS Lock.\n";
 	while(!m_ptrMCPM->GPSHasLock()){
 		sleep(1);
@@ -130,8 +131,8 @@ void CommandHandler::execNext(void){
 			}
 			std::string fullName = "/opt/CaPSLOC/pics/";
 			fullName.append(m_strLocName);
-			CameraDriver cd = CameraDriver(fullName);
-			cd.takePicture();
+
+			m_ptrCD->takePicture(fullName);
 			/*capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),
 					currCmd->getQuality(),

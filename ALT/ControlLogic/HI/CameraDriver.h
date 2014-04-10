@@ -16,10 +16,10 @@
 
 class CameraDriver {
 public:
-	CameraDriver(std::string name);
+	CameraDriver();
 	virtual ~CameraDriver();
 
-	void takePicture();
+	void takePicture(std::string name);
 
 private:
 	std::string m_strName;
