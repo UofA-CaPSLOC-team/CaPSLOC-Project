@@ -131,7 +131,7 @@ namespace CaPSLOC.Controllers
                     ALT = alt,
                     Location = loc,
                     ImageEncoding = Path.GetExtension(filename),
-                    CaptureTime = captureTime
+                    CaptureTime = DateTime.Now
                 };
 
                 DbModel.Data.Add(data);

@@ -35,9 +35,6 @@ $(document).ready(function () {
         $('#interactive-command-parameters-' + selectVal).css('display', 'block');
     });
 
-    interactiveRefreshLocations();
-    interactiveRefreshALTs();
-
     $('#send-command').button().click(function () {
         if($('#interactive-command-form').valid()){
             var com = readScriptInput($('#interactive-command-list').val(), $('#interactive-mode'));

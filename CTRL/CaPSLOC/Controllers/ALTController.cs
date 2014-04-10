@@ -271,7 +271,7 @@ namespace CaPSLOC.Controllers
             }
 
             // Clean out old messages
-            cachedMessages = cachedMessages.Where(c => c.Time > DateTime.Now.AddMinutes(-10)).ToList();
+            cachedMessages = cachedMessages.Where(c => c.Time > DateTime.Now.AddMinutes(-10)).OrderByDescending(c => c.Time).Take(50).ToList();
 
             // Timestamp the message, then add it to the list
             debugMessage.Time = DateTime.Now;

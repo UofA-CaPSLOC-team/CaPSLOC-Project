@@ -62,6 +62,14 @@ $(document).ready(function () {
                 required: true,
                 number: true
             },
+            'rotate-degrees': {
+                required: true,
+                number: true
+            },
+            'wait-duration': {
+                required: true,
+                time: true
+            },
             'execute-name': {
                 required: true
             },
