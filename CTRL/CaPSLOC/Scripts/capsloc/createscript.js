@@ -1,4 +1,4 @@
-﻿
+
 var _scriptContext = [];
 
 $(document).ready(function () {
@@ -61,6 +61,14 @@ $(document).ready(function () {
             'altitude-script-field': {
                 required: true,
                 number: true
+            },
+            'rotate-degrees': {
+                required: true,
+                number: true
+            },
+            'wait-duration': {
+                required: true,
+                time: true
             },
             'execute-name': {
                 required: true
