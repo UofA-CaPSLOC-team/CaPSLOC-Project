@@ -35,7 +35,7 @@ void CameraDriver::takePicture(std::string name){
     //extract the image in rgb format
     Camera.retrieve(data, raspicam::RASPICAM_FORMAT_RGB);//get camera image
     //save
-    std::ofstream outFile (m_strName, std::ios::binary);
+    std::ofstream outFile (m_strName.c_str(), std::ios::binary);
     outFile << "P6\n" << Camera.getWidth() << " " << Camera.getHeight() << " 255\n";
     outFile.write((char*)data, Camera.getImageTypeSize(raspicam::RASPICAM_FORMAT_RGB));
     std::cout << "Image saved at raspicam_image.ppm" << std::endl;
