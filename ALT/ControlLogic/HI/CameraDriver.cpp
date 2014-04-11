@@ -17,7 +17,7 @@ CameraDriver::~CameraDriver() {
 
 void CameraDriver::takePicture(std::string name){
 	m_strName = name;
-	m_strName.append(".png");
+	m_strName.append(".jpg");
 	raspicam::RaspiCam_Still * rpc = new raspicam::RaspiCam_Still(); //Camera object
 	rpc->setEncoding(raspicam::RASPICAM_ENCODING_JPEG);
 	rpc->setCaptureSize(640,480);
