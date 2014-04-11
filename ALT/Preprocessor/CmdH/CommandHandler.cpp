@@ -99,7 +99,7 @@ void CommandHandler::execNext(void){
 //		m_cmdScript->printList();
 		std::cout << "Script Commands:\n";
 		m_cmdScript->printList();
-		if(!m_bPaused && !m_bHaltExec){
+
 			if(m_cmdManual->hasCommands()){
 				currCmd = (m_cmdManual->pop_front());
 			}else if(m_cmdScript->hasCommands()){
@@ -107,32 +107,7 @@ void CommandHandler::execNext(void){
 			}else {
 				continue;
 			}
-		}else {
-			//Peek at the front of both lists. If either one has a RESUME, reset the pause flag and continue.
-			if(m_bPaused){
-				if(m_cmdManual->hasCommands()){
-					if(m_cmdManual->peek_front()->getType() == RESUME){
-						m_bPaused = false;
-						m_stc->sendCommandDebug("RESUMING");
-						continue;
-					}else {
-						continue;
-					}
-				}
-				if(m_cmdScript->hasCommands()){
-					if(m_cmdScript->peek_front()->getType() == RESUME){
-						m_bPaused = false;
-						m_stc->sendCommandDebug("RESUMING");
-						continue;
-					} else {
-						continue;
-					}
-				}
-			}
-			else if(m_bHaltExec){
-				continue;
-			}
-		}
+		std::cout << "Command Type: " << currCmd->getType() << "\n";
 		switch(currCmd->getType()){
 		case HALT:
 			//Stop things!
@@ -186,6 +161,7 @@ void CommandHandler::execNext(void){
 			//END CAPTURE
 		case GOTO:
 			while(!m_ptrMCPM->isReadyForNextLocation()){
+				std::cout << "Waiting for isReadyForNextLocation()\n";
 				usleep(50000);
 			}
 			m_strLocName = currCmd->getName();

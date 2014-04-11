@@ -49,10 +49,10 @@ int main(int argc, char ** argv){
 
 	BoostParse * bp = new BoostParse();
 
-	if(argc >= 2){
+	if(argc < 2){
 		std::cout << "Usage " << argv[0] << " <filename>\n";
 		std::cout << "argc = " << argc << "\n";
-		std::cout << "2nd argument: " << argv[2] << "\n";
+		std::cout << "2nd argument: " << argv[1] << "\n";
 		return 0;
 	} else {
 		bp->scriptFileParse(argv[1]);
