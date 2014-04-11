@@ -83,7 +83,7 @@ int main(int argv, char ** argc){
 
 
 	    // NO CODE BELOW THIS LINE
-	    bt2.join();
+	    bt.join();
 	  }
 	  catch (std::exception& e)
 	  {
