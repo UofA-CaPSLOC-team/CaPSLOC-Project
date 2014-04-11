@@ -25,7 +25,7 @@
 
 #define SCRIPTLOC "/opt/CaPSLOC/scripts/"
 
-extern boost::mutex lockObject;
+
 
 class CommandHandler;
 
@@ -110,16 +110,12 @@ public:
 	 */
 	bool hasScriptCommands(){return m_cmdScript->hasCommands();}
 
-	void setCmdH(CommandHandler * cmdH){
-		m_cmdH = cmdH;
-	}
-
 private:
 
 	boost::property_tree::ptree m_xmlScriptFile;
 	std::string m_strFilename;
 	CommandList * m_cmdScript, * m_cmdManual;
-	CommandHandler * m_cmdH;
+//	CommandHandler * m_cmdH;
 //	std::vector<CommandID> * m_vScriptCmd;
 //	std::deque<CommandID> * m_dqManualCmd;
 	Config * m_cnfg;

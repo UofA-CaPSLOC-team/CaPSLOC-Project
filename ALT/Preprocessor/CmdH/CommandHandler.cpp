@@ -99,10 +99,7 @@ void CommandHandler::execNext(void){
 //		m_cmdScript->printList();
 		std::cout << "Script Commands:\n";
 		m_cmdScript->printList();
-		std::cout << "Manual Commands:\n";
-		m_cmdManual->printList();
 		if(!m_bPaused && !m_bHaltExec){
-			lockObject.lock();
 			if(m_cmdManual->hasCommands()){
 				currCmd = (m_cmdManual->pop_front());
 			}else if(m_cmdScript->hasCommands()){
@@ -110,11 +107,9 @@ void CommandHandler::execNext(void){
 			}else {
 				continue;
 			}
-			lockObject.unlock();
 		}else {
 			//Peek at the front of both lists. If either one has a RESUME, reset the pause flag and continue.
 			if(m_bPaused){
-				lockObject.lock();
 				if(m_cmdManual->hasCommands()){
 					if(m_cmdManual->peek_front()->getType() == RESUME){
 						m_bPaused = false;
@@ -133,7 +128,6 @@ void CommandHandler::execNext(void){
 						continue;
 					}
 				}
-				lockObject.unlock();
 			}
 			else if(m_bHaltExec){
 				continue;

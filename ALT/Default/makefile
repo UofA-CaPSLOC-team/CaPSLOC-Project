@@ -8,7 +8,6 @@ RM := rm
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include Preprocessor/SocketComm/subdir.mk
 -include Preprocessor/InProc/subdir.mk
 -include Preprocessor/CmdH/subdir.mk
 -include DPU/subdir.mk

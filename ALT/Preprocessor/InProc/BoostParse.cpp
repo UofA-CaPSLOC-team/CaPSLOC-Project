@@ -7,13 +7,12 @@
 
 #include "BoostParse.h"
 
-boost::mutex lockObject;
 
 BoostParse::BoostParse() {
 	m_cmdScript = new CommandList();
 	m_cmdManual = new CommandList();
 	m_cnfg = new Config();
-	m_cmdH = new CommandHandler();
+//	m_cmdH = new CommandHandler();
 }
 
 BoostParse::~BoostParse() {
@@ -70,7 +69,7 @@ bool BoostParse::parseFile(){
 }
 
 bool BoostParse::addManualCommand(std::string strManualCmd){
-	lockObject.lock();
+
 	std::istringstream ss(strManualCmd);
 	CommandNode newNode = CommandNode();
 	try{
@@ -291,7 +290,7 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 }
 
 bool BoostParse::scriptFileParse(std::string strFileName){
-	lockObject.lock();
+
 	//TODO Implement using Boost Library
 	CommandNode newNode;
 	try{
@@ -301,9 +300,8 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 	} catch(std::exception * e){
 		std::cerr << "Cannot read file.\n";
 	}
-	//TODO Halt script execution NOW!!!!
-	m_cmdH->smoothHalt();
-	m_cmdScript->clear(); //clear script before putting new one into memory
+//	m_cmdH->smoothHalt();
+//	m_cmdScript->clear(); //clear script before putting new one into memory
 
 	BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, m_xmlScriptFile.get_child("script")){
 		if(v.first == "config"){
@@ -512,8 +510,6 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 			//END DEFAULT
 		}
 	}
-	m_cmdH->startFromHalt();
-	lockObject.unlock();
 	return true;
 }
 
