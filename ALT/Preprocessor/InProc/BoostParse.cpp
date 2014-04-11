@@ -7,7 +7,7 @@
 
 #include "BoostParse.h"
 
-boost::mutex lockObject;
+
 
 BoostParse::BoostParse() {
 	m_cmdScript = new CommandList();

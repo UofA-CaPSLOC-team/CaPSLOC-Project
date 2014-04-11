@@ -25,6 +25,8 @@
 
 #define SCRIPTLOC "/opt/CaPSLOC/scripts/"
 
+boost::mutex lockObject;
+
 class CommandHandler;
 
 
