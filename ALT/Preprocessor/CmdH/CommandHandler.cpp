@@ -71,7 +71,6 @@ CommandHandler::~CommandHandler() {
 
 void CommandHandler::execNext(void){
 	m_ptrMCPM = new MCPM();
-	m_ptrCD = new CameraDriver();
 	if (m_dLatOffset != 0.0)
 	{
 		std::cout << "Setting the gps from Google" << std::endl;
@@ -136,6 +135,7 @@ void CommandHandler::execNext(void){
 			while(!m_ptrMCPM->isReadyForNextLocation()){
 				usleep(50000);
 			}
+			m_ptrCD = new CameraDriver();
 			std::string fullName = "/opt/CaPSLOC/pics/";
 			fullName.append(m_strLocName);
 //			system(fullName);
@@ -156,6 +156,7 @@ void CommandHandler::execNext(void){
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()));
 			m_stc->sendCommandDebug(stcString);
 			m_stc->sendPicToCTRL(fullName, m_strAltName, m_dcurrLong, m_dcurrLat, m_dcurrAlt, m_strLocName, "null");
+			delete m_ptrCD;
 		}
 			break;
 			//END CAPTURE
