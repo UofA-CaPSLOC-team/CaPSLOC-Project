@@ -38,6 +38,7 @@ void CameraDriver::takePicture(std::string name){
     std::ofstream outFile (m_strName.c_str(), std::ios::binary);
     outFile.write((char*)data, rpc->getImageBufferSize());
     std::cout << "Image saved at raspicam_image.ppm" << std::endl;
+    outFile.close();
     //free resrources
     delete data;
     delete rpc;
