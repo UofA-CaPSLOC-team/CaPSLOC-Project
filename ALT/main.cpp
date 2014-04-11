@@ -61,6 +61,7 @@ int main(int argc, char ** argv){
 	std::cout << "\n\t --> Creating CommandHandler object." << std::endl;
 
 	SendToCTRL * stc = new SendToCTRL();
+	stc->setIPAddr(getCTRLIp());
 
 	CommandHandler * ch = new CommandHandler(bp, stc);
 	std::cout << "\t --> Executing scripts..." << std::endl;
