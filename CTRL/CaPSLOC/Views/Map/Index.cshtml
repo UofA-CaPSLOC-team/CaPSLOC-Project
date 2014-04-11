@@ -22,11 +22,13 @@ Please wait while the operation completes...<br />
 </div>
 
 <div id="save-script-dialog" style="display:none">
-    <label for="save-script-name">Name:</label>
-    <input type="text" id="save-script-name" />
-    <br />
-    <label for="save-script-description">Description:</label>
-    <input type="text" id="save-script-description" />
+    <form id="save-script-form" action="#">
+        <label for="save-script-name">Name:</label>
+        <input type="text" id="save-script-name" name="save-script-name" />
+        <br />
+        <label for="save-script-description">Description:</label>
+        <input type="text" id="save-script-description" name="save-script-description" />
+    </form>
 </div>
 
 <div id="add-script-dialog" style="display:none">
@@ -43,7 +45,7 @@ Please wait while the operation completes...<br />
     <li><a href="#alt-locate">Locate ALT</a></li>
     <li><a href="#create-script">Create Script</a></li>
     <li><a href="#manage-scripts">Manage Scripts</a></li>
-    <li><a href="#interactive-mode">Interactive</a></li>
+    <!--<li><a href="#interactive-mode">Interactive</a></li>-->
     <li><a href="#image-gallery">Image Gallery</a></li>
   </ul>
   <div id="map-page">
@@ -154,7 +156,7 @@ Please wait while the operation completes...<br />
                         </div>
                         <div id="command-parameters-8" class="command-parameters" style="display:none">
                             <label for="wait-duration">Duration:</label>
-                            <input type="time" id="wait-duration" name="wait-duration" />
+                            <input type="text" id="wait-duration" name="wait-duration" />
                         </div>
                         <div id="command-parameters-9" class="command-parameters" style="display:none">
                             <label for="execute-name">Script Name:</label>
@@ -217,7 +219,7 @@ Please wait while the operation completes...<br />
     <br />
     <table id="manage-scripts-found"></table>
   </div>
-  <div id="interactive-mode">
+  <!--<div id="interactive-mode">
   <table>
   <colgroup>
   <col style="width:600px" />
@@ -296,7 +298,7 @@ Please wait while the operation completes...<br />
         </div>
         <div id="interactive-command-parameters-8" class="command-parameters" style="display:none">
             <label for="interactive-wait-duration">Duration:</label>
-            <input type="time" id="interactive-wait-duration" />
+            <input type="text" id="interactive-wait-duration" />
         </div>
         <div id="interactive-command-parameters-9" class="command-parameters" style="display:none">
             <label for="interactive-script-list">Script Name:</label>
@@ -351,7 +353,7 @@ Please wait while the operation completes...<br />
             <div id="interactive-debug" style="max-height:400px;overflow:auto"></div>
         </td>
         </tr></tbody></table>
-    </div>
+    </div>-->
   <div id="image-gallery">
       <form id=image-filter-form action="#">
         <select id="image-alt-list"></select>

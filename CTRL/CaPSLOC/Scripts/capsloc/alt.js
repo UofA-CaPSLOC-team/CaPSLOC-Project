@@ -31,6 +31,29 @@ $(document).ready(function () {
             { display: 'IP Address', name: 'param_name', width: 150, sortable: false, align: 'left' }
         ],
         dataType: 'json',
+        buttons: [{
+            name: 'Reboot',
+            onpress: function () {
+                var selectedRows = $('#alts-located .trSelected');
+                if (selectedRows.length > 0) {
+                    var altId = selectedRows.attr('id').substr(3);
+                    $.ajax({
+                        url: '/CaPSLOC/ALT/Reboot',
+                        type: 'GET',
+                        data: { 'altId': altId },
+                        success: function (result) {
+                            alert(result.data);
+                        },
+                        error: function () {
+                            alert('An error occurred while sending the reboot command');
+                        }
+                    });
+                } else {
+                    alert('Please select a row!');
+                }
+            },
+            bclass: 'add'
+        }],
         title: 'Available ALT Units',
         width: 450,
         height: 300,

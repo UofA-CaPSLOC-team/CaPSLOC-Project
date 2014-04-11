@@ -1,4 +1,4 @@
-
+﻿
 var _scriptContext = [];
 
 $(document).ready(function () {
@@ -68,7 +68,7 @@ $(document).ready(function () {
             },
             'wait-duration': {
                 required: true,
-                time: true
+                number: true
             },
             'execute-name': {
                 required: true

@@ -133,7 +133,18 @@ function submitLocation() {
         $.ajax({
             url: '/CaPSLOC/Map/SaveLocation',
             type: 'POST',
-            data: location
+            data: location,
+            success: function(result){
+                if(result.success){
+                    alert('Location saved successfully');
+                }
+                else{
+                    alert('Error saving location: ' + result.data);
+                }
+            },
+            failure: function(){
+                alert('Error saving location');
+            }
         });
     }
 }

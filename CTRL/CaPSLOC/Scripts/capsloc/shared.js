@@ -82,29 +82,29 @@ function readScriptInput(cmdType, tab) {
             break;
         case 2:
             serializedInput.CommandName = 'Go To Location';
-            var locText = $('[id$=goto-location-list]', tab).text();
+            var locText = $('[id$=goto-location-list] :selected', tab).text();
             var locName = locText.substr(0, locText.indexOf('('));
             var locArray = locText.substring(locText.indexOf('(') + 1, locText.indexOf(')')).split(',');
 
             serializedInput.Params.push({
-                id: serializedInput.CommandId + '-1',
-                name: 'Latitude',
-                value: $.trim(locArray[0])
+                Id: serializedInput.CommandId + '-1',
+                Name: 'Latitude',
+                Value: $.trim(locArray[0])
             });
             serializedInput.Params.push({
-                id: serializedInput.CommandId + '-2',
-                name: 'Longitude',
-                value: $.trim(locArray[1])
+                Id: serializedInput.CommandId + '-2',
+                Name: 'Longitude',
+                Value: $.trim(locArray[1])
             });
             serializedInput.Params.push({
-                id: serializedInput.CommandId + '-3',
-                name: 'Altitude',
-                value: $.trim(locArray[2])
+                Id: serializedInput.CommandId + '-3',
+                Name: 'Altitude',
+                Value: $.trim(locArray[2])
             });
             serializedInput.Params.push({
-                id: serializedInput.CommandId + '-4',
-                name: 'Name',
-                value: $.trim(locName)
+                Id: serializedInput.CommandId + '-4',
+                Name: 'Name',
+                Value: $.trim(locName)
             });
             break;
         case 3:
