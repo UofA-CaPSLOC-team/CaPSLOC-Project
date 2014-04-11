@@ -25,7 +25,7 @@
 
 #define SCRIPTLOC "/opt/CaPSLOC/scripts/"
 
-boost::mutex lockObject;
+extern boost::mutex lockObject;
 
 class CommandHandler;
 

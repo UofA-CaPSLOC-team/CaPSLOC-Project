@@ -60,12 +60,12 @@ void displayAndChange(boost::thread& daThread)
         exit(EXIT_FAILURE);
     }
 
-    std::cout << "INHERITED: ";
-    std::cout << "policy=" << ((policy == SCHED_FIFO)  ? "SCHED_FIFO" :
-                               (policy == SCHED_RR)    ? "SCHED_RR" :
-                               (policy == SCHED_OTHER) ? "SCHED_OTHER" :
-                                                         "???")
-              << ", priority=" << param.sched_priority << std::endl;
+//    std::cout << "INHERITED: ";
+//    std::cout << "policy=" << ((policy == SCHED_FIFO)  ? "SCHED_FIFO" :
+//                               (policy == SCHED_RR)    ? "SCHED_RR" :
+//                               (policy == SCHED_OTHER) ? "SCHED_OTHER" :
+//                                                         "???")
+//              << ", priority=" << param.sched_priority << std::endl;
 
 
     policy = SCHED_FIFO;
@@ -75,15 +75,15 @@ void displayAndChange(boost::thread& daThread)
     {
         errno = retcode;
         perror("pthread_setschedparam");
-        exit(EXIT_FAILURE);
+//        exit(EXIT_FAILURE);
     }
 
-    std::cout << "  CHANGED: ";
-    std::cout << "policy=" << ((policy == SCHED_FIFO)  ? "SCHED_FIFO" :
-                               (policy == SCHED_RR)    ? "SCHED_RR" :
-                               (policy == SCHED_OTHER) ? "SCHED_OTHER" :
-                                                          "???")
-              << ", priority=" << param.sched_priority << std::endl;
+//    std::cout << "  CHANGED: ";
+//    std::cout << "policy=" << ((policy == SCHED_FIFO)  ? "SCHED_FIFO" :
+//                               (policy == SCHED_RR)    ? "SCHED_RR" :
+//                               (policy == SCHED_OTHER) ? "SCHED_OTHER" :
+//                                                          "???")
+//              << ", priority=" << param.sched_priority << std::endl;
 }
 
 
@@ -128,7 +128,8 @@ int main(int argv, char ** argc){
 		stc->setIPAddr(ipaddr);
 	    boost::thread bt2(runCmdH, ch);
 
-
+	    displayAndChange(bt);
+	    displayAndChange(bt2);
 	    // NO CODE BELOW THIS LINE
 	    bt.join();
 	  }
