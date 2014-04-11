@@ -97,6 +97,10 @@ void CommandHandler::execNext(void){
 	while(1){
 		//Remove this printList() for production.
 //		m_cmdScript->printList();
+		std::cout << "Script Commands:\n";
+		m_cmdScript->printList();
+		std::cout << "Manual Commands:\n";
+		m_cmdManual->printList();
 		if(!m_bPaused && !m_bHaltExec){
 			if(m_cmdManual->hasCommands()){
 				currCmd = (m_cmdManual->pop_front());
