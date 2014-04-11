@@ -68,6 +68,8 @@ bool BoostParse::parseFile(){
 }
 
 bool BoostParse::addManualCommand(std::string strManualCmd){
+	boost::lock_guard<CommandList *>(m_cmdScript);
+	boost::lock_guard<CommandList *>(m_cmdManual);
 	std::istringstream ss(strManualCmd);
 	CommandNode newNode = CommandNode();
 	try{
@@ -288,6 +290,8 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 }
 
 bool BoostParse::scriptFileParse(std::string strFileName){
+	boost::lock_guard<CommandList *>(m_cmdScript);
+	boost::lock_guard<CommandList *>(m_cmdManual);
 	//TODO Implement using Boost Library
 	CommandNode newNode;
 	try{

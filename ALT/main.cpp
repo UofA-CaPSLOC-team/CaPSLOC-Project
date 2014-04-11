@@ -9,6 +9,10 @@
 #include <iostream>
 #include <string>
 
+#include <unistd.h>
+#include <sched.h>
+#include <cstdio>
+
 //Local includes
 #include "Preprocessor/InProc/BoostParse.h"
 #include "Preprocessor/CmdH/CommandHandler.h"
@@ -39,6 +43,49 @@ std::string getCTRLIp(){
 void runCmdH(CommandHandler * ch){
 	ch->execNext();
 }
+
+void displayAndChange(boost::thread& daThread)
+{
+    int retcode;
+    int policy;
+
+    pthread_t threadID = (pthread_t) daThread.native_handle();
+
+    struct sched_param param;
+
+    if ((retcode = pthread_getschedparam(threadID, &policy, &param)) != 0)
+    {
+        errno = retcode;
+        perror("pthread_getschedparam");
+        exit(EXIT_FAILURE);
+    }
+
+    std::cout << "INHERITED: ";
+    std::cout << "policy=" << ((policy == SCHED_FIFO)  ? "SCHED_FIFO" :
+                               (policy == SCHED_RR)    ? "SCHED_RR" :
+                               (policy == SCHED_OTHER) ? "SCHED_OTHER" :
+                                                         "???")
+              << ", priority=" << param.sched_priority << std::endl;
+
+
+    policy = SCHED_FIFO;
+    param.sched_priority = 85;
+
+    if ((retcode = pthread_setschedparam(threadID, policy, &param)) != 0)
+    {
+        errno = retcode;
+        perror("pthread_setschedparam");
+        exit(EXIT_FAILURE);
+    }
+
+    std::cout << "  CHANGED: ";
+    std::cout << "policy=" << ((policy == SCHED_FIFO)  ? "SCHED_FIFO" :
+                               (policy == SCHED_RR)    ? "SCHED_RR" :
+                               (policy == SCHED_OTHER) ? "SCHED_OTHER" :
+                                                          "???")
+              << ", priority=" << param.sched_priority << std::endl;
+}
+
 
 int main(int argv, char ** argc){
 //	std::string fn = "/opt/CaPSLOC/scripts/test_script.xml";
