@@ -24,7 +24,7 @@ void SendToCTRL::sendPicToCTRL(std::string filename, std::string altName, double
 
 	std::string ipAddr = m_strIPAddr;
 	ipAddr.append(PIC_ROUTE);
-
+	std::cout << "Sending Picture to " << ipAddr << "\n";
 	struct curl_httppost *formpost=NULL;
 	struct curl_httppost *lastptr=NULL;
 	struct curl_slist *headerlist=NULL;
@@ -125,7 +125,7 @@ void SendToCTRL::sendCommandDebug(std::string cmdinfo){
 
 	std::string ipAddr = m_strIPAddr;
 	ipAddr.append(DEBUG_ROUTE);
-
+	std::cout << "Sending Debug to " << ipAddr << "\n";
 	struct curl_slist *headerlist=NULL;
 	std::string jsonObj = "AltName=ALT1&Message=";
 	//TODO: Add variable for AltName.

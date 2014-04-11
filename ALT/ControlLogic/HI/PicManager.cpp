@@ -151,8 +151,14 @@ int PicManager::writeAndRead( unsigned char *data)
 
 	if(retVal < 0)
 	{
-		perror("Error - Problem transmitting spi data..ioctl");
-		exit(1);
+		cout << "Error - Problem transmitting spi data..ioctl" << endl;
+		cout << "TX Buf: " << spi[0].tx_buf << endl;
+		cout << "RX Buf: " << spi[0].rx_buf << endl;
+		cout << "Length: " << spi[0].len << endl;
+		cout << "Delay: " << spi[0].delay_usecs << endl;
+		cout << "Speed: " << spi[0].speed_hz << endl;
+		cout << "Bits Per Words: " << spi[0].bits_per_word << endl;
+		cout << "cs_change: " << spi[0].cs_change << endl;
 	}
 
 	return retVal;
