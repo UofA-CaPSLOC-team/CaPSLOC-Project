@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Web;
 using System.Web.Script.Serialization;
+using Renci.SshNet;
 
 namespace CaPSLOC.Controllers
 {
@@ -253,6 +254,46 @@ namespace CaPSLOC.Controllers
                 JavaScriptSerializer deserial = new JavaScriptSerializer();
                 ScriptListModel respData = deserial.Deserialize<ScriptListModel>(respString);
                 result = Json(new { success = true, data = respData.data }, JsonRequestBehavior.AllowGet);
+            }
+
+            return result;
+        }
+
+        //From Browser
+        [HttpGet]
+        public ActionResult Reboot(int altId)
+        {
+            var result = Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+            // Lookup ALT address in list
+            using (DbModelContainer models = new DbModelContainer())
+            {
+                ALT alt = models.ALTs.SingleOrDefault(a => a.Id == altId);
+                if (alt == null)
+                {
+                    return Json(new { success = false, data = "Selected ALT not found in database" }, JsonRequestBehavior.DenyGet);
+                }
+                if (!alt.RecentlyLocated)
+                {
+                    return Json(new { success = false, data = "Selected ALT not recently located. Please scan for ALTs" }, JsonRequestBehavior.DenyGet);
+                }
+
+                try
+                {
+                    using (SshClient ssh = new SshClient(alt.Address, "pi", "raspberry"))
+                    {
+                        ssh.Connect();
+                        ssh.RunCommand("sudo shutdown -r now");
+                        ssh.Disconnect();
+                        result = Json(new { success = true, data = "Command issued successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    result = Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
             }
 
             return result;

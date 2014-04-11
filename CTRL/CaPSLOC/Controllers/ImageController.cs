@@ -56,8 +56,10 @@ namespace CaPSLOC.Controllers
         }
 
         // From ALT
-        public JsonResult Save(HttpPostedFileBase file, string altName, double latitude, double longitude, double altitude, string locName, DateTime captureTime)
+        public JsonResult Save(HttpPostedFileBase file, string altName, double latitude, double longitude, double altitude, string locName)
         {
+            Logger.Debug("Save message started.");
+            Logger.Debug("ALT Name: " + altName);
             JsonResult result = Json(new { success = false, data = "An unknown error has occurred" }, JsonRequestBehavior.DenyGet);
 
             try
@@ -67,17 +69,17 @@ namespace CaPSLOC.Controllers
 
                 // Generate filename (based on time, or some other method to prevent name collisions)
                 string filename = Path.GetRandomFileName();
-                switch (file.ContentType)
-                {
-                    case "image/jpeg":
-                        filename = Path.ChangeExtension(filename, "jpg");
-                        break;
-                    case "image/png":
-                        filename = Path.ChangeExtension(filename, "png");
-                        break;
-                    default:
-                        throw new Exception("Invalid MIME type: " + file.ContentType);
-                }
+                //switch (file.ContentType)
+                //{
+                //    case "image/jpeg":
+                filename = Path.ChangeExtension(filename, "jpg");
+                //        break;
+                //    case "image/png":
+                        //filename = Path.ChangeExtension(filename, "png");
+                //        break;
+                //    default:
+                //        throw new Exception("Invalid MIME type: " + file.ContentType);
+                //}
                 string filePath = Path.Combine(imagePath, filename);
 
                 // Save image to folder
