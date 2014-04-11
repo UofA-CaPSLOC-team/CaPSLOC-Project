@@ -40,4 +40,5 @@ void CameraDriver::takePicture(std::string name){
     std::cout << "Image saved at raspicam_image.ppm" << std::endl;
     //free resrources
     delete data;
+    delete rpc;
 }
