@@ -136,11 +136,16 @@ void CommandHandler::execNext(void){
 				usleep(50000);
 			}
 //			m_ptrCD = new CameraDriver();
-//			std::string fullName = "/opt/CaPSLOC/pics/";
-			std::string fullName = "/usr/bin/raspistill -w 640 -h 480 -e png -o /opt/CaPSLOC/pics/";
+			std::string fullName = "\"/opt/CaPSLOC/pics/";
 			fullName.append(m_strLocName);
-			fullName.append(".png");
-			system(fullName.c_str());
+			fullName.append(".jpg\"");
+			std::string fullCommand = "/opt/CaPSLOC/bin/simpletest_raspicam \"/opt/CaPSLOC/pics/";
+
+			fullCommand.append(m_strLocName);
+
+			fullCommand.append(".jpg\" -w 640 -h 480");
+//			fullName.append("");
+			system(fullCommand.c_str());
 //			m_ptrCD->takePicture(fullName);
 			/*capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),
