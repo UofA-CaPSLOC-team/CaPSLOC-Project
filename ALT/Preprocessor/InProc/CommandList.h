@@ -13,8 +13,9 @@
 #include "CommandNode.h"
 #include <iostream>
 #include <deque>
+#include <boost/thread.hpp>
 
-class CommandList {
+class CommandList{
 public:
 	CommandList();
 	virtual ~CommandList();

@@ -7,6 +7,8 @@
 
 #include "BoostParse.h"
 
+boost::mutex lockObject;
+
 BoostParse::BoostParse() {
 	m_cmdScript = new CommandList();
 	m_cmdManual = new CommandList();
@@ -290,8 +292,7 @@ bool BoostParse::addManualCommand(std::string strManualCmd){
 }
 
 bool BoostParse::scriptFileParse(std::string strFileName){
-	boost::lock_guard<CommandList *>(m_cmdScript);
-	boost::lock_guard<CommandList *>(m_cmdManual);
+	lockObject.lock();
 	//TODO Implement using Boost Library
 	CommandNode newNode;
 	try{
@@ -513,6 +514,7 @@ bool BoostParse::scriptFileParse(std::string strFileName){
 		}
 	}
 	m_cmdH->startFromHalt();
+	lockObject.unlock();
 	return true;
 }
 
