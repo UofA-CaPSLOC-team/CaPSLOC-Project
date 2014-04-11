@@ -137,7 +137,7 @@ void CommandHandler::execNext(void){
 			}
 //			m_ptrCD = new CameraDriver();
 //			std::string fullName = "/opt/CaPSLOC/pics/";
-			std::string fullName = "/usr/bin/raspistill -w 640 -h 480 -e png -o ";
+			std::string fullName = "/usr/bin/raspistill -w 640 -h 480 -e png -o /opt/CaPSLOC/pics/";
 			fullName.append(m_strLocName);
 			fullName.append(".png");
 			system(fullName.c_str());
@@ -148,6 +148,7 @@ void CommandHandler::execNext(void){
 					currCmd->getFrameRate());
 					*/
 //			fullName.append(".png");
+			sleep(5);
 			stcString = "CAPTURING in MODE ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getCapMode()));
 			stcString.append(" for ");
