@@ -135,17 +135,20 @@ void CommandHandler::execNext(void){
 			while(!m_ptrMCPM->isReadyForNextLocation()){
 				usleep(50000);
 			}
-			m_ptrCD = new CameraDriver();
-			std::string fullName = "/opt/CaPSLOC/pics/";
+//			m_ptrCD = new CameraDriver();
+//			std::string fullName = "/opt/CaPSLOC/pics/";
+			std::string fullName = "/usr/bin/raspistill -w 640 -h 480 -e png -o ";
 			fullName.append(m_strLocName);
+			fullName.append(".png");
+
 //			system(fullName);
-			m_ptrCD->takePicture(fullName);
+//			m_ptrCD->takePicture(fullName);
 			/*capturePicture(currCmd->getCapMode(),
 					currCmd->getTimeOnTarget(),
 					currCmd->getQuality(),
 					currCmd->getFrameRate());
 					*/
-			fullName.append(".png");
+//			fullName.append(".png");
 			stcString = "CAPTURING in MODE ";
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getCapMode()));
 			stcString.append(" for ");
@@ -156,7 +159,7 @@ void CommandHandler::execNext(void){
 			stcString.append(boost::lexical_cast<std::string>(currCmd->getQuality()));
 			m_stc->sendCommandDebug(stcString);
 			m_stc->sendPicToCTRL(fullName, m_strAltName, m_dcurrLong, m_dcurrLat, m_dcurrAlt, m_strLocName, "null");
-			delete m_ptrCD;
+//			delete m_ptrCD;
 		}
 			break;
 			//END CAPTURE
