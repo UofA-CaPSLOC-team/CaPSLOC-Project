@@ -51,7 +51,8 @@ int main(int argc, char ** argv){
 
 	if(argc >= 2){
 		std::cout << "Usage " << argv[0] << " <filename>\n";
-
+		std::cout << "argc = " << argc << "\n";
+		std::cout << "2nd argument: " << argv[2] << "\n";
 		return 0;
 	} else {
 		bp->scriptFileParse(argv[1]);
