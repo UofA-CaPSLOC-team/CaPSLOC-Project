@@ -70,8 +70,7 @@ bool BoostParse::parseFile(){
 }
 
 bool BoostParse::addManualCommand(std::string strManualCmd){
-	boost::lock_guard<CommandList *>(m_cmdScript);
-	boost::lock_guard<CommandList *>(m_cmdManual);
+	lockObject.lock();
 	std::istringstream ss(strManualCmd);
 	CommandNode newNode = CommandNode();
 	try{
